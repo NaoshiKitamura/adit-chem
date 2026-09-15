@@ -47,17 +47,13 @@ pip install "adit-chem[gui,smiles,analysis]" --pre
    (クラスタで計算する場合は、書き出されたフォルダを転送して `bash submit.sh`)
 6. 計算が終わったら **解析** タブでフォルダを指定し、**解析を実行** を押します
 
+![解析の結果](docs/images/tutorial/06_analysis_result.png)
+
 `結合長 (最終構造): O1-H2 0.967 Å` のように出れば成功です。
+**画面ごとの手順は [チュートリアル](docs/USAGE.md) に、すべて画像で載せています。**
 
-同じ流れをコマンドラインだけで行うこともできます。
-
-```bash
-adit-gen --list-samples                       # 付属の例を一覧で見る
-adit-gen --sample water_generated mine.json   # 1 つ写して、自分の条件ファイルにする
-adit-gen mine.json ~/adit_runs/water          # 入力ファイル一式を書き出す
-cd ~/adit_runs/water && bash submit.sh        # 実行する
-adit-analyze .                                # 図と要約を出す
-```
+多数の計算をまとめて回すときは、同じ流れをコマンドラインでも行えます
+(`adit-gen --list-samples` から始めます。[チュートリアル](docs/USAGE.md#コマンドラインから))。
 
 ## できること
 

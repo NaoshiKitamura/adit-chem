@@ -121,9 +121,13 @@ def test_the_readme_shows_how_to_start():
     assert "## インストール" in text and "## 使ってみる" in text
     start = text.index("## 使ってみる")
     recipe = text[start:text.index("##", start + 5)]
-    for command in ("--list-samples", "--sample water_generated", "adit-analyze"):
-        assert command in recipe, command
+    for step in ("入力を生成", "この PC で実行", "解析を実行", "![") :
+        assert step in recipe, step
     assert len(text.splitlines()) < 150
+    usage = (REPO / "docs" / "USAGE.md").read_text(encoding="utf-8")
+    for command in ("--list-samples", "--sample water_generated", "adit-analyze"):
+        assert command in usage, command
+    assert usage.count("![") >= 10, "チュートリアルは画面の画像で説明する"
     install = REPO / "docs" / "INSTALL.md"
     assert install.is_file() and "実行ファイルを使う" in install.read_text(encoding="utf-8")
 
