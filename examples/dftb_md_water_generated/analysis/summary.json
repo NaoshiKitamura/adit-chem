@@ -1,0 +1,64 @@
+{
+  "code": "dftbplus",
+  "tables": {
+    "energy": {
+      "n": 21,
+      "last_ev": -109.2555,
+      "min_ev": -109.2555,
+      "max_ev": -108.2205
+    },
+    "temperature": {
+      "n": 21,
+      "mean_k": 4280.604171428571,
+      "std_k": 2077.9529681099793,
+      "skipped": 0,
+      "target_k": 300.0
+    },
+    "bonds": [
+      [
+        "O1-H2",
+        1.0407663563195084
+      ],
+      [
+        "O1-H3",
+        0.9437089713219432
+      ]
+    ],
+    "charges": [
+      {
+        "definition": "Mulliken",
+        "values": [
+          -0.6061389,
+          0.29446018,
+          0.31167872
+        ],
+        "source": "detailed.out:18",
+        "unit": "e",
+        "note": "DFTB+ の Mulliken 電荷 (価電子の数 − Mulliken の電子数。負なら電子が多い)。MD では detailed.out は最後に書かれたステップの値",
+        "sum": 0.0,
+        "atoms": [
+          "O1",
+          "H2",
+          "H3"
+        ],
+        "file": "/home/ramut/agent/qc-gui/examples/dftb_md_water_generated/analysis/charges_Mulliken.csv"
+      }
+    ],
+    "trajectory": {
+      "source": "geo_end.xyz",
+      "n_frames_total": 21,
+      "skip": 0,
+      "stride": 1,
+      "n_frames_used": 21,
+      "dt_frame_fs": 5.0,
+      "dt_used_fs": 5.0
+    }
+  },
+  "figures": {
+    "energy": "/home/ramut/agent/qc-gui/examples/dftb_md_water_generated/analysis/energy.png",
+    "temperature": "/home/ramut/agent/qc-gui/examples/dftb_md_water_generated/analysis/temperature.png"
+  },
+  "notes": [
+    "MD の温度: 目標 300 K、平均 4281 K"
+  ]
+}

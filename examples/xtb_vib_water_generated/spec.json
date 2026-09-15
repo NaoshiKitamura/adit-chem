@@ -1,0 +1,98 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-10T08:58:20+00:00",
+    "app_version": "0.0.1",
+    "comment": ""
+  },
+  "structure": {
+    "source": "preset",
+    "source_ref": "H2O",
+    "atoms": {
+      "symbols": [
+        "O",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.783064
+        ],
+        [
+          0.0,
+          0.0,
+          -0.783064
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "pbc": [
+        false,
+        false,
+        false
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {}
+  },
+  "method": {
+    "code": "xtb",
+    "gfn": "2",
+    "accuracy": 1.0,
+    "etemp": 300.0,
+    "max_iterations": 250,
+    "opt_level": "normal"
+  },
+  "kpoints": null,
+  "task": {
+    "type": "vibrations",
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVT",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 1.0,
+      "steps": 1000,
+      "dump_interval": 10,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 4,
+    "walltime": "01:00:00",
+    "job_name": "water"
+  }
+}

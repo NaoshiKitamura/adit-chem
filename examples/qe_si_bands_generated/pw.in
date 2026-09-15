@@ -1,0 +1,45 @@
+&CONTROL
+   calculation      = 'scf'
+   tstress          = .true.
+   tprnfor          = .true.
+   outdir           = './tmp'
+   prefix           = 'adit'
+   pseudo_dir       = './pseudo'
+/
+&SYSTEM
+   ecutwfc          = 25.0
+   ecutrho          = 100.0
+   occupations      = 'fixed'
+   nspin            = 1
+   ntyp             = 1
+   nat              = 2
+   ibrav            = 0
+/
+&ELECTRONS
+   electron_maxstep = 100
+   conv_thr         = 1e-07
+   mixing_beta      = 0.7
+/
+&IONS
+/
+&CELL
+/
+&FCP
+/
+&RISM
+/
+ATOMIC_SPECIES
+Si 28.085 Si.pbe-n-rrkjus_psl.1.0.0.UPF
+
+K_POINTS automatic
+4 4 4  0 0 0
+
+CELL_PARAMETERS angstrom
+0.00000000000000 2.71500000000000 2.71500000000000
+2.71500000000000 0.00000000000000 2.71500000000000
+2.71500000000000 2.71500000000000 0.00000000000000
+
+ATOMIC_POSITIONS crystal
+Si 0.0000000000 0.0000000000 -0.0000000000  
+Si 0.2500000000 0.2500000000 0.2500000000  
+

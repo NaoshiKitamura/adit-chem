@@ -1,0 +1,32 @@
+{
+  "input_format": "gromacs",
+  "topology_file": "topol.top",
+  "coordinates_file": "conf.gro",
+  "include_dir": "/home/<user>/miniforge3/envs/gromacs/share/gromacs/top",
+  "defines": {},
+  "nonbonded_method": "PME",
+  "nonbonded_cutoff_nm": 0.8,
+  "constraints": "HBonds",
+  "rigid_water": true,
+  "periodic": true,
+  "platform": "CPU",
+  "seed": 12345,
+  "write_xyz_trajectory": true,
+  "plumed_file": "",
+  "barostat_interval_steps": 25,
+  "task": "molecular_dynamics",
+  "max_steps": 200,
+  "force_tolerance_kj_per_mol_nm": 4.9614752215219475,
+  "md": {
+    "ensemble": "NVT",
+    "thermostat": "langevin",
+    "temperature_k": 300.0,
+    "timestep_fs": 2.0,
+    "steps": 200,
+    "dump_interval": 50,
+    "coupling_time_fs": 100.0,
+    "pressure_bar": 1.0,
+    "barostat_time_fs": 1000.0
+  },
+  "velocities_ang_per_fs": null
+}

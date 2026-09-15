@@ -1,0 +1,44 @@
+{
+  "code": "espresso",
+  "tables": {
+    "energy": {
+      "n": 1,
+      "last_ev": -310.55604201558214,
+      "min_ev": -310.55604201558214,
+      "max_ev": -310.55604201558214
+    },
+    "bonds": [
+      [
+        "Si1-Si2",
+        2.3512589595791047
+      ]
+    ],
+    "bands": {
+      "n_kpoints": 40,
+      "n_bands": 8,
+      "labels": [
+        "G",
+        "X",
+        "W",
+        "K",
+        "G",
+        "L",
+        "U",
+        "W",
+        "L",
+        "K",
+        "U",
+        "X"
+      ],
+      "gap_ev": 0.5669999999999993,
+      "fermi_ev": 6.2527
+    }
+  },
+  "figures": {
+    "energy": "<作業ディレクトリ>/qe_bands/analysis/energy.png",
+    "bands": "<作業ディレクトリ>/qe_bands/analysis/bands.png"
+  },
+  "notes": [
+    "フェルミ準位の代わりに最高被占準位 (highest occupied level) を使った"
+  ]
+}

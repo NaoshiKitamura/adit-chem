@@ -1,0 +1,62 @@
+# ------------------------------------------------------------------------------
+# アナターゼ TiO2 の周期系 SCC 計算 (公式レシピ集「Band structure, DOS and PDOS」の
+# 第 1 段「Creating the proper input charges」の再現)。周期系 DFTB+ の基準例
+#
+# 出典: https://dftbplus-recipes.readthedocs.io/en/latest/basics/bandstruct.html
+#       (配布アーカイブ recipes.tar.bz2 内 recipes/basics/bandstruct/1_density/dftb_in.hsd)
+# 原文との違いは 3 点だけ:
+#   1. 構造を <<< で geometry.gen から取り込む (中身は原文と同一)
+#   2. SK ファイルの Prefix を ../../slakos/mio-ext/ にした
+#      (mio-ext は原文と同じ構成: mio-1-1 と tiorg-0-1 へのシンボリックリンク集)
+#   3. この # コメント
+# ------------------------------------------------------------------------------
+
+# === Geometry: 周期系 (POSCAR に相当) ===
+# gen 形式の 1 行目 "6 F" の F は「周期セル、分数座標」。末尾に原点 1 行と格子ベクトル 3 行が付く
+# (分子系の "C" と違う点)。座標は格子ベクトルに対する分数
+Geometry = GenFormat {
+  <<< "geometry.gen"
+}
+
+# === Driver: 無し = 一点計算 (構造は動かさない) ===
+
+# === Hamiltonian ===
+Hamiltonian = DFTB {
+  Scc = Yes
+  SccTolerance = 1e-5              # 原文で明示 (既定と同じ値)
+  SlaterKosterFiles = Type2FileNames {
+    Prefix = "../../slakos/mio-ext/"
+    Separator = "-"
+    Suffix = ".skf"
+  }
+  MaxAngularMomentum {
+    Ti = "d"                       # tiorg-0-1 の Ti-Ti.skf 末尾の <Shells>3d 4s 4p</Shells> から
+    O  = "p"                       # mio-1-1 の O-O.skf 末尾の <Shells>2s 2p</Shells> から
+  }
+  KPointsAndWeights = SupercellFolding {   # k 点 (KPOINTS に相当)。4x4x4 の Monkhorst-Pack 相当
+    4 0 0                          # 折り返し行列 (対角なら各方向の分割数)
+    0 4 0
+    0 0 4
+    0.5 0.5 0.5                    # シフト。0.5 で偶数分割の MP 格子と同じ点になる
+  }
+}
+
+# === Analysis: 元素・殻ごとの状態密度の投影 (原文どおり。band.out と dos_*.out を出す) ===
+Analysis {
+  ProjectStates {
+    Region {
+      Atoms = Ti
+      ShellResolved = Yes
+      Label = "dos_ti"
+    }
+    Region {
+      Atoms = O
+      ShellResolved = Yes
+      Label = "dos_o"
+    }
+  }
+}
+
+ParserOptions {
+  ParserVersion = 12               # 原文どおり。この環境 (25.1) のパーサ版は 14。自動変換される
+}

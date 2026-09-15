@@ -1,0 +1,249 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-11T18:56:53+00:00",
+    "app_version": "0.0.1",
+    "comment": "compare-set adsorbed:adsorbed",
+    "continued_from": null,
+    "template": null,
+    "stage": null
+  },
+  "structure": {
+    "source": "file",
+    "source_ref": "<作業ディレクトリ>/ads_inputs/adsorbed.extxyz",
+    "atoms": {
+      "symbols": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "C",
+        "O",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0,
+          7.5
+        ],
+        [
+          1.23,
+          0.71014083,
+          7.5
+        ],
+        [
+          -1.23,
+          2.13042249,
+          7.5
+        ],
+        [
+          0.0,
+          2.84056332,
+          7.5
+        ],
+        [
+          2.46,
+          0.0,
+          7.5
+        ],
+        [
+          3.69,
+          0.71014083,
+          7.5
+        ],
+        [
+          1.23,
+          2.13042249,
+          7.5
+        ],
+        [
+          2.46,
+          2.84056332,
+          7.5
+        ],
+        [
+          1.23,
+          1.42028166,
+          10.89753933
+        ],
+        [
+          1.23,
+          2.18352066,
+          10.30123033
+        ],
+        [
+          1.23,
+          0.65704266,
+          10.30123033
+        ]
+      ],
+      "cell": [
+        [
+          4.92,
+          0.0,
+          0.0
+        ],
+        [
+          -2.46,
+          4.260844986619438,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          15.0
+        ]
+      ],
+      "pbc": [
+        true,
+        true,
+        true
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {},
+    "velocities": null
+  },
+  "method": {
+    "code": "dftbplus",
+    "sk_set": "mio-1-1",
+    "scc": true,
+    "scc_tolerance": 1e-05,
+    "max_scc_iterations": 100,
+    "third_order": false,
+    "dispersion": "none",
+    "d3_params": null,
+    "filling_temperature": 0.0,
+    "solvation_param_file": ""
+  },
+  "kpoints": {
+    "mode": "mesh",
+    "mesh": [
+      4,
+      4,
+      1
+    ],
+    "shift": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "density": 0.0
+  },
+  "task": {
+    "type": "single_point",
+    "bands": {
+      "path": "",
+      "npoints": 60,
+      "empty_bands": 4
+    },
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVT",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 1.0,
+      "steps": 1000,
+      "dump_interval": 10,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "prep"
+  },
+  "handoff": null,
+  "provenance": {
+    "adit_version": "0.0.1",
+    "generated_utc": "2026-09-11T18:56:53+00:00",
+    "python": "3.14.7",
+    "ase": "3.29.0",
+    "files": [
+      {
+        "name": "skf/C-C.skf",
+        "sha256": "a0e2fa003c192f7ff3f518045bd6fca9f146eecb79d44c90fe2ed27a361c8996",
+        "bytes": 102566,
+        "source": "/home/<user>/adit/slakos/mio-1-1/C-C.skf"
+      },
+      {
+        "name": "skf/C-H.skf",
+        "sha256": "042957334558349525498a05aaf06933f805680d2d3ee5757800ec849df3351c",
+        "bytes": 54184,
+        "source": "/home/<user>/adit/slakos/mio-1-1/C-H.skf"
+      },
+      {
+        "name": "skf/C-O.skf",
+        "sha256": "77bc2c6d41bab506941921e57bbd644c619a8979130788d377f2146767952829",
+        "bytes": 101119,
+        "source": "/home/<user>/adit/slakos/mio-1-1/C-O.skf"
+      },
+      {
+        "name": "skf/H-C.skf",
+        "sha256": "439495f6eab744f4f0644f5c0df08e112f6636fd5b08be106a4ea43e9c1b7e2c",
+        "bytes": 54183,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-C.skf"
+      },
+      {
+        "name": "skf/H-H.skf",
+        "sha256": "d43946902e4d120105025683b54c8696856cbd2b459cfd16df166164774359c8",
+        "bytes": 33182,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-H.skf"
+      },
+      {
+        "name": "skf/H-O.skf",
+        "sha256": "e357795fc4da4e6317fa29a1ffe57c13d17b96d8929fc840648cb2430acd1a6d",
+        "bytes": 53482,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-O.skf"
+      },
+      {
+        "name": "skf/LICENSE",
+        "sha256": "9348ddfd44da5a127c59141981954746a860ec8e03e0412cf3af7134af0f97e2",
+        "bytes": 20133,
+        "source": "/home/<user>/adit/slakos/mio-1-1/LICENSE"
+      },
+      {
+        "name": "skf/O-C.skf",
+        "sha256": "7d34e71a15951a1c908dac0a620d5a9111749140a5763bfc0e39365ef4abe0fa",
+        "bytes": 101108,
+        "source": "/home/<user>/adit/slakos/mio-1-1/O-C.skf"
+      },
+      {
+        "name": "skf/O-H.skf",
+        "sha256": "0bc4d6d3c013069ac5964cb58d52e50ea05eb7c5e2097fa76dd8255b535727bd",
+        "bytes": 53483,
+        "source": "/home/<user>/adit/slakos/mio-1-1/O-H.skf"
+      },
+      {
+        "name": "skf/O-O.skf",
+        "sha256": "423de839173a667cc1fd75bd111e6dfa46435b874544a5ce4441b84a31b80b43",
+        "bytes": 102082,
+        "source": "/home/<user>/adit/slakos/mio-1-1/O-O.skf"
+      },
+      {
+        "name": "skf/README",
+        "sha256": "92f2a22a702ed3e8548e376a28c47bbba9fe556df8b735d42d4cbb8f67b63e15",
+        "bytes": 3427,
+        "source": "/home/<user>/adit/slakos/mio-1-1/README"
+      }
+    ],
+    "generated_files": [],
+    "code_version_file": "code_version.txt"
+  }
+}

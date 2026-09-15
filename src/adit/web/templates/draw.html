@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}ADIT — Draw{% endblock %}
+{#- Draw (2 次元エディタ)。操作と SMILES への変換はデスクトップ版 (gui/sketcher.py) と共通の adit/sketch.py。
+    描く部分だけ JavaScript (web/static/sketch.js)。外部のライブラリは読み込まない -#}
+{% block body %}
+<form method="post" action="/draw">
+{% if error %}<div class="error-banner" role="alert">{{ error }}</div>{% endif %}
+{% if message %}<div class="message-banner" role="status">{{ message }}</div>{% endif %}
+<fieldset><legend>Draw ({{ T("分子を描いて SMILES にする", "draw a molecule and get its SMILES") }})</legend>
+  <div class="sketchbar">
+    <span class="section">{{ T("元素", "Element") }}</span>
+    {% for e in elements %}<button type="button" data-elem="{{ e }}">{{ e }}</button>{% endfor %}
+  </div>
+  <div class="sketchbar">
+    <span class="section">{{ T("ツール", "Tool") }}</span>
+    <button type="button" data-tool="1" title="{{ T('単結合。原子からドラッグすると伸びます', 'Single bond; drag from an atom to extend') }}">—</button>
+    <button type="button" data-tool="2" title="{{ T('二重結合', 'Double bond') }}">=</button>
+    <button type="button" data-tool="3" title="{{ T('三重結合', 'Triple bond') }}">≡</button>
+    {% for name, formula in rings %}<button type="button" data-tool="ring:{{ name }}" title="{{ T(formula + ' の環。選んでから空いた所をクリックします', formula + ' ring: select it, then click an empty spot') }}">{{ formula }}</button>{% endfor %}
+    <button type="button" data-tool="eraser" title="{{ T('クリックした原子か結合を消します', 'Click an atom or a bond to remove it') }}">{{ T("消しゴム", "Eraser") }}</button>
+    <span class="section">{{ T("電荷", "Charge") }}</span>
+    <button type="button" data-charge="1" title="{{ T('選んだ原子 (青い丸) の電荷を 1 増やします', 'Raise the charge of the selected atom by 1') }}">+</button>
+    <button type="button" data-charge="-1" title="{{ T('選んだ原子 (青い丸) の電荷を 1 減らします', 'Lower the charge of the selected atom by 1') }}">−</button>
+    <button type="button" id="sketch_undo" title="Ctrl+Z">{{ T("元に戻す", "Undo") }}</button>
+    <button type="button" id="sketch_redo" title="Ctrl+Shift+Z">{{ T("やり直す", "Redo") }}</button>
+    <button type="button" id="sketch_clear">{{ T("すべて消去", "Clear all") }}</button>
+  </div>
+  <canvas id="sketchpad" style="width:100%;max-width:760px;height:420px;border-radius:10px;border:1px solid rgba(0,0,0,0.12)"></canvas>
+  <input type="hidden" name="sketch" id="sketch_data" value="{{ sketch_json }}">
+  <div class="hint">{{ T("空いた所をクリックで原子を置く / 原子からドラッグで結合を伸ばす (30 度 刻み) / 原子をクリックで元素を置き換え / 結合をクリックで次数を変える / 右クリックで 1 つ消す",
+                        "Click empty space to place an atom; drag from an atom to extend a bond (snapped to 30°); click an atom to change its element; click a bond to change its order; right-click to remove one") }}</div>
+  <div class="actions">
+    <button type="submit" name="action" value="check" class="primary">{{ T("SMILES にする", "Get the SMILES") }}</button>
+    <button type="submit" name="action" value="use">{{ T("この分子を構造に使う", "Use this molecule as the structure") }}</button>
+    <button type="submit" name="action" value="svg" title="{{ T('Word や PowerPoint に貼れます (拡大しても粗くなりません)', 'Paste into Word or PowerPoint; stays sharp when enlarged') }}">{{ T("SVG で保存", "Save as SVG") }}</button>
+    <button type="submit" name="action" value="mol" title="{{ T('ChemDraw などで開けます', 'Opens in ChemDraw and similar') }}">{{ T("MOL で保存", "Save as MOL") }}</button>
+    <input type="text" name="from_smiles" value="{{ from_smiles }}" placeholder="{{ T('SMILES を入れて読み込む (例 c1ccccc1)', 'Load a SMILES (e.g. c1ccccc1)') }}">
+    <button type="submit" name="action" value="load">{{ T("SMILES から読み込む", "Load from SMILES") }}</button>
+  </div>
+  <noscript><div class="hint">{{ T("この画面はブラウザの中の小さなプログラム (JavaScript) で描いています。切っていると描けません。SMILES の欄に文字で入れるか、デスクトップ版の Draw を使ってください。",
+                                  "This editor is drawn by a small program in the browser (JavaScript). With it disabled you cannot draw; type a SMILES instead, or use the desktop version.") }}</div></noscript>
+</fieldset>
+{% if smiles or formula or smiles_error %}
+<fieldset><legend>{{ T("結果", "Result") }}</legend>
+  {% if smiles %}<div class="row"><label>SMILES</label><div class="inline"><code>{{ smiles }}</code></div></div>{% endif %}
+  {% if formula %}<div class="row"><label>{{ T("分子式", "Formula") }}</label><div class="inline">{{ formula }}</div></div>{% endif %}
+  {% if smiles_error %}<div class="error">{{ smiles_error }}</div>{% endif %}
+  <p class="hint">{{ T("水素は描きません (SMILES にするときに RDKit が補います)。原子価を超える描き方も止めませんが、RDKit が受け付けないときは上に理由が出ます。",
+                       "Hydrogens are not drawn (RDKit adds them when making the SMILES). Drawing beyond the normal valence is not blocked, but if RDKit rejects it the reason appears above.") }}</p>
+</fieldset>
+{% endif %}
+</form>
+<script>window.ADIT_SKETCH_COLORS = {{ colors | safe }};</script>
+<script>{{ sketch_js | safe }}</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+Geometry = GenFormat {
+  <<< "geometry.gen"
+}
+
+Driver = GeometryOptimization {
+  Optimizer = Rational {}
+  MovedAtoms = 1:-1
+  MaxSteps = 200
+  OutputPrefix = "geom.out"
+  Convergence { GradElem [eV/AA] = 0.00514221 }
+}
+
+Hamiltonian = DFTB {
+  Scc = Yes
+  SccTolerance = 1e-05
+  MaxSccIterations = 100
+  SlaterKosterFiles = Type2FileNames {
+    Prefix = "skf/"
+    Separator = "-"
+    Suffix = ".skf"
+  }
+  MaxAngularMomentum {
+    Ti = "d"
+    O = "p"
+  }
+  KPointsAndWeights = SupercellFolding {
+    4 0 0
+    0 4 0
+    0 0 4
+    0.5 0.5 0.5
+  }
+}
+
+Options {
+  WriteResultsTag = Yes
+}
+
+Analysis {
+  PrintForces = Yes
+}
+
+ParserOptions {
+  ParserVersion = 14
+}

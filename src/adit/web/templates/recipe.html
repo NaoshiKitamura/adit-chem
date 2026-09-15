@@ -1,0 +1,104 @@
+{#- 組み立て手順 (index.html の構造の群から include)。JS は使わない: 手順の並びは hidden の recipe_steps (JSON)、
+    追加・上へ・下へ・削除・濃度から個数・作る はボタンの送信 (POST /recipe、name="recipe_action")。
+    欄の文言はデスクトップ版 gui/panels/recipe_editor.py と同じ (日本語は help.py の鍵、英語は gui/i18n.py の _EN から写した) -#}
+{% macro rtxt(name, cls="narrow", ph="", aria="") -%}<input type="text" name="{{ name }}" id="{{ name }}" class="{{ cls }}" value="{{ form.get(name, '') }}"{% if ph %} placeholder="{{ ph }}"{% endif %}{% if aria %} aria-label="{{ aria }}"{% endif %}>{%- endmacro %}
+{% macro rsel(name, options, cls="", aria="") -%}<select name="{{ name }}" id="{{ name }}"{% if cls %} class="{{ cls }}"{% endif %}{% if aria %} aria-label="{{ aria }}"{% endif %}>
+{%- for k, v in options %}<option value="{{ k }}"{% if k|string == form.get(name, '')|string %} selected{% endif %}>{{ v }}</option>{% endfor -%}
+</select>{%- endmacro %}
+{% macro rrow(ja, en, for_id, sw="") -%}{% set h = HELP(ja) %}<div class="row{% if sw %} sw{% endif %}"{% if sw %} data-sw="{{ sw }}"{% endif %}><label for="{{ for_id }}"{% if h and h.required %} class="required"{% endif %}{% if h %} title="{{ h.text() }}"{% endif %}>{{ T(ja, en) }}</label><div class="inline">{{ caller() }}</div></div>{%- endmacro %}
+{% macro rhint(ja, en, sw="") -%}<div class="row{% if sw %} sw{% endif %}"{% if sw %} data-sw="{{ sw }}"{% endif %}><span></span><div class="hint">{{ T(ja, en) }}</div></div>{%- endmacro %}
+{% macro selection(p) -%}
+  {% call rrow("元素 (条件)", "Elements", p ~ "elements") %}{{ rtxt(p ~ "elements", "", ph=T("例: Li (空欄なら全元素)", "e.g. Li (empty = all elements)")) }}{% endcall %}
+  {% call rrow("z の範囲 [Å]", "z range [Å]", p ~ "zmin") %}{{ rtxt(p ~ "zmin", ph=T("下限 (空欄なら無し)", "min (empty = none)")) }}<span>〜</span>{{ rtxt(p ~ "zmax", ph=T("上限 (空欄なら無し)", "max (empty = none)"), aria=T("z の上限", "z max")) }}{% endcall %}
+{%- endmacro %}
+{% macro comps(p, auto) -%}
+  {% call rrow("成分", "Components", p ~ "comps") %}<textarea name="{{ p }}comps" id="{{ p }}comps">{{ form.get(p ~ "comps", "") }}</textarea>
+    <span class="hint">{{ T("1 行に 1 成分: 名前 (プリセット) / smiles:… / file:… * 個数 [charge=±n] [label=表示名]。全電荷は成分の電荷の合計になります", "One component per line: name (preset) / smiles:… / file:… * count [charge=±n] [label=name]. The total charge is the sum of the components") }}{% if auto %} {{ T("個数を 0 にした成分は「自動」(箱全体が指定の密度になる個数) です", "A count of 0 means auto (as many as needed for the whole box to reach the density)") }}{% endif %}</span>{% endcall %}
+  {% call rrow("分子間の最短距離 [Å]", "Min. distance [Å]", p ~ "mind") %}{{ rtxt(p ~ "mind") }}{% endcall %}
+  {% call rrow("乱数シード", "Seed", p ~ "seed") %}{{ rtxt(p ~ "seed") }}{% endcall %}
+{%- endmacro %}
+
+<div class="sub" title="{{ T('土台の構造に加工 (面で切る、溶液の層、原子を抜く・置換、吸着、固定、超格子、真空、直方体、溶媒和) を上から順に行います', 'processes the base structure from top to bottom: cut a slab, add a solvent layer, remove or substitute atoms, adsorb, fix, supercell, vacuum, box, solvate') }}">{{ T("組み立て手順", "Build steps") }}</div>
+<input type="hidden" name="recipe_steps" value="{{ form.get('recipe_steps', '[]') }}">
+<input type="hidden" name="recipe_q" value="{{ form.get('recipe_q', '') }}">
+<input type="hidden" name="base_extra" value="{{ form.get('base_extra', '{}') }}">
+<input type="hidden" name="file_sha_path" value="{{ form.get('file_sha_path', '') }}">
+<input type="hidden" name="file_sha256" value="{{ form.get('file_sha256', '') }}">
+<div class="recipe-add">
+  {{ rsel("recipe_add", rc.add_opts, aria=T("足す手順の種類", "Kind of step to add")) }}
+  <button type="submit" formaction="/recipe" name="recipe_action" value="add" title="{{ T('足す手順の種類。「電極と電解質の界面」は、面で切る・断面を溶液に合わせて広げる・溶液の層を置く・下の層を固定する、の各手順をまとめて追加します。土台がすでに板なら、面で切る手順は省きます', 'the kind of step to add. "Electrode–electrolyte interface" adds steps to cut a slab, widen its cross-section to fit the solution, add the electrolyte layer, and fix the bottom layer. The slab step is skipped when the base is already a slab') }}">{{ T("追加", "Add") }}</button>
+</div>
+{% if not rc["items"] %}
+<p class="hint">{{ T("手順を足すと、土台の構造を面で切る・溶液を足す・原子を抜くなどの加工ができます。手順があるときは「作る」を押して構造を作ります", "add steps to cut the base structure along a plane, add a solution layer, remove atoms and so on. With steps, press Build to make the structure") }}</p>
+{% else %}
+<ol class="steps">
+{%- for it in rc["items"] %}
+  <li{% if it.k == rc.open %} class="current"{% endif %}><a href="#step{{ it.k }}">{{ it.k }}. {{ it.label }}{% if it.summary %}  —  {{ it.summary }}{% endif %}</a>
+    <span class="step-btns"><button type="submit" formaction="/recipe" name="recipe_action" value="up:{{ it.k }}"{% if loop.first %} disabled{% endif %} aria-label="{{ T('上へ', 'Up') }} {{ it.k }}">{{ T("上へ", "Up") }}</button><button type="submit" formaction="/recipe" name="recipe_action" value="down:{{ it.k }}"{% if loop.last %} disabled{% endif %} aria-label="{{ T('下へ', 'Down') }} {{ it.k }}">{{ T("下へ", "Down") }}</button><button type="submit" formaction="/recipe" name="recipe_action" value="del:{{ it.k }}" aria-label="{{ T('削除', 'Remove') }} {{ it.k }}">{{ T("削除", "Remove") }}</button></span></li>
+{%- endfor %}
+</ol>
+{%- for it in rc["items"] %}{% set p = it.p %}
+<details class="stepbox" id="step{{ it.k }}"{% if it.k == rc.open %} open{% endif %}>
+  <summary>{{ T("手順 " ~ it.k ~ ": " ~ it.label, "Step " ~ it.k ~ ": " ~ it.label) }}</summary>
+  <input type="hidden" name="{{ p }}op" value="{{ it.op }}">
+  {%- if it.op == "supercell" %}
+  {% if it.auto_fit %}{{ rhint("溶液の成分が周期境界で重ならないよう、a・b 方向の繰り返し数を必要に応じて増やします。表示値は繰り返し数の下限です", "The repeats along a and b are increased as needed so that each solution component clears its periodic images. The displayed values are minimum repeats.") }}{% endif %}
+  {% call rrow("超格子の取り方", "Supercell type", p ~ "mode") %}{{ rsel(p ~ "mode", [("repeat", T("各軸の繰り返し", "Repeat along each axis")), ("matrix", T("変換行列 (3×3)", "Transformation matrix (3×3)"))], "swsel") }}{% endcall %}
+  {% call rrow("繰り返し (a × b × c)", "Repeats (a × b × c)", p ~ "r0", "repeat") %}{{ rtxt(p ~ "r0", "tiny") }}<span>×</span>{{ rtxt(p ~ "r1", "tiny", aria="b") }}<span>×</span>{{ rtxt(p ~ "r2", "tiny", aria="c") }}{% endcall %}
+  {% call rrow("変換行列", "Matrix", p ~ "m00", "matrix") %}<div class="matrix">{% for i in range(3) %}{% for j in range(3) %}{{ rtxt(p ~ "m" ~ i ~ j, "tiny", aria=T("変換行列", "Matrix") ~ " " ~ (i + 1) ~ "," ~ (j + 1)) }}{% endfor %}{% endfor %}</div>{% endcall %}
+  {{ rhint("変換行列の各行が新しい格子ベクトル (元の a, b, c の整数倍の和) です", "each matrix row is a new lattice vector (an integer combination of a, b, c)", "matrix") }}
+  {%- elif it.op == "slab" %}
+  {% call rrow("ミラー指数 (h k l)", "Miller indices (h k l)", p ~ "h") %}{{ rtxt(p ~ "h", "tiny") }}{{ rtxt(p ~ "k", "tiny", aria="k") }}{{ rtxt(p ~ "l", "tiny", aria="l") }}{% endcall %}
+  {% call rrow("層の数 (周期)", "Layers (repeat units)", p ~ "layers") %}{{ rtxt(p ~ "layers", "tiny") }}{% endcall %}
+  {% call rrow("真空 (片側) [Å]", "Vacuum per side [Å]", p ~ "vacuum") %}{{ rtxt(p ~ "vacuum") }}{% endcall %}
+  {% call rrow("終端 (最上面)", "Termination (top plane)", p ~ "term") %}{{ rsel(p ~ "term", it.terms) }}{% endcall %}
+  {{ rhint("ミラー指数は、いまのセルの格子ベクトルに対する指数です。立方晶の指数で切るなら、バルクは「立方晶セル」にしてください", "Miller indices refer to the current cell vectors. For cubic indices, tick \"Cubic cell\" for the bulk") }}
+  {%- elif it.op == "vacuum" %}
+  {% call rrow("軸", "Axis", p ~ "axis") %}{{ rsel(p ~ "axis", [("0", "a"), ("1", "b"), ("2", T("c (スラブなら面に垂直)", "c (normal to a slab)"))]) }}{% endcall %}
+  {% call rrow("周期の像との隙間 [Å]", "Gap to periodic image [Å]", p ~ "thickness") %}{{ rtxt(p ~ "thickness") }}{% endcall %}
+  {%- elif it.op == "box" %}
+  {% call rrow("余白 [Å]", "Padding [Å]", p ~ "padding") %}{{ rtxt(p ~ "padding") }}{% endcall %}
+  {% call rrow("倍数の上限", "Max. cell multiple", p ~ "maxm") %}{{ rtxt(p ~ "maxm", "tiny") }}{% endcall %}
+  {{ rhint("分子やナノ粒子は、端から余白ずつ離した直方体の箱に入れます。周期の構造は、直交するセルに取り直します (元のセルの「倍数の上限」倍まで)", "a molecule or nanoparticle is put in a rectangular box with this padding on every side; a periodic structure is re-cut into an orthogonal cell (up to the multiple limit)") }}
+  {%- elif it.op in ("remove", "substitute") %}
+  {{ selection(p) }}
+  {% call rrow("選ぶ数", "Number to pick", p ~ "pmode") %}{{ rsel(p ~ "pmode", [("count", T("個数", "Count")), ("fraction", T("割合 (0〜1)", "Fraction (0-1)"))], "swsel") }}<input type="text" name="{{ p }}count" id="{{ p }}count" class="tiny swi" data-sw="count" value="{{ form.get(p ~ 'count', '') }}" aria-label="{{ T('個数', 'Count') }}"><input type="text" name="{{ p }}fraction" id="{{ p }}fraction" class="tiny swi" data-sw="fraction" value="{{ form.get(p ~ 'fraction', '') }}" aria-label="{{ T('割合 (0〜1)', 'Fraction (0-1)') }}">{% endcall %}
+  {% call rrow("乱数シード", "Seed", p ~ "seed") %}{{ rtxt(p ~ "seed") }}{% endcall %}
+  {%- if it.op == "substitute" %}
+  {% call rrow("置き換え先の元素", "Replace with", p ~ "to") %}{{ rsel(p ~ "to", elements_opts) }}{% endcall %}
+  {%- endif %}
+  {%- elif it.op == "adsorb" %}
+  {% call rrow("分子", "Molecule", p ~ "kind") %}{{ rsel(p ~ "kind", [("preset", T("プリセット", "Preset")), ("smiles", "SMILES"), ("file", T("ファイル", "File"))]) }}{{ rtxt(p ~ "ref", "", ph="H2O", aria=T("分子の指定", "Molecule")) }}{% endcall %}
+  {% call rrow("置き場所", "Position", p ~ "place") %}{{ rsel(p ~ "place", [("site", T("席の名前 (ASE の面)", "Site name (ASE surface)")), ("above_atom", T("原子の真上", "Above an atom")), ("xy", T("xy 座標", "xy position"))], "swsel") }}{% endcall %}
+  {% call rrow("吸着サイトの名前", "Site", p ~ "site", "site") %}<input type="text" name="{{ p }}site" id="{{ p }}site" class="narrow" list="ads_sites" value="{{ form.get(p ~ 'site', '') }}" title="{{ T('土台が「スラブ」(ASE の面) のときだけ使えます。面ごとの席の名前は ASE と同じ', 'only for a Slab base (ASE surface); the site names are ASE\'s') }}">{% endcall %}
+  {% call rrow("原子の番号 (1 始まり)", "Atom number (from 1)", p ~ "atom", "above_atom") %}{{ rtxt(p ~ "atom") }}{% endcall %}
+  {% call rrow("xy 座標 [Å]", "x, y [Å]", p ~ "x", "xy") %}{{ rtxt(p ~ "x") }}{{ rtxt(p ~ "y", aria="y") }}{% endcall %}
+  {% call rrow("高さ [Å]", "Height [Å]", p ~ "height") %}{{ rtxt(p ~ "height") }}{% endcall %}
+  {% call rrow("下に向ける原子 (1 始まり)", "Atom facing down (from 1)", p ~ "down") %}{{ rtxt(p ~ "down", "tiny") }}{% endcall %}
+  {%- elif it.op == "solvent_layer" %}
+  {{ comps(p, False) }}
+  {% call rrow("厚みの決め方", "Thickness from", p ~ "tmode") %}{{ rsel(p ~ "tmode", [("density", T("密度から [g/cm³]", "From density [g/cm³]")), ("thickness", T("厚みを指定 [Å]", "Thickness [Å]"))], "swsel") }}<input type="text" name="{{ p }}density" id="{{ p }}density" class="narrow swi" data-sw="density" value="{{ form.get(p ~ 'density', '') }}" aria-label="{{ T('密度 [g/cm³]', 'Density [g/cm³]') }}" title="{{ T('成分の総質量をこの密度で割った体積が、溶液の帯になります (板の断面は変えずに厚みが決まります)', 'the band volume is the total mass of the components divided by this density (the slab cross-section is kept; the thickness follows)') }}"><input type="text" name="{{ p }}thickness" id="{{ p }}thickness" class="narrow swi" data-sw="thickness" value="{{ form.get(p ~ 'thickness', '') }}" aria-label="{{ T('厚み [Å]', 'Thickness [Å]') }}" title="{{ T('分子の中心を置く帯の厚み。詰めすぎると入り切らないので、はじめは密度から決める方が確実です', 'thickness of the band where molecule centers are placed; too thin and the molecules will not fit, so starting from a density is safer') }}">{% endcall %}
+  {% call rrow("間隙 [Å]", "Gap [Å]", p ~ "gap") %}{{ rtxt(p ~ "gap") }}{% endcall %}
+  {% call rrow("真空 [Å] (0 なら両側が溶液)", "Vacuum [Å] (0 = solution on both sides)", p ~ "vacuum") %}{{ rtxt(p ~ "vacuum") }}{% endcall %}
+  {% call rrow("濃度から個数", "Count from concentration", p ~ "conc") %}{{ rtxt(p ~ "conc", "tiny") }}<span>mol/L</span>{{ rsel(p ~ "conc_row", it.rows, aria=T("個数を決める行", "Row whose count is set")) }}<button type="submit" formaction="/recipe" name="recipe_action" value="conc:{{ it.k }}" title="{{ T('溶液の帯の体積と、この濃度 [mol/L] から個数を出し、選んだ行 (イオンなど) に入れます。塩なら陽イオンと陰イオンの行それぞれに', 'computes a count from the band volume and this concentration [mol/L] and puts it in the selected row (for a salt, do it for the cation and the anion rows)') }}">{{ T("選んだ行に入れる", "Fill selected row") }}</button>{% endcall %}
+  {%- if it.note %}<div class="row"><span></span><div class="{{ 'hint' if it.note_ok else 'error recipe-error' }}">{{ it.note }}</div></div>{% endif %}
+  {%- elif it.op == "solvate" %}
+  {{ comps(p, True) }}
+  {% call rrow("溶質の周りの余白 [Å]", "Padding around solute [Å]", p ~ "padding") %}{{ rtxt(p ~ "padding") }}{% endcall %}
+  {% call rrow("密度 [g/cm³]", "Density [g/cm³]", p ~ "density") %}{{ rtxt(p ~ "density") }}{% endcall %}
+  {{ rhint("いまの構造 (溶質) は動かしません。個数を「自動」にした成分 1 つを、箱全体がこの密度になるまで入れます", "the current structure (solute) is not moved; one component set to \"auto\" is added until the whole box reaches this density") }}
+  {%- elif it.op == "fix" %}
+  {% call rrow("下から数えた層", "Bottom layers", p ~ "layers") %}{{ rtxt(p ~ "layers", "tiny") }}<span class="hint">{{ T("0 なら使わない", "0 = not used") }}</span>{% endcall %}
+  {{ selection(p) }}
+  {{ rhint("条件はすべて「かつ」。何も指定しないと全原子を固定します。固定の手順があるときは、共通設定の「固定原子」の欄は使いません", "all conditions must hold; with none, every atom is fixed. When there is a fix step, the \"Fixed atoms\" field below is not used") }}
+  {%- endif %}
+</details>
+{%- endfor %}
+<datalist id="ads_sites">{% for x in ["ontop", "bridge", "fcc", "hcp", "hollow", "shortbridge", "longbridge"] %}<option value="{{ x }}">{% endfor %}</datalist>
+{% endif %}
+<div class="actions recipe-build{% if not rc['items'] %} only{% endif %}" data-source="2d cluster polymer">
+  <button type="submit" class="primary" formaction="/recipe" name="recipe_action" value="build" title="{{ T('組み立て手順を順に実行して構造を作ります (溶液の詰め込みやポリマーは数秒〜数十秒かかります)', 'runs the steps in order to make the structure (packing a solution or a polymer takes seconds to tens of seconds)') }}">{{ T("作る", "Build") }}</button>
+  <span class="hint">{{ T("溶液の詰め込みやポリマーは数秒〜数十秒かかります", "packing a solution or a polymer takes seconds to tens of seconds") }}</span>
+</div>
+{% if rc.status %}<div class="{{ {'ok': 'status ok', 'ng': 'error recipe-error', 'hint': 'hint'}[rc.status[0]] }} recipe-status" role="status">{{ rc.status[1] }}</div>{% endif %}
+{% if rc.lines %}<pre class="recipe-log">{{ rc.lines|join("\n") }}</pre>{% endif %}

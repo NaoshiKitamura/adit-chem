@@ -1,0 +1,15 @@
+{
+  "task": "molecular_dynamics",
+  "input_format": "gromacs",
+  "openmm_version": "8.4.0.dev-4768436",
+  "platform": "CPU",
+  "ensemble": "NVT",
+  "potential_energy_kj_per_mol": -9980.070389849154,
+  "potential_energy_ev": -103.4361407088742,
+  "kinetic_energy_kj_per_mol": 1587.1432414447743,
+  "total_energy_kj_per_mol": -8392.92714840438,
+  "total_energy_ev": -86.98656017142655,
+  "steps": 200,
+  "final_temperature_k": 295.26597902352506,
+  "degrees_of_freedom": 1293
+}

@@ -1,0 +1,11 @@
+; adit が生成した GROMACS の mdp (項目は https://manual.gromacs.org/current/user-guide/mdp-options.html で確かめたもの)
+integrator    = steep
+nsteps        = 50
+emtol         = 1000
+nstenergy     = 1
+nstlog        = 1
+cutoff-scheme = Verlet
+coulombtype   = PME
+rcoulomb      = 0.85
+rvdw          = 0.85
+constraints   = none

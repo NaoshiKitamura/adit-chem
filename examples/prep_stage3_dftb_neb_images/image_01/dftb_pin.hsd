@@ -1,0 +1,97 @@
+Geometry = GenFormat {
+8  C
+C      H
+1 1     -0.000000000073934     -0.000000000485426      0.764445705817508
+2 1      0.000000000608171      0.000000003404725     -0.735119350584143
+3 2      0.000032567631651      1.019198902360211      1.157894327984675
+4 2     -0.882668777401762     -0.509571746986118      1.157894327237752
+5 2      0.882636209728883     -0.509628155780095      1.157894327273074
+6 2     -0.161461611976409     -0.964496988421197     -1.167669785595409
+7 2     -0.754548319825814      0.622078858627706     -1.167669776108610
+8 2      0.916010084731532      0.342419039106448     -1.167669776024846
+}
+Driver = {}
+Hamiltonian = DFTB {
+  Scc = Yes
+  SccTolerance = 1e-05
+  MaxSccIterations = 100
+  SlaterKosterFiles = Type2FileNames {
+    Prefix = "skf/"
+    Separator = "-"
+    Suffix = ".skf"
+    LowerCaseTypeName = No
+  }
+  MaxAngularMomentum = {
+    C = "p"
+    H = "s"
+  }
+  PolynomialRepulsive = {}
+  Hybrid = None {}
+  ShellResolvedSCC = No
+  OldSKInterpolation = No
+  ReadInitialCharges = No
+  InitialCharges = {}
+  ConvergentSCCOnly = Yes
+  HCorrection = None {}
+  SpinPolarisation = {}
+  ElectricField = {}
+  Solver = RelativelyRobust {}
+  Charge = 0.0000000000000000
+  OnSiteCorrection = {}
+  Dispersion = {}
+  Solvation = {}
+  ElectronicConstraints = {}
+  Electrostatics = GammaFunctional {}
+  Mdftb = None {}
+  ThirdOrder = No
+  ThirdOrderFull = No
+  Differentiation = FiniteDiff {
+    Delta = 1.2207031250000000E-004
+  }
+  ForceEvaluation = "Traditional"
+  Mixer = Broyden {
+    MixingParameter = 0.20000000000000001
+    InverseJacobiWeight = 1.0000000000000000E-002
+    MinimalWeight = 1.0000000000000000
+    MaximalWeight = 100000.00000000000
+    WeightFactor = 1.0000000000000000E-002
+  }
+  Filling = Fermi {
+    Temperature = 0.0000000000000000
+  }
+}
+Options = {
+  WriteResultsTag = Yes
+  WriteDetailedOut = Yes
+  WriteAutotestTag = No
+  WriteDetailedXML = No
+  RestartFrequency = 20
+  RandomSeed = 0
+  WriteHS = No
+  WriteRealHS = No
+  MinimiseMemoryUsage = No
+  ShowFoldedCoords = No
+  TimingVerbosity = 1
+  WriteCharges = Yes
+  WriteChargesAsText = No
+  BinaryAccessTypes = {
+ "stream"
+  }
+}
+Analysis = {
+  PrintForces = Yes
+  ProjectStates = {}
+  WriteEigenvectors = No
+  WriteBandOut = Yes
+  MullikenAnalysis = Yes
+  WriteNetCharges = No
+  AtomResolvedEnergies = No
+}
+ParserOptions = {
+  ParserVersion = 14
+  WriteHSDInput = Yes
+  StopAfterParsing = No
+  IgnoreUnprocessedNodes = No
+}
+Reks = None {}
+ExcitedState = {}

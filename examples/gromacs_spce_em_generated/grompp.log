@@ -1,0 +1,39 @@
+                :-) GROMACS - gmx grompp, 2026.3-conda_forge (-:
+
+Executable:   /home/<user>/miniforge3/envs/gromacs/bin.AVX2_256/gmx
+Data prefix:  /home/<user>/miniforge3/envs/gromacs
+Working dir:  /home/<user>/adit/examples/gromacs_spce_em_generated
+Command line:
+  gmx grompp -f grompp.mdp -c conf.gro -p topol.top -o adit.tpr
+
+
+NOTE 1 [file grompp.mdp]:
+  You have set rlist larger than the interaction cut-off, but you also have
+  verlet-buffer-tolerance > 0. Will set rlist using
+  verlet-buffer-tolerance.
+
+Generating 1-4 interactions: fudge = 0.5
+Number of degrees of freedom in T-Coupling group rest is 1293.00
+The integrator does not provide a ensemble temperature, there is no system ensemble temperature
+
+There was 1 NOTE
+
+GROMACS reminds you: "Between equal rights, force decides." (Karl Marx)
+
+Setting the LD random seed to -695113
+
+Generated 330891 of the 330891 non-bonded parameter combinations
+
+Generated 330891 of the 330891 1-4 parameter combinations
+
+Excluding 2 bonded neighbours molecule type 'SOL'
+Analysing residue names:
+There are:   216      Water residues
+
+The largest distance between excluded atoms is 0.164 nm between atom 242 and 243
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 16x16x16, spacing 0.116 0.116 0.116
+
+Estimate for the relative computational load of the PME mesh part: 0.29
+
+This run will generate roughly 0 Mb of data

@@ -1,0 +1,1926 @@
+
+     Program PWSCF v.7.5 starts on 10Sep2026 at 18: 1:47 
+
+     This program is part of the open-source Quantum ESPRESSO suite
+     for quantum simulation of materials; please cite
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 21 395502 (2009);
+         "P. Giannozzi et al., J. Phys.:Condens. Matter 29 465901 (2017);
+         "P. Giannozzi et al., J. Chem. Phys. 152 154105 (2020);
+          URL http://www.quantum-espresso.org", 
+     in publications or presentations arising from this work. More details at
+     http://www.quantum-espresso.org/quote
+
+     Parallel version (MPI & OpenMP), running on       2 processor cores
+     Number of MPI processes:                 2
+     Threads/MPI process:                     1
+
+     MPI processes distributed on     1 nodes
+     1037 MiB available memory on the printing compute node when the environment starts
+
+     Reading input from pw.in
+Warning: card &CELL ignored
+Warning: card &FCP ignored
+Warning: card &RISM ignored
+
+     Current dimensions of program PWSCF are:
+     Max number of different atomic species (ntypx) = 10
+     Max number of k-points (npk) =  40000
+     Max angular momentum in pseudopotentials (lmaxx) =  4
+
+     File ./tmp/adit.update deleted, as requested
+
+     File ./tmp/adit.md deleted, as requested
+
+     R & G space division:  proc/nbgrp/npool/nimage =       2
+     Subspace diagonalization in iterative solution of the eigenvalue problem:
+     a serial algorithm will be used
+
+
+     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min         216     216     54                 2992     2992     373
+     Max         217     217     55                 2993     2993     376
+     Sum         433     433    109                 5985     5985     749
+
+     Using Slab Decomposition
+
+
+
+     bravais-lattice index     =            0
+     lattice parameter (alat)  =       7.2558  a.u.
+     unit-cell volume          =     270.1072 (a.u.)^3
+     number of atoms/cell      =            2
+     number of atomic types    =            1
+     number of electrons       =         8.00
+     number of Kohn-Sham states=            4
+     kinetic-energy cutoff     =      30.0000  Ry
+     charge density cutoff     =     120.0000  Ry
+     scf convergence threshold =      1.0E-06
+     mixing beta               =       0.7000
+     number of iterations used =            8  plain     mixing
+     energy convergence thresh.=      0.0E+00
+     force convergence thresh. =      0.0E+00
+     Exchange-correlation= PBE
+                           (   1   4   3   4   0   0   0)
+     nstep                     =           20
+
+
+     celldm(1)=   7.255773  celldm(2)=   0.000000  celldm(3)=   0.000000
+     celldm(4)=   0.000000  celldm(5)=   0.000000  celldm(6)=   0.000000
+
+     crystal axes: (cart. coord. in units of alat)
+               a(1) = (   0.000000   0.707107   0.707107 )  
+               a(2) = (   0.707107   0.000000   0.707107 )  
+               a(3) = (   0.707107   0.707107   0.000000 )  
+
+     reciprocal axes: (cart. coord. in units 2 pi/alat)
+               b(1) = ( -0.707107  0.707107  0.707107 )  
+               b(2) = (  0.707107 -0.707107  0.707107 )  
+               b(3) = (  0.707107  0.707107 -0.707107 )  
+
+
+     PseudoPot. # 1 for Si read from file:
+     ./pseudo/Si.pbe-n-rrkjus_psl.1.0.0.UPF
+     MD5 check sum: fa25574f73a70a4139f2adfbefec430c
+     Pseudo is Ultrasoft + core correction, Zval =  4.0
+     Generated using &quot;atomic&quot; code by A. Dal Corso  v.6.3
+     Using radial grid of 1141 points,  6 beta functions with: 
+                l(1) =   0
+                l(2) =   0
+                l(3) =   1
+                l(4) =   1
+                l(5) =   2
+                l(6) =   2
+     Q(r) pseudized with 0 coefficients 
+
+
+     atomic species   valence    mass     pseudopotential
+     Si                4.00    28.08500     Si( 1.00)
+
+     No symmetry found
+
+
+
+   Cartesian axes
+
+     site n.     atom                  positions (alat units)
+         1        Si     tau(   1) = (   0.0000000   0.0000000   0.0000000  )
+         2        Si     tau(   2) = (   0.3535534   0.3535534   0.3535534  )
+
+     number of k points=     1
+                       cart. coord. in units 2pi/alat
+        k(    1) = (   0.0000000   0.0000000   0.0000000), wk =   2.0000000
+
+     Dense  grid:     5985 G-vectors     FFT dimensions: (  25,  25,  25)
+
+     Estimated max dynamical RAM per process >      12.09 MB
+
+     Estimated total dynamical RAM >      24.17 MB
+
+     Check: negative core charge=   -0.000003
+
+     Initial potential from superposition of free atoms
+
+     starting charge       7.9989, renormalised to       8.0000
+     Starting wfcs are    8 randomized atomic wfcs
+
+     total cpu time spent up to now is        0.4 secs
+
+     per-process dynamical memory:    10.4 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-02,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        0.4 secs
+
+     total energy              =     -21.57138101 Ry
+     estimated scf accuracy    <       0.30471587 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.81E-03,  avg # of iterations =  1.0
+
+     total cpu time spent up to now is        0.4 secs
+
+     total energy              =     -21.58181649 Ry
+     estimated scf accuracy    <       0.01812340 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.27E-04,  avg # of iterations =  3.0
+
+     total cpu time spent up to now is        0.4 secs
+
+     total energy              =     -21.58705866 Ry
+     estimated scf accuracy    <       0.00066776 Ry
+
+     iteration #  4     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  8.35E-06,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        0.5 secs
+
+     total energy              =     -21.58741441 Ry
+     estimated scf accuracy    <       0.00015397 Ry
+
+     iteration #  5     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.92E-06,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        0.5 secs
+
+     total energy              =     -21.58743055 Ry
+     estimated scf accuracy    <       0.00001089 Ry
+
+     iteration #  6     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.36E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        0.5 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9567   7.1984   7.1994   7.2003
+
+     highest occupied level (ev):     7.2003
+
+!    total energy              =     -21.58743221 Ry
+     estimated scf accuracy    <       0.00000022 Ry
+
+     convergence has been achieved in   6 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.00001205    0.00003314    0.00005617
+     atom    2 type  1   force =     0.00001205   -0.00003314   -0.00005617
+
+     Total force =     0.000094     Total SCF correction =     0.000203
+     SCF correction compared to forces is large: reduce conv_thr to get better values
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      433.65
+   0.00294724   0.00000070   0.00000049          433.55        0.10        0.07
+   0.00000070   0.00294856   0.00000032            0.10      433.75        0.05
+   0.00000049   0.00000032   0.00294794            0.07        0.05      433.66
+
+
+     Molecular Dynamics Calculation
+
+     Starting temperature  =   300.00 K
+
+     temperature is controlled by soft (Berendsen) velocity rescaling
+     Characteristic time = 20*timestep
+     mass Si               =    28.09
+     Time step             =    41.34 a.u.,  2.0000 femto-seconds
+
+     Entering Dynamics:    iteration =     1
+                           time      =   0.0020 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0002685819        0.0010018969        0.0013487098
+Si               0.2502685819        0.2489981031        0.2486512902
+
+
+     kinetic energy (Ekin) =           0.00285013 Ry
+     temperature           =         300.00000000 K 
+     Ekin + Etot (const)   =         -21.58458208 Ry
+     Ions kinetic stress =            1.03 (kbar)
+                                      2.37           1.09           0.74
+                                      1.09           0.50           0.34
+                                      0.74           0.34           0.23
+
+
+
+     Linear momentum :   -0.0000000000    0.0000000000    0.0000000000
+
+     File ./tmp/adit.msd.dat deleted, as requested
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        0.6 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        0.7 secs
+
+     total energy              =     -21.58719973 Ry
+     estimated scf accuracy    <       0.00002145 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.68E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        0.7 secs
+
+     total energy              =     -21.58720508 Ry
+     estimated scf accuracy    <       0.00000151 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.89E-08,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        0.7 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9575   7.1131   7.2152   7.2691
+
+     highest occupied level (ev):     7.2691
+
+!    total energy              =     -21.58720623 Ry
+     estimated scf accuracy    <       0.00000054 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.01446091   -0.00671052   -0.00461515
+     atom    2 type  1   force =     0.01446091    0.00671052    0.00461515
+
+     Total force =     0.023471     Total SCF correction =     0.000523
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      433.79
+   0.00294808   0.00001142   0.00001655          433.68        1.68        2.43
+   0.00001142   0.00294915   0.00003549            1.68      433.84        5.22
+   0.00001655   0.00003549   0.00294936            2.43        5.22      433.87
+
+
+     Entering Dynamics:    iteration =     2
+                           time      =   0.0040 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0005167638        0.0019233348        0.0025896928
+Si               0.2505167638        0.2480766652        0.2474103072
+
+
+     kinetic energy (Ekin) =           0.00262603 Ry
+     temperature           =         276.41125427 K 
+     Ekin + Etot (const)   =         -21.58458021 Ry
+     Ions kinetic stress =            0.95 (kbar)
+                                      2.19           1.00           0.68
+                                      1.00           0.46           0.31
+                                      0.68           0.31           0.21
+
+
+
+     Linear momentum :   -0.0000000000    0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        0.9 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        0.9 secs
+
+     total energy              =     -21.58659070 Ry
+     estimated scf accuracy    <       0.00001825 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.28E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        0.9 secs
+
+     total energy              =     -21.58659437 Ry
+     estimated scf accuracy    <       0.00000135 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.69E-08,  avg # of iterations =  3.0
+
+     total cpu time spent up to now is        0.9 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9584   7.0377   7.2300   7.3315
+
+     highest occupied level (ev):     7.3315
+
+!    total energy              =     -21.58659474 Ry
+     estimated scf accuracy    <       0.00000017 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.02770134   -0.01297643   -0.00903077
+     atom    2 type  1   force =     0.02770134    0.01297643    0.00903077
+
+     Total force =     0.045107     Total SCF correction =     0.000281
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.07
+   0.00294772   0.00002382   0.00003395          433.62        3.50        4.99
+   0.00002382   0.00295189   0.00007120            3.50      434.24       10.47
+   0.00003395   0.00007120   0.00295255            4.99       10.47      434.33
+
+
+     Entering Dynamics:    iteration =     3
+                           time      =   0.0060 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0007284244        0.0026921654        0.0036274031
+Si               0.2507284244        0.2473078346        0.2463725969
+
+
+     kinetic energy (Ekin) =           0.00203265 Ry
+     temperature           =         213.95331699 K 
+     Ekin + Etot (const)   =         -21.58456209 Ry
+     Ions kinetic stress =            0.74 (kbar)
+                                      1.70           0.78           0.53
+                                      0.78           0.36           0.24
+                                      0.53           0.24           0.16
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        1.1 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        1.2 secs
+
+     total energy              =     -21.58578290 Ry
+     estimated scf accuracy    <       0.00001259 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.57E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        1.2 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9596   6.9738   7.2430   7.3845
+
+     highest occupied level (ev):     7.3845
+
+!    total energy              =     -21.58578560 Ry
+     estimated scf accuracy    <       0.00000091 Ry
+
+     convergence has been achieved in   2 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.03911655   -0.01840371   -0.01290607
+     atom    2 type  1   force =     0.03911655    0.01840371    0.01290607
+
+     Total force =     0.063802     Total SCF correction =     0.000213
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.43
+   0.00294718   0.00003524   0.00004997          433.54        5.18        7.35
+   0.00003524   0.00295562   0.00010717            5.18      434.79       15.76
+   0.00004997   0.00010717   0.00295689            7.35       15.76      434.97
+
+
+     Entering Dynamics:    iteration =     4
+                           time      =   0.0080 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0008914064        0.0032499393        0.0043852037
+Si               0.2508914064        0.2467500607        0.2456147963
+
+
+     kinetic energy (Ekin) =           0.00126360 Ry
+     temperature           =         133.00409100 K 
+     Ekin + Etot (const)   =         -21.58452200 Ry
+     Ions kinetic stress =            0.46 (kbar)
+                                      1.06           0.48           0.32
+                                      0.48           0.22           0.15
+                                      0.32           0.15           0.10
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        1.4 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  3.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  8.57E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        1.4 secs
+
+     total energy              =     -21.58502639 Ry
+     estimated scf accuracy    <       0.00000586 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  7.33E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        1.5 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9610   6.9276   7.2523   7.4226
+
+     highest occupied level (ev):     7.4226
+
+!    total energy              =     -21.58502796 Ry
+     estimated scf accuracy    <       0.00000060 Ry
+
+     convergence has been achieved in   2 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.04701822   -0.02219270   -0.01562913
+     atom    2 type  1   force =     0.04701822    0.02219270    0.01562913
+
+     Total force =     0.076779     Total SCF correction =     0.000315
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.82
+   0.00294699   0.00004187   0.00005908          433.52        6.16        8.69
+   0.00004187   0.00295939   0.00012455            6.16      435.34       18.32
+   0.00005908   0.00012455   0.00296120            8.69       18.32      435.61
+
+
+     Entering Dynamics:    iteration =     5
+                           time      =   0.0100 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0009995881        0.0035617286        0.0048177882
+Si               0.2509995881        0.2464382714        0.2451822118
+
+
+     kinetic energy (Ekin) =           0.00055832 Ry
+     temperature           =          58.76760332 K 
+     Ekin + Etot (const)   =         -21.58446964 Ry
+     Ions kinetic stress =            0.20 (kbar)
+                                      0.47           0.21           0.14
+                                      0.21           0.09           0.06
+                                      0.14           0.06           0.04
+
+
+
+     Linear momentum :    0.0000000000    0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        1.6 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  3.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  2.86E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        1.6 secs
+
+     total energy              =     -21.58454094 Ry
+     estimated scf accuracy    <       0.00000195 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.44E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        1.7 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9617   6.9027   7.2570   7.4439
+
+     highest occupied level (ev):     7.4439
+
+!    total energy              =     -21.58454143 Ry
+     estimated scf accuracy    <       0.00000018 Ry
+
+     convergence has been achieved in   2 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.05156283   -0.02428376   -0.01707721
+     atom    2 type  1   force =     0.05156283    0.02428376    0.01707721
+
+     Total force =     0.084143     Total SCF correction =     0.000161
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      435.04
+   0.00294669   0.00004546   0.00006415          433.47        6.69        9.44
+   0.00004546   0.00296160   0.00013585            6.69      435.67       19.98
+   0.00006415   0.00013585   0.00296378            9.44       19.98      435.99
+
+
+     Entering Dynamics:    iteration =     6
+                           time      =   0.0120 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0010519734        0.0036154088        0.0049103000
+Si               0.2510519734        0.2463845912        0.2450897000
+
+
+     kinetic energy (Ekin) =           0.00011194 Ry
+     temperature           =          11.78247890 K 
+     Ekin + Etot (const)   =         -21.58442950 Ry
+     Ions kinetic stress =            0.04 (kbar)
+                                      0.10           0.04           0.02
+                                      0.04           0.02           0.01
+                                      0.02           0.01           0.01
+
+
+
+     Linear momentum :   -0.0000000000    0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        1.8 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  2.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  9.27E-10,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        1.9 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9618   6.8994   7.2569   7.4475
+
+     highest occupied level (ev):     7.4475
+
+!    total energy              =     -21.58445336 Ry
+     estimated scf accuracy    <       0.00000006 Ry
+
+     convergence has been achieved in   1 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.05239112   -0.02452485   -0.01710905
+     atom    2 type  1   force =     0.05239112    0.02452485    0.01710905
+
+     Total force =     0.085311     Total SCF correction =     0.000010
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      435.08
+   0.00294640   0.00004539   0.00006482          433.43        6.68        9.54
+   0.00004539   0.00296207   0.00013770            6.68      435.74       20.26
+   0.00006482   0.00013770   0.00296439            9.54       20.26      436.08
+
+
+     Entering Dynamics:    iteration =     7
+                           time      =   0.0140 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0010600858        0.0034028049        0.0046590890
+Si               0.2510600858        0.2465971951        0.2453409110
+
+
+     kinetic energy (Ekin) =           0.00001460 Ry
+     temperature           =           1.53653096 K 
+     Ekin + Etot (const)   =         -21.58443876 Ry
+     Ions kinetic stress =            0.01 (kbar)
+                                      0.01           0.01           0.01
+                                      0.01           0.00           0.00
+                                      0.01           0.00           0.01
+
+
+
+     Linear momentum :    0.0000000000    0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        2.0 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  2.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  1.60E-08,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        2.0 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9613   6.9157   7.2518   7.4354
+
+     highest occupied level (ev):     7.4354
+
+!    total energy              =     -21.58479534 Ry
+     estimated scf accuracy    <       0.00000097 Ry
+
+     convergence has been achieved in   1 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.04932661   -0.02272144   -0.01552143
+     atom    2 type  1   force =     0.04932661    0.02272144    0.01552143
+
+     Total force =     0.079879     Total SCF correction =     0.000301
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.95
+   0.00294661   0.00003944   0.00005747          433.46        5.80        8.45
+   0.00003944   0.00296075   0.00012447            5.80      435.54       18.31
+   0.00005747   0.00012447   0.00296275            8.45       18.31      435.83
+
+
+     Entering Dynamics:    iteration =     8
+                           time      =   0.0160 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0010145188        0.0024328560        0.0034690845
+Si               0.2510145188        0.2475671440        0.2465309155
+
+
+     kinetic energy (Ekin) =           0.00199221 Ry
+     temperature           =         209.69666107 K 
+     Ekin + Etot (const)   =         -21.58280313 Ry
+     Ions kinetic stress =            0.72 (kbar)
+                                      1.45           0.79           0.65
+                                      0.79           0.43           0.35
+                                      0.65           0.35           0.29
+
+
+
+     Linear momentum :    0.0000000000    0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        2.2 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        2.2 secs
+
+     total energy              =     -21.58607841 Ry
+     estimated scf accuracy    <       0.00001928 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.41E-07,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        2.3 secs
+
+     total energy              =     -21.58608431 Ry
+     estimated scf accuracy    <       0.00000200 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.49E-08,  avg # of iterations =  1.0
+
+     total cpu time spent up to now is        2.3 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9592   6.9999   7.2292   7.3709
+
+     highest occupied level (ev):     7.3709
+
+!    total energy              =     -21.58608452 Ry
+     estimated scf accuracy    <       0.00000014 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.03601533   -0.01529924   -0.00926466
+     atom    2 type  1   force =     0.03601533    0.01529924    0.00926466
+
+     Total force =     0.056868     Total SCF correction =     0.000191
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.32
+   0.00294680   0.00002426   0.00003970          433.49        3.57        5.84
+   0.00002426   0.00295475   0.00009290            3.57      434.66       13.67
+   0.00003970   0.00009290   0.00295586            5.84       13.67      434.82
+
+
+     Entering Dynamics:    iteration =     9
+                           time      =   0.0180 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0008939528        0.0012574446        0.0019927304
+Si               0.2508939528        0.2487425554        0.2480072696
+
+
+     kinetic energy (Ekin) =           0.00331618 Ry
+     temperature           =         349.05523111 K 
+     Ekin + Etot (const)   =         -21.58276835 Ry
+     Ions kinetic stress =            1.20 (kbar)
+                                      2.51           1.30           1.03
+                                      1.30           0.68           0.54
+                                      1.03           0.54           0.42
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        2.4 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        2.4 secs
+
+     total energy              =     -21.58705173 Ry
+     estimated scf accuracy    <       0.00002984 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.73E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        2.5 secs
+
+     total energy              =     -21.58705899 Ry
+     estimated scf accuracy    <       0.00000212 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.66E-08,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        2.5 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9575   7.0998   7.2055   7.2929
+
+     highest occupied level (ev):     7.2929
+
+!    total energy              =     -21.58706052 Ry
+     estimated scf accuracy    <       0.00000081 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.01967856   -0.00667977   -0.00232377
+     atom    2 type  1   force =     0.01967856    0.00667977    0.00232377
+
+     Total force =     0.029572     Total SCF correction =     0.000646
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      433.85
+   0.00294737   0.00000723   0.00001874          433.57        1.06        2.76
+   0.00000723   0.00295008   0.00005362            1.06      433.97        7.89
+   0.00001874   0.00005362   0.00295036            2.76        7.89      434.01
+
+
+     Entering Dynamics:    iteration =    10
+                           time      =   0.0200 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0007043519       -0.0000135292        0.0003651869
+Si               0.2507043519        0.2500135292        0.2496348131
+
+
+     kinetic energy (Ekin) =           0.00424101 Ry
+     temperature           =         446.40125792 K 
+     Ekin + Etot (const)   =         -21.58281952 Ry
+     Ions kinetic stress =            1.54 (kbar)
+                                      3.30           1.66           1.27
+                                      1.66           0.84           0.64
+                                      1.27           0.64           0.49
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        2.6 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        2.6 secs
+
+     total energy              =     -21.58740272 Ry
+     estimated scf accuracy    <       0.00003365 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  4.21E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        2.7 secs
+
+     total energy              =     -21.58740894 Ry
+     estimated scf accuracy    <       0.00000262 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.28E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        2.7 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9571   7.1713   7.2058   7.2200
+
+     highest occupied level (ev):     7.2200
+
+!    total energy              =     -21.58740935 Ry
+     estimated scf accuracy    <       0.00000016 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =    -0.00197101    0.00212958    0.00442154
+     atom    2 type  1   force =     0.00197101   -0.00212958   -0.00442154
+
+     Total force =     0.007479     Total SCF correction =     0.000226
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      433.70
+   0.00294831  -0.00001206  -0.00000611          433.71       -1.77       -0.90
+  -0.00001206   0.00294825   0.00000358           -1.77      433.70        0.53
+  -0.00000611   0.00000358   0.00294812           -0.90        0.53      433.68
+
+
+     Entering Dynamics:    iteration =    11
+                           time      =   0.0220 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0004608611       -0.0012719509       -0.0012766952
+Si               0.2504608611        0.2512719509        0.2512766952
+
+
+     kinetic energy (Ekin) =           0.00450291 Ry
+     temperature           =         473.96845310 K 
+     Ekin + Etot (const)   =         -21.58290644 Ry
+     Ions kinetic stress =            1.63 (kbar)
+                                      3.58           1.75           1.29
+                                      1.75           0.86           0.63
+                                      1.29           0.63           0.47
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        2.8 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        2.9 secs
+
+     total energy              =     -21.58703905 Ry
+     estimated scf accuracy    <       0.00003128 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.91E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        2.9 secs
+
+     total energy              =     -21.58704497 Ry
+     estimated scf accuracy    <       0.00000260 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.25E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        2.9 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9577   7.1250   7.1564   7.3166
+
+     highest occupied level (ev):     7.3166
+
+!    total energy              =     -21.58704538 Ry
+     estimated scf accuracy    <       0.00000014 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.01551781    0.01043880    0.01037802
+     atom    2 type  1   force =    -0.01551781   -0.01043880   -0.01037802
+
+     Total force =     0.030248     Total SCF correction =     0.000220
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      433.87
+   0.00294871  -0.00002727  -0.00002757          433.77       -4.01       -4.06
+  -0.00002727   0.00294975  -0.00004206           -4.01      433.92       -6.19
+  -0.00002757  -0.00004206   0.00294978           -4.06       -6.19      433.93
+
+
+     Entering Dynamics:    iteration =    12
+                           time      =   0.0240 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si              -0.0001851358       -0.0024181974       -0.0028020761
+Si               0.2501851358        0.2524181974        0.2528020761
+
+
+     kinetic energy (Ekin) =           0.00406211 Ry
+     temperature           =         427.57085945 K 
+     Ekin + Etot (const)   =         -21.58298327 Ry
+     Ions kinetic stress =            1.47 (kbar)
+                                      3.30           1.57           1.12
+                                      1.57           0.75           0.53
+                                      1.12           0.53           0.38
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        3.1 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        3.1 secs
+
+     total energy              =     -21.58610172 Ry
+     estimated scf accuracy    <       0.00002760 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.45E-07,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        3.1 secs
+
+     total energy              =     -21.58610922 Ry
+     estimated scf accuracy    <       0.00000251 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.14E-08,  avg # of iterations =  1.0
+
+     total cpu time spent up to now is        3.1 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9592   7.0483   7.1399   7.4119
+
+     highest occupied level (ev):     7.4119
+
+!    total energy              =     -21.58610950 Ry
+     estimated scf accuracy    <       0.00000017 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.03156207    0.01765365    0.01520598
+     atom    2 type  1   force =    -0.03156207   -0.01765365   -0.01520598
+
+     Total force =     0.055480     Total SCF correction =     0.000202
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.31
+   0.00294880  -0.00003940  -0.00004585          433.78       -5.80       -6.74
+  -0.00003940   0.00295386  -0.00008245           -5.80      434.53      -12.13
+  -0.00004585  -0.00008245   0.00295438           -6.74      -12.13      434.60
+
+
+     Entering Dynamics:    iteration =    13
+                           time      =   0.0260 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0000969680       -0.0033664231       -0.0040947451
+Si               0.2499030320        0.2533664231        0.2540947451
+
+
+     kinetic energy (Ekin) =           0.00308943 Ry
+     temperature           =         325.18802653 K 
+     Ekin + Etot (const)   =         -21.58302007 Ry
+     Ions kinetic stress =            1.12 (kbar)
+                                      2.57           1.18           0.80
+                                      1.18           0.54           0.37
+                                      0.80           0.37           0.25
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        3.3 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        3.3 secs
+
+     total energy              =     -21.58490050 Ry
+     estimated scf accuracy    <       0.00001844 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.30E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        3.4 secs
+
+     total energy              =     -21.58490429 Ry
+     estimated scf accuracy    <       0.00000143 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.79E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        3.4 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9610   6.9833   7.1282   7.4915
+
+     highest occupied level (ev):     7.4915
+
+!    total energy              =     -21.58490459 Ry
+     estimated scf accuracy    <       0.00000009 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.04502243    0.02336975    0.01866724
+     atom    2 type  1   force =    -0.04502243   -0.02336975   -0.01866724
+
+     Total force =     0.076441     Total SCF correction =     0.000187
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.84
+   0.00294840  -0.00004833  -0.00006084          433.72       -7.11       -8.95
+  -0.00004833   0.00295904  -0.00011807           -7.11      435.29      -17.37
+  -0.00006084  -0.00011807   0.00296042           -8.95      -17.37      435.49
+
+
+     Entering Dynamics:    iteration =    14
+                           time      =   0.0280 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0003590996       -0.0040504611       -0.0050613631
+Si               0.2496409004        0.2540504611        0.2550613631
+
+
+     kinetic energy (Ekin) =           0.00189500 Ry
+     temperature           =         199.46407727 K 
+     Ekin + Etot (const)   =         -21.58300959 Ry
+     Ions kinetic stress =            0.69 (kbar)
+                                      1.62           0.71           0.45
+                                      0.71           0.32           0.20
+                                      0.45           0.20           0.13
+
+
+
+     Linear momentum :   -0.0000000000    0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        3.5 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  3.0
+
+     total cpu time spent up to now is        3.6 secs
+
+     total energy              =     -21.58378946 Ry
+     estimated scf accuracy    <       0.00001102 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.38E-07,  avg # of iterations =  3.0
+
+     total cpu time spent up to now is        3.6 secs
+
+     total energy              =     -21.58379392 Ry
+     estimated scf accuracy    <       0.00000109 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.36E-08,  avg # of iterations =  1.0
+
+     total cpu time spent up to now is        3.6 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9627   6.9357   7.1219   7.5481
+
+     highest occupied level (ev):     7.5481
+
+!    total energy              =     -21.58379408 Ry
+     estimated scf accuracy    <       0.00000012 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.05482321    0.02722225    0.02062810
+     atom    2 type  1   force =    -0.05482321   -0.02722225   -0.02062810
+
+     Total force =     0.091347     Total SCF correction =     0.000191
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      435.33
+   0.00294757  -0.00005247  -0.00006987          433.60       -7.72      -10.28
+  -0.00005247   0.00296400  -0.00014254           -7.72      436.02      -20.97
+  -0.00006987  -0.00014254   0.00296631          -10.28      -20.97      436.36
+
+
+     Entering Dynamics:    iteration =    15
+                           time      =   0.0300 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0005791434       -0.0044292527       -0.0056404610
+Si               0.2494208566        0.2544292527        0.2556404610
+
+
+     kinetic energy (Ekin) =           0.00082853 Ry
+     temperature           =          87.21008024 K 
+     Ekin + Etot (const)   =         -21.58296555 Ry
+     Ions kinetic stress =            0.30 (kbar)
+                                      0.74           0.30           0.17
+                                      0.30           0.12           0.07
+                                      0.17           0.07           0.04
+
+
+
+     Linear momentum :    0.0000000000    0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        3.8 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  3.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  4.48E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        3.8 secs
+
+     total energy              =     -21.58308963 Ry
+     estimated scf accuracy    <       0.00000312 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.90E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        3.8 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9638   6.9079   7.1205   7.5790
+
+     highest occupied level (ev):     7.5790
+
+!    total energy              =     -21.58309035 Ry
+     estimated scf accuracy    <       0.00000025 Ry
+
+     convergence has been achieved in   2 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.06052631    0.02920966    0.02125523
+     atom    2 type  1   force =    -0.06052631   -0.02920966   -0.02125523
+
+     Total force =     0.099684     Total SCF correction =     0.000174
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      435.62
+   0.00294669  -0.00005434  -0.00007565          433.47       -7.99      -11.13
+  -0.00005434   0.00296716  -0.00015863           -7.99      436.48      -23.33
+  -0.00007565  -0.00015863   0.00297009          -11.13      -23.33      436.92
+
+
+     Entering Dynamics:    iteration =    16
+                           time      =   0.0320 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0007467569       -0.0044884159       -0.0058082833
+Si               0.2492532431        0.2544884159        0.2558082833
+
+
+     kinetic energy (Ekin) =           0.00016657 Ry
+     temperature           =          17.53321930 K 
+     Ekin + Etot (const)   =         -21.58292378 Ry
+     Ions kinetic stress =            0.06 (kbar)
+                                      0.17           0.05           0.01
+                                      0.05           0.02           0.00
+                                      0.01           0.00           0.00
+
+
+
+     Linear momentum :    0.0000000000    0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        4.0 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  2.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  2.79E-09,  avg # of iterations =  4.0
+
+     total cpu time spent up to now is        4.0 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9639   6.9020   7.1238   7.5820
+
+     highest occupied level (ev):     7.5820
+
+!    total energy              =     -21.58297117 Ry
+     estimated scf accuracy    <       0.00000017 Ry
+
+     convergence has been achieved in   1 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.06192081    0.02919253    0.02049580
+     atom    2 type  1   force =    -0.06192081   -0.02919253   -0.02049580
+
+     Total force =     0.101059     Total SCF correction =     0.000078
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      435.68
+   0.00294607  -0.00005104  -0.00007493          433.38       -7.51      -11.02
+  -0.00005104   0.00296787  -0.00016248           -7.51      436.59      -23.90
+  -0.00007493  -0.00016248   0.00297108          -11.02      -23.90      437.06
+
+
+     Entering Dynamics:    iteration =    17
+                           time      =   0.0340 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0008923853       -0.0042216001       -0.0055742982
+Si               0.2491076147        0.2542216001        0.2555742982
+
+
+     kinetic energy (Ekin) =           0.00004867 Ry
+     temperature           =           5.12284193 K 
+     Ekin + Etot (const)   =         -21.58292250 Ry
+     Ions kinetic stress =            0.02 (kbar)
+                                      0.00           0.01           0.01
+                                      0.01           0.02           0.02
+                                      0.01           0.02           0.03
+
+
+
+     Linear momentum :    0.0000000000   -0.0000000000   -0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        4.2 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  3.0
+
+     Threshold (ethr) on eigenvalues was too large:
+     Diagonalizing with lowered threshold
+
+     Davidson diagonalization with overlap
+     ethr =  2.22E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        4.2 secs
+
+     total energy              =     -21.58347292 Ry
+     estimated scf accuracy    <       0.00000167 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.09E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        4.2 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9632   6.9158   7.1337   7.5569
+
+     highest occupied level (ev):     7.5569
+
+!    total energy              =     -21.58347325 Ry
+     estimated scf accuracy    <       0.00000012 Ry
+
+     convergence has been achieved in   2 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.05886958    0.02709115    0.01823336
+     atom    2 type  1   force =    -0.05886958   -0.02709115   -0.01823336
+
+     Total force =     0.095205     Total SCF correction =     0.000098
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      435.46
+   0.00294582  -0.00004545  -0.00006891          433.34       -6.69      -10.14
+  -0.00004545   0.00296589  -0.00015185           -6.69      436.30      -22.34
+  -0.00006891  -0.00015185   0.00296891          -10.14      -22.34      436.74
+
+
+     Entering Dynamics:    iteration =    18
+                           time      =   0.0360 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0010910347       -0.0033707533       -0.0046728342
+Si               0.2489089653        0.2533707533        0.2546728342
+
+
+     kinetic energy (Ekin) =           0.00141729 Ry
+     temperature           =         149.18184898 K 
+     Ekin + Etot (const)   =         -21.58205596 Ry
+     Ions kinetic stress =            0.51 (kbar)
+                                      0.81           0.54           0.55
+                                      0.54           0.37           0.37
+                                      0.55           0.37           0.37
+
+
+
+     Linear momentum :   -0.0000000000   -0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        4.4 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        4.4 secs
+
+     total energy              =     -21.58487504 Ry
+     estimated scf accuracy    <       0.00001521 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.90E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        4.4 secs
+
+     total energy              =     -21.58487834 Ry
+     estimated scf accuracy    <       0.00000119 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.48E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        4.4 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9610   6.9658   7.1562   7.4811
+
+     highest occupied level (ev):     7.4811
+
+!    total energy              =     -21.58487856 Ry
+     estimated scf accuracy    <       0.00000008 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.04847412    0.02093778    0.01254072
+     atom    2 type  1   force =    -0.04847412   -0.02093778   -0.01254072
+
+     Total force =     0.076752     Total SCF correction =     0.000155
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.82
+   0.00294565  -0.00003107  -0.00005312          433.32       -4.57       -7.81
+  -0.00003107   0.00295988  -0.00012452           -4.57      435.41      -18.32
+  -0.00005312  -0.00012452   0.00296204           -7.81      -18.32      435.73
+
+
+     Entering Dynamics:    iteration =    19
+                           time      =   0.0380 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0011970708       -0.0022378976       -0.0033788235
+Si               0.2488029292        0.2522378976        0.2533788235
+
+
+     kinetic energy (Ekin) =           0.00291544 Ry
+     temperature           =         306.87476980 K 
+     Ekin + Etot (const)   =         -21.58196311 Ry
+     Ions kinetic stress =            1.06 (kbar)
+                                      1.91           1.15           1.05
+                                      1.15           0.69           0.63
+                                      1.05           0.63           0.58
+
+
+
+     Linear momentum :   -0.0000000000   -0.0000000000    0.0000000000
+
+     Writing config-only to output data dir ./tmp/adit.save/ :
+     XML data file
+     NEW-OLD atomic charge density approx. for the potential
+
+     Check: negative core charge=   -0.000003
+
+     total cpu time spent up to now is        4.6 secs
+
+     per-process dynamical memory:    18.8 Mb
+
+     Self-consistent Calculation
+
+     iteration #  1     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  1.00E-06,  avg # of iterations =  5.0
+
+     total cpu time spent up to now is        4.6 secs
+
+     total energy              =     -21.58626552 Ry
+     estimated scf accuracy    <       0.00002577 Ry
+
+     iteration #  2     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  3.22E-07,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        4.7 secs
+
+     total energy              =     -21.58627030 Ry
+     estimated scf accuracy    <       0.00000209 Ry
+
+     iteration #  3     ecut=    30.00 Ry     beta= 0.70
+     Davidson diagonalization with overlap
+     ethr =  2.61E-08,  avg # of iterations =  2.0
+
+     total cpu time spent up to now is        4.7 secs
+
+     End of self-consistent calculation
+
+          k = 0.0000 0.0000 0.0000 (   749 PWs)   bands (ev):
+
+    -4.9588   7.0354   7.1815   7.3830
+
+     highest occupied level (ev):     7.3830
+
+!    total energy              =     -21.58627078 Ry
+     estimated scf accuracy    <       0.00000012 Ry
+
+     convergence has been achieved in   3 iterations
+
+     Forces acting on atoms (cartesian axes, Ry/au):
+
+     atom    1 type  1   force =     0.03399539    0.01298127    0.00576952
+     atom    2 type  1   force =    -0.03399539   -0.01298127   -0.00576952
+
+     Total force =     0.052105     Total SCF correction =     0.000220
+
+
+     Computing stress (Cartesian axis) and pressure
+
+          total   stress  (Ry/bohr**3)                   (kbar)     P=      434.19
+   0.00294644  -0.00001413  -0.00003279          433.44       -2.08       -4.82
+  -0.00001413   0.00295368  -0.00008646           -2.08      434.50      -12.72
+  -0.00003279  -0.00008646   0.00295457           -4.82      -12.72      434.63
+
+
+     Entering Dynamics:    iteration =    20
+                           time      =   0.0400 pico-seconds
+
+
+     Soft (Berendsen) velocity rescaling
+
+ATOMIC_POSITIONS (crystal)
+Si               0.0012038555       -0.0009314034       -0.0018174151
+Si               0.2487961445        0.2509314034        0.2518174151
+
+
+     kinetic energy (Ekin) =           0.00427137 Ry
+     temperature           =         449.59680733 K 
+     Ekin + Etot (const)   =         -21.58199941 Ry
+     Ions kinetic stress =            1.55 (kbar)
+                                      3.01           1.69           1.45
+                                      1.69           0.95           0.81
+                                      1.45           0.81           0.70
+
+
+
+     Linear momentum :    0.0000000000    0.0000000000    0.0000000000
+
+     The maximum number of steps has been reached.
+
+     End of molecular dynamics calculation
+
+     diffusion coefficients :
+     atom     1   D =       0.00000002 cm^2/s
+     atom     2   D =       0.00000002 cm^2/s
+
+     < D > =       0.00000002 cm^2/s
+
+     Writing all to output data dir ./tmp/adit.save/ :
+     XML data file, charge density, pseudopotentials, collected wavefunctions
+
+     init_run     :      0.22s CPU      0.23s WALL (       1 calls)
+     electrons    :      1.53s CPU      1.58s WALL (      20 calls)
+     update_pot   :      0.07s CPU      0.08s WALL (      19 calls)
+     forces       :      0.33s CPU      0.33s WALL (      20 calls)
+     stress       :      2.17s CPU      2.18s WALL (      20 calls)
+
+     Called by init_run:
+     wfcinit      :      0.01s CPU      0.01s WALL (       1 calls)
+     potinit      :      0.01s CPU      0.01s WALL (       1 calls)
+     hinit0       :      0.19s CPU      0.20s WALL (       1 calls)
+
+     Called by electrons:
+     c_bands      :      0.21s CPU      0.23s WALL (      59 calls)
+     sum_band     :      0.64s CPU      0.66s WALL (      59 calls)
+     v_of_rho     :      0.22s CPU      0.23s WALL (      72 calls)
+     newd         :      0.64s CPU      0.65s WALL (      72 calls)
+     mix_rho      :      0.01s CPU      0.01s WALL (      59 calls)
+
+     Called by c_bands:
+     init_us_2    :      0.02s CPU      0.02s WALL (     139 calls)
+     cegterg      :      0.17s CPU      0.19s WALL (      59 calls)
+
+     Called by *egterg:
+     cdiaghg      :      0.01s CPU      0.01s WALL (     200 calls)
+     h_psi        :      0.15s CPU      0.16s WALL (     227 calls)
+     s_psi        :      0.01s CPU      0.01s WALL (     227 calls)
+     g_psi        :      0.00s CPU      0.00s WALL (     167 calls)
+
+     Called by h_psi:
+     h_psi:calbec :      0.01s CPU      0.01s WALL (     227 calls)
+     vloc_psi     :      0.13s CPU      0.14s WALL (     227 calls)
+                                        0.00s GPU  (     227 calls)
+     add_vuspsi   :      0.01s CPU      0.01s WALL (     227 calls)
+
+     General routines
+     calbec       :      0.03s CPU      0.03s WALL (     626 calls)
+     fft          :      0.22s CPU      0.22s WALL (    1318 calls)
+     ffts         :      0.01s CPU      0.01s WALL (      59 calls)
+     fftw         :      0.13s CPU      0.14s WALL (    1684 calls)
+
+     Parallel routines
+
+     PWSCF        :      4.70s CPU      4.82s WALL
+
+
+   This run was terminated on:  18: 1:52  10Sep2026            
+
+=------------------------------------------------------------------------------=
+   JOB DONE.
+=------------------------------------------------------------------------------=

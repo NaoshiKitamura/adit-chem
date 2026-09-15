@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}ADIT — {{ T("解析", "Analysis") }}{% endblock %}
+{#- 部品。欄の名前・説明・選択肢はデスクトップ版の解析タブと同じ (gui/analysis_fields.py の LABELS、gui/help.py)。
+    f は欄の値 (文字列)、off は一括生成のディレクトリで欄を無効にする属性。JS は使わない (折りたたみは <details>) -#}
+{% macro arow(key, for_id) -%}{% set h = hlp(key) %}<div class="row"><label for="{{ for_id }}"{% if h and h.required %} class="required"{% endif %}{% if h %} title="{{ h.text() }}"{% endif %}>{{ lab(key) }}</label><div class="inline">{{ caller() }}</div></div>{%- endmacro %}
+{% macro txt(name, cls="tiny", placeholder="", aria="") -%}<input type="text" id="{{ name }}" name="{{ name }}" class="{{ cls }}" value="{{ f[name] }}"{% if placeholder %} placeholder="{{ placeholder }}"{% endif %}{% if aria %} aria-label="{{ aria }}"{% endif %}{{ off }}>{%- endmacro %}
+{% macro sel(name, opts) -%}<select id="{{ name }}" name="{{ name }}"{{ off }}>{% for v, t in opts %}<option value="{{ v }}"{% if f[name] == v %} selected{% endif %}>{{ t }}</option>{% endfor %}</select>{%- endmacro %}
+{% macro chk(name, key) -%}{% set h = hlp(key) %}<label{% if h %} title="{{ h.text() }}"{% endif %}><input type="checkbox" id="{{ name }}" name="{{ name }}"{% if f[name] %} checked{% endif %}{{ off }}> {{ lab(key) }}</label>{%- endmacro %}
+{% block body %}
+<form method="post" action="/analysis">
+{% if notice %}<div class="error-banner" role="alert">{{ notice }}</div>{% endif %}
+{% if message %}<div class="message-banner" role="status">{{ message }}</div>{% endif %}
+<fieldset><legend>{{ T("解析", "Analysis") }}</legend>
+  {% set h = HELP("計算結果のディレクトリ") %}
+  <div class="row"><label for="run_dir"{% if h and h.required %} class="required"{% endif %}{% if h %} title="{{ h.text() }}"{% endif %}>{{ T("計算結果のディレクトリ", "Run directory") }}</label><div class="inline"><input type="text" id="run_dir" name="run_dir" value="{{ run_dir }}"></div></div>
+  {#- 一括生成 (scan.json) のディレクトリのとき: 普段のチェック項目は使わないので無効にし、代わりにこの 1 行を出す (デスクトップ版と同じ文) -#}
+  <div class="row"><label>{{ T("解析項目", "Items") }}</label><div class="inline">
+    <span class="hint">{{ T("エネルギー・温度・結合長・振動数・バンドは常に解析します", "Energy, temperature, bond lengths, frequencies and bands are always analyzed") }}</span>
+    <label><input type="checkbox" name="rdf"{% if f.rdf %} checked{% endif %}{{ off }}> {{ T("動径分布関数 (RDF)", "Radial distribution function (RDF)") }}</label> {{ T("r の最大値 [Å]", "Maximum r [Å]") }} <input type="text" name="rmax" class="tiny" value="{{ f.rmax }}"{{ off }}>
+    <label><input type="checkbox" name="msd"{% if f.msd %} checked{% endif %}{{ off }}> {{ T("平均二乗変位 (MSD) と拡散係数", "Mean squared displacement (MSD) and diffusion") }}</label> {{ T("元素", "element") }} <input type="text" name="msd_species" class="tiny" value="{{ f.msd_species }}" placeholder="{{ T('全原子', 'all') }}"{{ off }}>
+    <label><input type="checkbox" name="dos"{% if f.dos %} checked{% endif %}{{ off }}> {{ T("状態密度 (DOS)", "Density of states (DOS)") }}</label> {{ T("ガウス幅 σ [eV]", "Gaussian width sigma [eV]") }} <input type="text" name="sigma" class="tiny" value="{{ f.sigma }}"{{ off }}>
+    {{ T("平衡化として捨てるフレーム数", "Frames to skip as equilibration") }} <input type="text" name="skip" class="tiny" value="{{ f.skip }}"{{ off }}>
+  </div></div>
+  <details class="more"{% if more_open %} open{% endif %}><summary>{{ lab("more") }}</summary>
+    <p class="hint">{{ T("ここの欄は すべて 任意です。空のままでも解析は走ります (エネルギー・温度・結合長・振動数・バンドは常に出ます)。必要な解析の欄だけ埋めてください。",
+                         "Every field here is optional: the analysis runs with all of them empty (energy, temperature, bond lengths, frequencies and bands are always produced). Fill in only what you need.") }}</p>
+    <div class="subhead">{{ T("軌跡", "Trajectory") }}</div>
+    {% call arow("stride", "stride") %}{{ txt("stride") }}{% endcall %}
+    {% call arow("msd_fit", "msd_fit_from") %}{{ txt("msd_fit_from", aria=T("始め [fs]", "start [fs]")) }} 〜 {{ txt("msd_fit_to", aria=T("終わり [fs]", "end [fs]")) }}<span class="hint">{{ ph("msd_fit") }}</span>{% endcall %}
+    {% call arow("msd_axes", "msd_axes") %}{{ sel("msd_axes", msd_axes) }}{% endcall %}
+    {% call arow("msd_blocks", "msd_blocks") %}{{ txt("msd_blocks", placeholder=ph("msd_blocks")) }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("msd_keep_drift", "msd_keep_drift") }}</div></div>
+    <div class="row"><label></label><div class="inline">{{ chk("msd_per_atom", "msd_per_atom") }}</div></div>
+    <div class="row"><label></label><div class="inline">{{ chk("vanhove", "vanhove") }}</div></div>
+    {% call arow("vanhove_taus", "vanhove_taus") %}{{ txt("vanhove_taus", placeholder=ph("vanhove_taus")) }}{% endcall %}
+    {% call arow("vanhove_displacement", "vanhove_displacement") %}{{ sel("vanhove_displacement", vanhove_displacements) }}{% endcall %}
+    <p class="hint">{{ T("変位の分布は重いので、見積もりが 60 秒を超えると、その場では計算せずに実行用のファイル (msd_worker.py と msd_run.sh) を計算のディレクトリに置きます。実行したあと、もう一度「解析を実行」すると図になります",
+                         "The displacement distribution is heavy: if the estimate exceeds 60 s, files to run it (msd_worker.py, msd_run.sh) are written to the run directory instead; run them and press Run analysis again to get the figures") }}</p>
+    {% call arow("memory_mb", "memory_mb") %}{{ txt("memory_mb", placeholder=ph("memory_mb")) }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("zdens", "zdens") }}</div></div>
+    {% call arow("zdens_bin", "zdens_bin") %}{{ txt("zdens_bin") }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("stats", "stats") }}</div></div>
+    <div class="subhead">{{ T("熱化学 (振動数から ASE で計算。欄に既定値は入れていません。足りない欄があれば、計算しない理由が要約に出ます)",
+      "Thermochemistry (computed with ASE from the frequencies; no default values are filled in; if something is missing, the summary says why nothing was computed)") }}</div>
+    {% call arow("th_model", "th_model") %}{{ sel("th_model", th_models) }}{% endcall %}
+    {% call arow("th_temps", "th_temps") %}{{ txt("th_temps", cls="", placeholder=ph("th_temps")) }}{% endcall %}
+    {% call arow("th_pressure", "th_pressure") %}{{ txt("th_pressure") }}{% endcall %}
+    {% call arow("th_sigma", "th_sigma") %}{{ txt("th_sigma") }}{% endcall %}
+    {% call arow("th_geometry", "th_geometry") %}{{ sel("th_geometry", geometries) }}{% endcall %}
+    {% call arow("th_spin", "th_spin") %}{{ txt("th_spin") }}{% endcall %}
+    {% call arow("th_imag", "th_imag") %}{{ sel("th_imag", imaginary) }}{% endcall %}
+    {% call arow("th_exclude", "th_exclude") %}{{ txt("th_exclude") }}{% endcall %}
+    {% call arow("th_qh", "th_qh") %}{{ txt("th_qh") }}{% endcall %}
+    {% call arow("th_tau", "th_tau") %}{{ txt("th_tau") }}{% endcall %}
+    <div class="subhead">{{ T("スペクトルと構造", "Spectra and structure") }}</div>
+    {% call arow("freq_scale", "freq_scale") %}{{ txt("freq_scale", placeholder=ph("freq_scale")) }}{% endcall %}
+    {% call arow("spectrum_measured", "spectrum_measured") %}{{ txt("spectrum_measured", cls="", placeholder=ph("spectrum_measured")) }}{% endcall %}
+    {% call arow("code", "code") %}{{ txt("code", placeholder=ph("code")) }}{% endcall %}
+    <div class="subhead">{{ T("図の見た目", "Figure style") }}</div>
+    {% call arow("plot_colors", "plot_colors") %}{{ txt("plot_colors", cls="", placeholder=ph("plot_colors")) }}{% endcall %}
+    {% call arow("plot_ticks", "plot_ticks") %}{{ sel("plot_ticks", tick_directions) }}{% endcall %}
+    {% call arow("plot_grid", "plot_grid") %}{{ sel("plot_grid", grid_choices) }}{% endcall %}
+    {% call arow("plot_spines", "plot_spines") %}{{ sel("plot_spines", spine_choices) }}{% endcall %}
+    {% call arow("plot_line_width", "plot_line_width") %}{{ txt("plot_line_width", placeholder=ph("plot_line_width")) }}{% endcall %}
+    {% call arow("plot_font_size", "plot_font_size") %}{{ txt("plot_font_size", placeholder=ph("plot_font_size")) }}{% endcall %}
+    {% call arow("plot_dpi", "plot_dpi") %}{{ txt("plot_dpi", placeholder=ph("plot_dpi")) }}{% endcall %}
+    {% call arow("figure_format", "figure_format") %}{{ txt("figure_format", placeholder=ph("figure_format")) }}{% endcall %}
+    <p class="hint">{{ T("数値は変わりません。論文誌や研究室の作法に合わせるための指定です。", "These change only the appearance; the numbers stay the same.") }}</p>
+    {% call arow("uv_shape", "uv_shape") %}{{ sel("uv_shape", uv_shapes) }}{% endcall %}
+    {% call arow("uv_fwhm", "uv_fwhm") %}{{ txt("uv_fwhm") }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("pdos", "pdos") }}</div></div>
+    {% call arow("symprec", "symprec") %}{{ txt("symprec", cls="", placeholder=ph("symprec")) }}{% endcall %}
+    <div class="subhead">{{ T("原子の選び方と近傍の構造", "Atom selection and local structure") }}</div>
+    {% call arow("select", "select") %}{{ txt("select", cls="", placeholder=ph("select")) }}{% endcall %}
+    {% call arow("rdf_pairs", "rdf_pairs") %}{{ txt("rdf_pairs", cls="", placeholder=ph("rdf_pairs")) }}{% endcall %}
+    {% call arow("zdens_axis", "zdens_axis") %}{{ sel("zdens_axis", axes) }}{% endcall %}
+    {% call arow("coordination", "coordination") %}{{ txt("coordination", placeholder=ph("coordination")) }}{% endcall %}
+    {% call arow("centrosymmetry", "centrosymmetry") %}{{ txt("centrosymmetry", placeholder=ph("centrosymmetry")) }}{% endcall %}
+    {% call arow("steinhardt", "steinhardt") %}{{ txt("steinhardt", placeholder=ph("steinhardt")) }}{% endcall %}
+    {% call arow("clusters", "clusters") %}{{ txt("clusters", placeholder=ph("clusters")) }}{% endcall %}
+    {% call arow("adf", "adf") %}{{ txt("adf", placeholder=ph("adf")) }}{% endcall %}
+    {% call arow("adf_cutoff", "adf_cutoff") %}{{ txt("adf_cutoff") }}{% endcall %}
+    {% call arow("hbond", "hbond") %}{{ txt("hbond", placeholder=ph("hbond")) }}{% endcall %}
+    {% call arow("density_grid", "density_grid") %}{{ txt("density_grid", placeholder=ph("density_grid")) }}{% endcall %}
+    {% call arow("voronoi_face", "voronoi_face") %}{{ txt("voronoi_face", placeholder=ph("voronoi_face")) }}{% endcall %}
+    {% call arow("sasa", "sasa") %}{{ txt("sasa", placeholder=ph("sasa")) }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("sq", "sq") }}</div></div>
+    <div class="row"><label></label><div class="inline">{{ chk("rg", "rg") }}</div></div>
+    <div class="row"><label></label><div class="inline">{{ chk("voronoi", "voronoi") }}</div></div>
+    <div class="subhead">{{ T("時系列と分布", "Time series and distributions") }}</div>
+    {% call arow("distances", "distances") %}{{ txt("distances", cls="", placeholder=ph("distances")) }}{% endcall %}
+    {% call arow("angles", "angles") %}{{ txt("angles", cls="", placeholder=ph("angles")) }}{% endcall %}
+    {% call arow("dihedrals", "dihedrals") %}{{ txt("dihedrals", cls="", placeholder=ph("dihedrals")) }}{% endcall %}
+    {% call arow("rmsd_reference", "rmsd_reference") %}{{ txt("rmsd_reference", placeholder=ph("rmsd_reference")) }}{% endcall %}
+    {% call arow("conductivity_charge", "conductivity_charge") %}{{ txt("conductivity_charge", placeholder=ph("conductivity_charge")) }}{% endcall %}
+    {% call arow("conductivity_temperature", "conductivity_temperature") %}{{ txt("conductivity_temperature", placeholder=ph("conductivity_temperature")) }}{% endcall %}
+    {% call arow("displacement", "displacement") %}{{ txt("displacement", placeholder=ph("displacement")) }}{% endcall %}
+    {% call arow("strain", "strain") %}{{ txt("strain", placeholder=ph("strain")) }}{% endcall %}
+    {% call arow("pca", "pca") %}{{ txt("pca", placeholder=ph("pca")) }}{% endcall %}
+    {% call arow("cluster", "cluster") %}{{ txt("cluster", placeholder=ph("cluster")) }}{% endcall %}
+    {% call arow("fes", "fes") %}{{ txt("fes", placeholder=ph("fes")) }}{% endcall %}
+    {% call arow("fes_bins", "fes_bins") %}{{ txt("fes_bins", placeholder=ph("fes_bins")) }}{% endcall %}
+    {% call arow("fes_unit", "fes_unit") %}{{ sel("fes_unit", fes_units) }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("rmsf", "rmsf") }}</div></div>
+    <div class="row"><label></label><div class="inline">{{ chk("vacf", "vacf") }}</div></div>
+    <div class="row"><label></label><div class="inline">{{ chk("viscosity", "viscosity") }}</div></div>
+    <div class="subhead">{{ T("電子・回折・体積データ", "Electronic structure, diffraction and volumetric data") }}</div>
+    {% call arow("bands_window", "bands_window") %}{{ txt("bands_window", placeholder=ph("bands_window")) }}{% endcall %}
+    {% call arow("effective_mass_points", "effective_mass_points") %}{{ txt("effective_mass_points", placeholder=ph("effective_mass_points")) }}{% endcall %}
+    {% call arow("bader", "bader") %}{{ txt("bader", cls="", placeholder=ph("bader")) }}{% endcall %}
+    {% call arow("bader_valence", "bader_valence") %}{{ txt("bader_valence", placeholder=ph("bader_valence")) }}{% endcall %}
+    {% call arow("xrd", "xrd") %}{{ txt("xrd", placeholder=ph("xrd")) }}{% endcall %}
+    {% call arow("xrd_range", "xrd_range") %}{{ txt("xrd_range", placeholder=ph("xrd_range")) }}{% endcall %}
+    {% call arow("xrd_measured", "xrd_measured") %}{{ txt("xrd_measured", cls="", placeholder=ph("xrd_measured")) }}{% endcall %}
+    {% call arow("plane_average", "plane_average") %}{{ sel("plane_average", plane_axes) }}{% endcall %}
+    {% call arow("cube_unit", "cube_unit") %}{{ sel("cube_unit", cube_units) }}{% endcall %}
+    {% call arow("heavy_limit", "heavy_limit") %}{{ txt("heavy_limit", placeholder=ph("heavy_limit")) }}{% endcall %}
+    <div class="row"><label></label><div class="inline">{{ chk("work_function", "work_function") }}</div></div>
+    <p class="hint">{{ T("射影バンド (projwfc.x の filproj)・光学 (epsilon.x)・VASP の PROCAR は、計算結果のディレクトリにあれば自動で読みます。",
+                         "Projected bands (filproj from projwfc.x), optics (epsilon.x) and a VASP PROCAR are read automatically when they are in the run directory.") }}</p>
+  </details>
+  {% if scan %}<p class="hint scan-note">{{ T("1 つの条件だけを変えた一連の計算です。「解析を実行」で、値ごとのエネルギー・力・圧力を表と図にします (上のチェック項目は使いません)。",
+    "These runs differ in one setting only. \"Run analysis\" tabulates and plots the energy, forces and pressure for each value (the options above are not used).") }}</p>{% endif %}
+  <div class="actions">
+    <button type="submit" class="primary" name="action" value="run">{{ T("解析を実行", "Run analysis") }}</button>
+    <button type="submit" name="action" value="export"{{ off }}>{{ lab("export") }}</button>
+    {{ chk("export_unwrap", "export_unwrap") }}
+    <a class="btn" href="{{ compare_link }}">{{ lab("compare") }}</a>
+  </div>
+  {% if too_large %}<div class="error-banner" role="alert">{{ too_large }}</div>
+    {% if suggested_stride %}<div class="actions"><button type="submit" name="use_stride" value="{{ suggested_stride }}">{{ T("間引きを " ~ suggested_stride ~ " にする", "Set the stride to " ~ suggested_stride) }}</button></div>{% endif %}
+  {% elif error %}<div class="error">{{ error }}</div>{% endif %}
+</fieldset>
+</form>
+<fieldset><legend>{{ T("計算間の横断点検", "Cross-run audit") }}</legend>
+  <form method="post" action="/audit_runs">
+    <div class="row"><label for="audit_ref">{{ T("基準の計算ディレクトリ", "Reference run directory") }}</label><input type="text" id="audit_ref" name="audit_ref" value="{{ audit_fields.audit_ref }}"></div>
+    <div class="row"><label for="audit_other">{{ T("照合する計算ディレクトリ", "Run directory to check") }}</label><input type="text" id="audit_other" name="audit_other" value="{{ audit_fields.audit_other }}"></div>
+    <div class="row"><label for="audit_kind">{{ T("点検対象", "Audit kind") }}</label><select id="audit_kind" name="audit_kind"><option value="msd"{% if audit_fields.audit_kind == 'msd' %} selected{% endif %}>MSD</option><option value="energy"{% if audit_fields.audit_kind == 'energy' %} selected{% endif %}>{{ T("エネルギー", "Energy") }}</option></select></div>
+    <p class="hint">{{ T("原子・セル・時間間隔など、出力から読める機械的な整合性だけを確認します。入力や解析結果は書き換えず、図も作りません。異なるコードのエネルギーは内訳を照合できないため、直接比較は「比較できない」と判定します。", "Checks only mechanical consistency readable from the outputs, such as atoms, cells, and frame spacing. It neither changes files nor creates plots. Direct energy comparison across different calculation codes is reported as not comparable, because their energy contributions have not been matched.") }}</p>
+    <div class="actions"><button type="submit">{{ T("横断点検を実行", "Run cross-run audit") }}</button></div>
+  </form>
+  {% if audit_error %}<div class="error-banner" role="alert">{{ audit_error }}</div>{% endif %}
+  {% if audit_result %}<div class="{{ 'message-banner' if audit_result.comparable else 'error-banner' }}" role="{{ 'status' if audit_result.comparable else 'alert' }}"><pre>{{ audit_result.summary_text() }}</pre></div>{% endif %}
+</fieldset>
+{% if result and scan %}
+<fieldset><legend>{{ T("値ごとの結果", "Results per value") }}</legend>
+  <div class="table-wrap"><table class="scan">
+    <thead><tr>{% for text, num in scan_table.head %}<th scope="col"{% if num %} class="num"{% endif %}>{{ text }}</th>{% endfor %}</tr></thead>
+    <tbody>{% for row in scan_table.body %}<tr>{% for text, num in row %}<td{% if num %} class="num"{% endif %}>{{ text }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>
+</fieldset>
+<fieldset><legend>{{ T("要約", "Summary") }}</legend><pre>{{ result.summary_text(include_table=False) }}</pre>
+  <div class="hint">{{ T("図と表の保存先", "Figures and table saved to") }}: {{ scan_dir }}</div></fieldset>
+{% elif result %}
+<fieldset><legend>{{ T("要約", "Summary") }}</legend><pre>{{ result.summary_text() }}</pre>
+  <div class="hint">{{ T("図と要約の保存先", "Figures and summary saved to") }}: {{ result.run_dir }}/analysis/</div></fieldset>
+{% if export_dir %}
+<fieldset id="export"><legend>{{ T("書き出したファイル (export_README.txt)", "Exported files (export_README.txt)") }}</legend>
+  <div class="hint">{{ T("書き出し先", "Written to") }}: {{ export_dir }}</div>
+  <div class="hint">{{ T("ウェブ版からはフォルダを開けません。上の場所をファイルマネージャで開いてください。", "The web version cannot open folders; open the location above in your file manager.") }}</div>
+  <pre>{{ export_readme }}</pre>
+</fieldset>
+{% endif %}
+{% endif %}
+{% include "_sections.html" %}
+{% if result %}
+{% for name, path in (result.figures or {}).items() %}
+<fieldset><legend>{{ figure_title(name) }}</legend><img class="fig" src="/file?path={{ path|urlencode }}" alt="{{ figure_title(name) }}">
+  <div class="actions">{% for suffix, file in (figure_files or {}).get(name, [("png", path)]) %}<a class="btn" href="/file?path={{ file|urlencode }}&amp;download=1"{% if suffix != "png" %} title="{{ T('拡大しても粗くなりません (Word に貼れます)', 'Stays sharp when enlarged; can be pasted into Word') }}"{% endif %}>{{ suffix|upper }} {{ T("で保存", "download") }}</a> {% endfor %}</div>
+  <div class="hint">{{ path }}{% if (figure_files or {}).get(name, [])|length < 2 %} — {{ T("SVG や PDF も出すには、詳しい条件の「図の追加の形式」に svg,pdf と入れます", "to also get SVG or PDF, set \"Extra figure formats\" to svg,pdf in the detailed options") }}{% endif %}</div></fieldset>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,88 @@
+ Fermi distribution function
+
+MD step: 20
+
+
+********************************************************************************
+ iSCC Total electronic   Diff electronic      SCC error    
+    4   -0.41510510E+01   -0.19910510E-07    0.78163012E-06
+********************************************************************************
+
+Coordinates of moved atoms (au):
+    1      0.00216938     -1.31996008      0.07170505
+    2     -0.56915354      0.36347864      0.52209478
+    3      0.53469759     -1.42663376     -1.66098152
+
+ Total charge:     0.00000000
+
+ Atomic gross charges (e)
+ Atom           Charge
+    1      -0.60213355
+    2       0.30021842
+    3       0.30191514
+
+Nr. of electrons (up):      8.00000000
+Atom populations (up)
+ Atom       Population
+    1       6.60213355
+    2       0.69978158
+    3       0.69808486
+
+l-shell populations (up)
+ Atom Sh.   l       Population
+    1   1   0       1.72727002
+    1   2   1       4.87486353
+    2   1   0       0.69978158
+    3   1   0       0.69808486
+
+Orbital populations (up)
+ Atom Sh.   l   m       Population  Label
+    1   1   0   0       1.72727002  s
+    1   2   1  -1       1.53666648  p_y
+    1   2   1   0       1.44892238  p_z
+    1   2   1   1       1.88927467  p_x
+    2   1   0   0       0.69978158  s
+    3   1   0   0       0.69808486  s
+
+Fermi level:                         0.0816183438 H            2.2209 eV
+Band energy:                        -3.6630397263 H          -99.6764 eV
+TS:                                  0.0000000000 H            0.0000 eV
+Band free energy (E-TS):            -3.6630397263 H          -99.6764 eV
+Extrapolated E(0K):                 -3.6630397263 H          -99.6764 eV
+Input / Output electrons (q):      8.0000000000      8.0000000000
+
+Energy H0:                          -4.1694856874 H         -113.4575 eV
+Energy SCC:                          0.0184347106 H            0.5016 eV
+Total Electronic energy:            -4.1510509768 H         -112.9558 eV
+Repulsive energy:                    0.0736842195 H            2.0050 eV
+Total energy:                       -4.0773667573 H         -110.9508 eV
+Extrapolated to 0:                  -4.0773667573 H         -110.9508 eV
+Total Mermin free energy:           -4.0773667573 H         -110.9508 eV
+Force related energy:               -4.0773667573 H         -110.9508 eV
+
+Non-constrained calculation
+
+SCC converged
+
+Full geometry written in geo_end.{xyz|gen}
+
+Total Forces
+    1     -0.002919162501     -0.003175079318      0.012873367514
+    2      0.002755189935     -0.002654237917     -0.007077248375
+    3      0.000163972565      0.005829317235     -0.005796119140
+
+Maximal derivative component:        0.128734E-01 au
+Max force for moved atoms::          0.128734E-01 au
+
+MD Kinetic Energy:                   0.0026198993 H
+Total MD Energy:                    -4.0747468580 H
+MD Temperature:                      0.0008732998 H          275.7659 K
+MD Kinetic Energy:                   0.0026198993 H
+Total MD Energy:                    -4.0747468580 H         -110.8795 eV
+MD Temperature:                      0.0008732998 H          275.7659 K
+
+Dipole moment:   -0.01074333    0.47319291   -0.38790902 au
+Dipole moment:   -0.02730683    1.20273650   -0.98596646 Debye
+
+Molecular dynamics completed
+

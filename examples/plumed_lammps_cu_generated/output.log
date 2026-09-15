@@ -1,0 +1,64 @@
+LAMMPS (22 Jul 2025 - Update 5)
+  using 1 OpenMP thread(s) per MPI task
+Reading data file ...
+  orthogonal box = (0 0 0) to (10.845 10.845 10.845)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  108 atoms
+  read_data CPU = 0.001 seconds
+Reading eam potential file Cu_u3.eam with DATE: 2007-06-11
++++ Loading the PLUMED kernel runtime +++
++++ PLUMED_KERNEL="/home/<user>/miniforge3/envs/lammps/lib/libplumedKernel.so" +++
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 6.95
+  ghost atom cutoff = 6.95
+  binsize = 3.475, bins = 4 4 4
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair eam, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton
+      stencil: half/bin/3d
+      bin: standard
+Setting up Verlet run ...
+  Unit style    : metal
+  Current step  : 0
+  Time step     : 0.001
+Per MPI rank memory allocation (min/avg/max) = 3.35 | 3.35 | 3.35 Mbytes
+   Step          Time           Temp          PotEng         KinEng         TotEng         Press          Volume    
+         0   0              300           -382.32         4.1492507     -378.17075      3474.5344      1275.5241    
+        50   0.05           70.203966     -379.05543      0.9709795     -378.08445      13468.884      1275.5241    
+       100   0.1            150.9727      -379.7969       2.0880785     -377.70882      11748.159      1275.5241    
+       150   0.15           205.71212     -380.0999       2.8451705     -377.25473      10794.648      1275.5241    
+       200   0.2            217.17133     -379.76463      3.0036609     -376.76097      12468.274      1275.5241    
+       250   0.25           215.62674     -379.13543      2.982298      -376.15313      15387.209      1275.5241    
+       300   0.3            252.67043     -379.02162      3.4946432     -375.52698      15344.609      1275.5241    
+Loop time of 0.0445544 on 1 procs for 300 steps with 108 atoms
+
+Performance: 581.761 ns/day, 0.041 hours/ns, 6733.347 timesteps/s, 727.201 katom-step/s
+99.1% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.038919   | 0.038919   | 0.038919   |   0.0 | 87.35
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.0010485  | 0.0010485  | 0.0010485  |   0.0 |  2.35
+Output  | 0.0016096  | 0.0016096  | 0.0016096  |   0.0 |  3.61
+Modify  | 0.002689   | 0.002689   | 0.002689   |   0.0 |  6.04
+Other   |            | 0.0002883  |            |       |  0.65
+
+Nlocal:            108 ave         108 max         108 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            990 ave         990 max         990 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:           7236 ave        7236 max        7236 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 7236
+Ave neighs/atom = 67
+Neighbor list builds = 0
+Dangerous builds = 0
+System init for write_data ...
+Total wall time: 0:00:00

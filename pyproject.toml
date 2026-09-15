@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adit-chem"  # the import name is "adit"; the PyPI name "adit" is a different project
+version = "0.1.0a1"
+description = "Prepare atomistic simulations and analyse their results: structures, input sets for DFTB+, VASP, xtb, Quantum ESPRESSO, ORCA, CP2K, LAMMPS, GROMACS, and analysis"
+readme = "README.md"
+authors = [{ name = "ADIT contributors (https://github.com/NaoshiKitamura/adit-chem)" }]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["computational chemistry", "DFT", "molecular dynamics", "input generation", "analysis",
+            "DFTB+", "VASP", "Quantum ESPRESSO", "ORCA", "CP2K", "LAMMPS", "GROMACS"]
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Environment :: X11 Applications :: Qt",
+    "Natural Language :: Japanese",
+    "Natural Language :: English",
+]
+dependencies = [
+    "ase>=3.23",
+    "pydantic>=2",
+    "jinja2>=3",
+    "tomli-w>=1.0",
+    "matplotlib>=3.7",
+    "scipy>=1.8",
+]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.6", "pyqtdarktheme-fork>=2.3"]  # the theme package is optional
+smiles = ["rdkit"]
+analysis = ["spglib>=2"]  # space groups; analysis works without it, that field is then absent
+xrd = ["pymatgen>=2024"]  # powder X-ray diffraction
+phonons = ["phonopy>=4.5"]  # finite-displacement phonons; ASE Phonons is used when absent
+dev = ["pytest", "PySide6>=6.6", "pyqtdarktheme-fork>=2.3"]
+
+[project.urls]
+Homepage = "https://github.com/NaoshiKitamura/adit-chem"
+Repository = "https://github.com/NaoshiKitamura/adit-chem"
+Issues = "https://github.com/NaoshiKitamura/adit-chem/issues"
+
+[project.scripts]
+adit = "adit.gui.app:main"
+adit-gen = "adit.cli:main"
+adit-analyze = "adit.analysis.cli:main"
+adit-web = "adit.web.server:main"
+adit-convert = "adit.convert:main"
+adit-report = "adit.report:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+# web/static/*.js draws the 3D view and the sketch editor; without it those areas stay empty
+adit = ["scripts/templates/*.j2", "web/templates/*.html", "web/static/*.js",
+        "examples/*/spec.json", "examples/*/SOURCES.md"]   # for --list-samples / --sample
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

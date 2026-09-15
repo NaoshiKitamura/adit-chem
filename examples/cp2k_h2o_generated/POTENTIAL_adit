@@ -1,0 +1,14 @@
+# adit: /home/<user>/miniforge3/envs/cp2k/share/cp2k/data/GTH_POTENTIALS から、この計算で使う項目だけを写したもの (CP2K の配布物。GPL-2.0-or-later)
+
+O GTH-PBE-q6 GTH-PBE
+    2    4
+     0.24455430    2   -16.66721480     2.48731132
+    2
+     0.22095592    1    18.33745811
+     0.21133247    0
+#
+H GTH-PBE-q1 GTH-PBE
+    1
+     0.20000000    2    -4.17890044     0.72446331
+    0
+#

@@ -1,0 +1,169 @@
+{
+  "kind": "adsorption",
+  "generated_by": "adit 0.0.1",
+  "reactions": [
+    {
+      "name": "adsorption",
+      "terms": [
+        {
+          "dir": "adsorbed",
+          "nu": 1
+        },
+        {
+          "dir": "slab",
+          "nu": -1
+        },
+        {
+          "dir": "molecule",
+          "nu": -1
+        }
+      ]
+    }
+  ],
+  "members": [
+    {
+      "dir": "slab",
+      "role": "slab",
+      "formula": "C8",
+      "natoms": 8,
+      "periodic": true,
+      "charge": 0,
+      "multiplicity": 1,
+      "structure_source": "<作業ディレクトリ>/ads_inputs/slab.extxyz",
+      "kpoints_mesh": [
+        4,
+        4,
+        1
+      ],
+      "changed_for_this_run": []
+    },
+    {
+      "dir": "molecule",
+      "role": "molecule",
+      "formula": "H2O",
+      "natoms": 3,
+      "periodic": false,
+      "charge": 0,
+      "multiplicity": 1,
+      "structure_source": "<作業ディレクトリ>/ads_inputs/h2o.xyz",
+      "kpoints_mesh": null,
+      "changed_for_this_run": [
+        "非周期なので k 点を使いません"
+      ]
+    },
+    {
+      "dir": "adsorbed",
+      "role": "adsorbed",
+      "formula": "C8H2O",
+      "natoms": 11,
+      "periodic": true,
+      "charge": 0,
+      "multiplicity": 1,
+      "structure_source": "<作業ディレクトリ>/ads_inputs/adsorbed.extxyz",
+      "kpoints_mesh": [
+        4,
+        4,
+        1
+      ],
+      "changed_for_this_run": []
+    }
+  ],
+  "differences": [
+    {
+      "setting": "structure.periodic",
+      "values": {
+        "slab": true,
+        "molecule": false,
+        "adsorbed": true
+      },
+      "intended": false
+    }
+  ],
+  "partial": [
+    {
+      "setting": "kpoints",
+      "values": {
+        "molecule": null
+      },
+      "intended": false,
+      "missing_in": [
+        "slab",
+        "adsorbed"
+      ]
+    },
+    {
+      "setting": "kpoints.density",
+      "values": {
+        "slab": 0.0,
+        "adsorbed": 0.0
+      },
+      "intended": false,
+      "missing_in": [
+        "molecule"
+      ]
+    },
+    {
+      "setting": "kpoints.mesh",
+      "values": {
+        "slab": "[4, 4, 1]",
+        "adsorbed": "[4, 4, 1]"
+      },
+      "intended": false,
+      "missing_in": [
+        "molecule"
+      ]
+    },
+    {
+      "setting": "kpoints.mode",
+      "values": {
+        "slab": "mesh",
+        "adsorbed": "mesh"
+      },
+      "intended": false,
+      "missing_in": [
+        "molecule"
+      ]
+    },
+    {
+      "setting": "kpoints.resolved_mesh",
+      "values": {
+        "slab": "[4, 4, 1]",
+        "adsorbed": "[4, 4, 1]"
+      },
+      "intended": false,
+      "missing_in": [
+        "molecule"
+      ]
+    },
+    {
+      "setting": "kpoints.shift",
+      "values": {
+        "slab": "[0.0, 0.0, 0.0]",
+        "adsorbed": "[0.0, 0.0, 0.0]"
+      },
+      "intended": false,
+      "missing_in": [
+        "molecule"
+      ]
+    },
+    {
+      "setting": "kpoints.spacing_2pi_per_A",
+      "values": {
+        "slab": "[0.3687, 0.3687, 0.4189]",
+        "adsorbed": "[0.3687, 0.3687, 0.4189]"
+      },
+      "intended": false,
+      "missing_in": [
+        "molecule"
+      ]
+    }
+  ],
+  "balance": [
+    {
+      "name": "adsorption",
+      "imbalance": {},
+      "charge_imbalance": 0.0
+    }
+  ],
+  "rule": "違う = その項目を持つ計算のあいだで値が 2 種類以上。一部だけ = その項目を持たない計算がある。intended = 違えるのが目的の項目 (溶媒和の上書き)"
+}

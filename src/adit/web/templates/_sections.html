@@ -1,0 +1,18 @@
+{#- 解析の結果の表 (gui/analysis_fields.py の Section。デスクトップ版の解析タブと同じ表)。折りたたみは <details> (JS なし) -#}
+<style>
+details.section { border:1px solid var(--edge); border-radius:var(--radius); background:var(--box); padding:8px 14px 10px; margin:0 0 12px; }
+details.section > summary { cursor:pointer; font-weight:600; padding:2px 0; }
+details.section .hint { margin-top:4px; }
+details.more { margin:6px 0 4px; } details.more > summary { cursor:pointer; font-weight:600; color:var(--accent); padding:4px 0; }
+.subhead { font-weight:600; margin:12px 0 4px; }
+</style>
+{% for s in sections %}
+<details class="section" id="sec-{{ s.key }}" open><summary>{{ s.title }}</summary>
+  {% if s.columns and s.rows %}<div class="table-wrap"><table class="scan result">
+    <thead><tr>{% for c in s.columns %}<th scope="col"{% if s.numeric[loop.index0] %} class="num"{% endif %}>{{ c }}</th>{% endfor %}</tr></thead>
+    <tbody>{% for row in s.rows %}<tr>{% for v in row %}<td{% if s.numeric[loop.index0] %} class="num"{% endif %}>{{ v }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+  </table></div>{% endif %}
+  {% for n in s.notes %}<div class="hint">{{ n }}</div>{% endfor %}
+  {% if s.more_text() %}<div class="hint">{{ s.more_text() }}</div>{% endif %}
+</details>
+{% endfor %}

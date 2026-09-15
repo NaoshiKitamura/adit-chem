@@ -1,0 +1,25 @@
+{
+  "code": "dftbplus",
+  "tables": {
+    "energy": {
+      "n": 10,
+      "last_ev": -110.9663,
+      "min_ev": -110.9663,
+      "max_ev": -108.298
+    },
+    "bonds": [
+      [
+        "O1-H2",
+        0.9672083456759422
+      ],
+      [
+        "O1-H3",
+        0.9672083456748363
+      ]
+    ]
+  },
+  "figures": {
+    "energy": "examples/water_generated/analysis/energy.png"
+  },
+  "notes": []
+}

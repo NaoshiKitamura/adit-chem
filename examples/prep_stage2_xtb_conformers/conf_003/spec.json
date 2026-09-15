@@ -1,0 +1,155 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-11T19:01:43+00:00",
+    "app_version": "0.0.1",
+    "comment": "conformer 3 (RDKit id 7, MMFF94 -1.3369 kcal/mol)",
+    "continued_from": null,
+    "template": null,
+    "stage": null
+  },
+  "structure": {
+    "source": "smiles",
+    "source_ref": "CCO",
+    "atoms": {
+      "symbols": [
+        "C",
+        "C",
+        "O",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          -0.8742151245922168,
+          0.2288037887994309,
+          0.03359218929687082
+        ],
+        [
+          0.43626293246405257,
+          -0.47254451799323816,
+          -0.25758335975815516
+        ],
+        [
+          1.413764229420816,
+          -0.09135148382349864,
+          0.6995412471897301
+        ],
+        [
+          -1.643015052140807,
+          -0.06709894972942426,
+          -0.6856155133135587
+        ],
+        [
+          -0.7497518572453907,
+          1.315762683756456,
+          -0.01102914137249511
+        ],
+        [
+          -1.2231536051058516,
+          -0.010463350730742012,
+          1.0434947684729639
+        ],
+        [
+          0.8043596788117637,
+          -0.21792771018344226,
+          -1.2560638572816232
+        ],
+        [
+          0.3101337682909021,
+          -1.5577295171485055,
+          -0.20272293158157223
+        ],
+        [
+          1.5256150300967117,
+          0.8725490570529576,
+          0.6363865983478472
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "pbc": [
+        false,
+        false,
+        false
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {},
+    "velocities": null
+  },
+  "method": {
+    "code": "xtb",
+    "gfn": "2",
+    "accuracy": 1.0,
+    "etemp": 300.0,
+    "max_iterations": 250,
+    "opt_level": "normal",
+    "solvation": "none",
+    "solvent": ""
+  },
+  "kpoints": null,
+  "task": {
+    "type": "geometry_optimization",
+    "bands": {
+      "path": "",
+      "npoints": 60,
+      "empty_bands": 4
+    },
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVT",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 1.0,
+      "steps": 1000,
+      "dump_interval": 10,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "prep"
+  },
+  "handoff": null,
+  "provenance": {
+    "adit_version": "0.0.1",
+    "generated_utc": "2026-09-11T19:01:44+00:00",
+    "python": "3.14.7",
+    "ase": "3.29.0",
+    "files": [],
+    "generated_files": [],
+    "code_version_file": "code_version.txt"
+  }
+}

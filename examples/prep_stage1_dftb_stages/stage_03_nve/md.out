@@ -1,0 +1,105 @@
+MD step: 0
+Potential Energy:                   -4.0775870555 H         -110.9568 eV
+MD Kinetic Energy:                   0.0028412985 H            0.0773 eV
+Total MD Energy:                    -4.0747457570 H         -110.8795 eV
+MD Temperature:                      0.0009470995 au         299.0700 K
+MD step: 1
+Potential Energy:                   -4.0777454058 H         -110.9611 eV
+MD Kinetic Energy:                   0.0029971212 H            0.0816 eV
+Total MD Energy:                    -4.0747482846 H         -110.8795 eV
+MD Temperature:                      0.0009990404 au         315.4716 K
+MD step: 2
+Potential Energy:                   -4.0778603798 H         -110.9642 eV
+MD Kinetic Energy:                   0.0031105849 H            0.0846 eV
+Total MD Energy:                    -4.0747497950 H         -110.8796 eV
+MD Temperature:                      0.0010368616 au         327.4146 K
+MD step: 3
+Potential Energy:                   -4.0779077142 H         -110.9655 eV
+MD Kinetic Energy:                   0.0031579699 H            0.0859 eV
+Total MD Energy:                    -4.0747497444 H         -110.8796 eV
+MD Temperature:                      0.0010526566 au         332.4023 K
+MD step: 4
+Potential Energy:                   -4.0778872129 H         -110.9650 eV
+MD Kinetic Energy:                   0.0031388399 H            0.0854 eV
+Total MD Energy:                    -4.0747483730 H         -110.8795 eV
+MD Temperature:                      0.0010462800 au         330.3887 K
+MD step: 5
+Potential Energy:                   -4.0778193346 H         -110.9631 eV
+MD Kinetic Energy:                   0.0030728413 H            0.0836 eV
+Total MD Energy:                    -4.0747464932 H         -110.8795 eV
+MD Temperature:                      0.0010242804 au         323.4418 K
+MD step: 6
+Potential Energy:                   -4.0777328738 H         -110.9608 eV
+MD Kinetic Energy:                   0.0029878583 H            0.0813 eV
+Total MD Energy:                    -4.0747450155 H         -110.8795 eV
+MD Temperature:                      0.0009959528 au         314.4966 K
+MD step: 7
+Potential Energy:                   -4.0776508673 H         -110.9585 eV
+MD Kinetic Energy:                   0.0029063431 H            0.0791 eV
+Total MD Energy:                    -4.0747445242 H         -110.8794 eV
+MD Temperature:                      0.0009687810 au         305.9165 K
+MD step: 8
+Potential Energy:                   -4.0775813972 H         -110.9566 eV
+MD Kinetic Energy:                   0.0028363401 H            0.0772 eV
+Total MD Energy:                    -4.0747450571 H         -110.8795 eV
+MD Temperature:                      0.0009454467 au         298.5481 K
+MD step: 9
+Potential Energy:                   -4.0775168602 H         -110.9549 eV
+MD Kinetic Energy:                   0.0027707323 H            0.0754 eV
+Total MD Energy:                    -4.0747461279 H         -110.8795 eV
+MD Temperature:                      0.0009235774 au         291.6423 K
+MD step: 10
+Potential Energy:                   -4.0774414143 H         -110.9528 eV
+MD Kinetic Energy:                   0.0026944572 H            0.0733 eV
+Total MD Energy:                    -4.0747469570 H         -110.8795 eV
+MD Temperature:                      0.0008981524 au         283.6138 K
+MD step: 11
+Potential Energy:                   -4.0773429775 H         -110.9501 eV
+MD Kinetic Energy:                   0.0025961409 H            0.0706 eV
+Total MD Energy:                    -4.0747468366 H         -110.8795 eV
+MD Temperature:                      0.0008653803 au         273.2652 K
+MD step: 12
+Potential Energy:                   -4.0772239963 H         -110.9469 eV
+MD Kinetic Energy:                   0.0024784685 H            0.0674 eV
+Total MD Energy:                    -4.0747455278 H         -110.8795 eV
+MD Temperature:                      0.0008261562 au         260.8792 K
+MD step: 13
+Potential Energy:                   -4.0771049019 H         -110.9437 eV
+MD Kinetic Energy:                   0.0023614361 H            0.0643 eV
+Total MD Energy:                    -4.0747434658 H         -110.8794 eV
+MD Temperature:                      0.0007871454 au         248.5605 K
+MD step: 14
+Potential Energy:                   -4.0770171358 H         -110.9413 eV
+MD Kinetic Energy:                   0.0022754864 H            0.0619 eV
+Total MD Energy:                    -4.0747416494 H         -110.8794 eV
+MD Temperature:                      0.0007584955 au         239.5136 K
+MD step: 15
+Potential Energy:                   -4.0769879153 H         -110.9405 eV
+MD Kinetic Energy:                   0.0022468152 H            0.0611 eV
+Total MD Energy:                    -4.0747411001 H         -110.8793 eV
+MD Temperature:                      0.0007489384 au         236.4958 K
+MD step: 16
+Potential Energy:                   -4.0770249851 H         -110.9415 eV
+MD Kinetic Energy:                   0.0022827980 H            0.0621 eV
+Total MD Energy:                    -4.0747421871 H         -110.8794 eV
+MD Temperature:                      0.0007609327 au         240.2832 K
+MD step: 17
+Potential Energy:                   -4.0771113997 H         -110.9438 eV
+MD Kinetic Energy:                   0.0023670681 H            0.0644 eV
+Total MD Energy:                    -4.0747443316 H         -110.8794 eV
+MD Temperature:                      0.0007890227 au         249.1534 K
+MD step: 18
+Potential Energy:                   -4.0772145588 H         -110.9467 eV
+MD Kinetic Energy:                   0.0024681948 H            0.0672 eV
+Total MD Energy:                    -4.0747463640 H         -110.8795 eV
+MD Temperature:                      0.0008227316 au         259.7978 K
+MD step: 19
+Potential Energy:                   -4.0773040326 H         -110.9491 eV
+MD Kinetic Energy:                   0.0025567498 H            0.0696 eV
+Total MD Energy:                    -4.0747472828 H         -110.8795 eV
+MD Temperature:                      0.0008522499 au         269.1189 K
+MD step: 20
+Potential Energy:                   -4.0773667573 H         -110.9508 eV
+MD Kinetic Energy:                   0.0026198993 H            0.0713 eV
+Total MD Energy:                    -4.0747468580 H         -110.8795 eV
+MD Temperature:                      0.0008732998 au         275.7659 K

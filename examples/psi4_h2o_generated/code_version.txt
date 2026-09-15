@@ -1,0 +1,1 @@
+adit-psi4: psi4 1.11

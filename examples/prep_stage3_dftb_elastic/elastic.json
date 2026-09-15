@@ -1,0 +1,238 @@
+{
+  "generated_by": "adit 0.0.1",
+  "code": "dftbplus",
+  "task": "single_point",
+  "components": [
+    1,
+    4
+  ],
+  "strains": [
+    -0.005,
+    0.005
+  ],
+  "runs": [
+    {
+      "dir": "e0",
+      "component": 0,
+      "strain": 0.0
+    },
+    {
+      "dir": "e1_-0.005",
+      "component": 1,
+      "strain": -0.005
+    },
+    {
+      "dir": "e1_+0.005",
+      "component": 1,
+      "strain": 0.005
+    },
+    {
+      "dir": "e4_-0.005",
+      "component": 4,
+      "strain": -0.005
+    },
+    {
+      "dir": "e4_+0.005",
+      "component": 4,
+      "strain": 0.005
+    }
+  ],
+  "kpoints_mesh": {
+    "e0": "4x4x4",
+    "e1_-0.005": "4x4x4",
+    "e1_+0.005": "4x4x4",
+    "e4_-0.005": "4x4x4",
+    "e4_+0.005": "4x4x4"
+  },
+  "convention": "Voigt 1=xx 2=yy 3=zz 4=yz 5=xz 6=xy; engineering shear strain; stress in GPa, ASE sign (compression negative)",
+  "stress_voigt_gpa": {
+    "e0": [
+      4.08690079713397,
+      4.08690079713397,
+      4.08690079713397,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    "e1_-0.005": [
+      -1.6347793954471606,
+      3.069019366697584,
+      3.069019366697584,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    "e1_+0.005": [
+      9.698594601146917,
+      5.029503676840675,
+      5.029503676840675,
+      0.0,
+      -0.0,
+      -0.0
+    ],
+    "e4_-0.005": [
+      4.068886096670393,
+      4.0547476458671605,
+      4.0547476458671605,
+      -3.194062112674285,
+      0.0,
+      -0.0
+    ],
+    "e4_+0.005": [
+      4.068886096670393,
+      4.0547476458671605,
+      4.0547476458671605,
+      3.194062112674285,
+      0.0,
+      -0.0
+    ]
+  },
+  "c_gpa": [
+    [
+      1133.3373996594078,
+      null,
+      null,
+      0.0,
+      null,
+      null
+    ],
+    [
+      196.04843101430913,
+      null,
+      null,
+      0.0,
+      null,
+      null
+    ],
+    [
+      196.04843101430913,
+      null,
+      null,
+      0.0,
+      null,
+      null
+    ],
+    [
+      0.0,
+      null,
+      null,
+      638.8124225348571,
+      null,
+      null
+    ],
+    [
+      0.0,
+      null,
+      null,
+      0.0,
+      null,
+      null
+    ],
+    [
+      0.0,
+      null,
+      null,
+      0.0,
+      null,
+      null
+    ]
+  ],
+  "fits": [
+    {
+      "i": 1,
+      "j": 1,
+      "c_gpa": 1133.3373996594078,
+      "intercept_gpa": 4.050238667611243,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.036662129522727405
+    },
+    {
+      "i": 2,
+      "j": 1,
+      "c_gpa": 196.04843101430913,
+      "intercept_gpa": 4.0618079468907435,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.025092850243226827
+    },
+    {
+      "i": 3,
+      "j": 1,
+      "c_gpa": 196.04843101430913,
+      "intercept_gpa": 4.0618079468907435,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.025092850243226827
+    },
+    {
+      "i": 4,
+      "j": 1,
+      "c_gpa": 0.0,
+      "intercept_gpa": 0.0,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.0
+    },
+    {
+      "i": 5,
+      "j": 1,
+      "c_gpa": 0.0,
+      "intercept_gpa": 0.0,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.0
+    },
+    {
+      "i": 6,
+      "j": 1,
+      "c_gpa": 0.0,
+      "intercept_gpa": 0.0,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.0
+    },
+    {
+      "i": 1,
+      "j": 4,
+      "c_gpa": 0.0,
+      "intercept_gpa": 4.074890996824918,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.012009800309052743
+    },
+    {
+      "i": 2,
+      "j": 4,
+      "c_gpa": 0.0,
+      "intercept_gpa": 4.065465362956097,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.021435434177873525
+    },
+    {
+      "i": 3,
+      "j": 4,
+      "c_gpa": 0.0,
+      "intercept_gpa": 4.065465362956097,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.021435434177873525
+    },
+    {
+      "i": 4,
+      "j": 4,
+      "c_gpa": 638.8124225348571,
+      "intercept_gpa": 1.9747946600877198e-16,
+      "n_points": 3,
+      "max_abs_residual_gpa": 4.440892098500626e-16
+    },
+    {
+      "i": 5,
+      "j": 4,
+      "c_gpa": 0.0,
+      "intercept_gpa": 0.0,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.0
+    },
+    {
+      "i": 6,
+      "j": 4,
+      "c_gpa": 0.0,
+      "intercept_gpa": 0.0,
+      "n_points": 3,
+      "max_abs_residual_gpa": 0.0
+    }
+  ]
+}

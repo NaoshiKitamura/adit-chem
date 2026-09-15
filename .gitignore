@@ -1,0 +1,32 @@
+# Slater-Koster parameters (third-party data, CC BY-SA 4.0; not kept in this repository)
+slakos/
+# files written while DFTB+ runs
+examples/**/charges.bin
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+runs/
+site_notes/
+pseudo/
+/build/
+dist/
+# timing file written by CP2K (contains the host name)
+timer.dat
+
+# local working copies for review (not published)
+/review/
+
+# local notes for the maintainers (not published)
+/CLAUDE.md
+# internal notes kept locally, never published
+/design.md
+/docs/CMMDE_COMPAT.md
+/docs/CMMDE_EXTENSIONS.md
+/docs/MAJOR_SOFTWARE_ROADMAP.md
+/docs/LAB_SETUP.md
+/docs/SCREENSHOTS.md
+/docs/history/
+/docs/review_*/
+/docs/workflow_survey_*/
+/docs/ANALYSIS_PARITY.md

@@ -1,0 +1,88 @@
+{
+  "stages": [
+    {
+      "dir": "stage_01_min",
+      "name": "min",
+      "task": {
+        "type": "geometry_optimization",
+        "bands": {
+          "path": "",
+          "npoints": 60,
+          "empty_bands": 4
+        },
+        "optimizer": "Rational",
+        "md": {
+          "ensemble": "NVT",
+          "thermostat": "berendsen",
+          "temperature_k": 300.0,
+          "timestep_fs": 1.0,
+          "steps": 1000,
+          "dump_interval": 10,
+          "coupling_time_fs": 100.0,
+          "pressure_bar": 1.0,
+          "barostat_time_fs": 1000.0
+        },
+        "max_steps": 100,
+        "force_tolerance_ev_per_ang": 0.005142208619,
+        "relax_cell": "no"
+      },
+      "velocities": false
+    },
+    {
+      "dir": "stage_02_nvt",
+      "name": "nvt",
+      "task": {
+        "type": "molecular_dynamics",
+        "bands": {
+          "path": "",
+          "npoints": 60,
+          "empty_bands": 4
+        },
+        "optimizer": "Rational",
+        "md": {
+          "ensemble": "NVT",
+          "thermostat": "berendsen",
+          "temperature_k": 300.0,
+          "timestep_fs": 0.5,
+          "steps": 40,
+          "dump_interval": 1,
+          "coupling_time_fs": 20.0,
+          "pressure_bar": 1.0,
+          "barostat_time_fs": 1000.0
+        },
+        "max_steps": 100,
+        "force_tolerance_ev_per_ang": 0.005142208619,
+        "relax_cell": "no"
+      },
+      "velocities": false
+    },
+    {
+      "dir": "stage_03_nve",
+      "name": "nve",
+      "task": {
+        "type": "molecular_dynamics",
+        "bands": {
+          "path": "",
+          "npoints": 60,
+          "empty_bands": 4
+        },
+        "optimizer": "Rational",
+        "md": {
+          "ensemble": "NVE",
+          "thermostat": "berendsen",
+          "temperature_k": 300.0,
+          "timestep_fs": 0.5,
+          "steps": 20,
+          "dump_interval": 1,
+          "coupling_time_fs": 100.0,
+          "pressure_bar": 1.0,
+          "barostat_time_fs": 1000.0
+        },
+        "max_steps": 100,
+        "force_tolerance_ev_per_ang": 0.005142208619,
+        "relax_cell": "no"
+      },
+      "velocities": true
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+                :-) GROMACS - gmx grompp, 2026.3-conda_forge (-:
+
+Executable:   /home/<user>/miniforge3/envs/gromacs/bin.AVX2_256/gmx
+Data prefix:  /home/<user>/miniforge3/envs/gromacs
+Working dir:  /home/<user>/adit/examples/gromacs_spce_nvt_generated
+Command line:
+  gmx grompp -f grompp.mdp -c conf.gro -p topol.top -o adit.tpr
+
+
+NOTE 1 [file grompp.mdp]:
+  You have set rlist larger than the interaction cut-off, but you also have
+  verlet-buffer-tolerance > 0. Will set rlist using
+  verlet-buffer-tolerance.
+
+
+NOTE 2 [file grompp.mdp]:
+  Setting nstcalcenergy (100) equal to nstenergy (25)
+
+Generating 1-4 interactions: fudge = 0.5
+Number of degrees of freedom in T-Coupling group System is 1293.00
+
+There were 2 NOTEs
+
+GROMACS reminds you: "Sincerity is the key to success. Once you can fake that you've got it made." (Groucho Marx)
+
+Setting the LD random seed to 1723750011
+
+Generated 330891 of the 330891 non-bonded parameter combinations
+
+Generated 330891 of the 330891 1-4 parameter combinations
+
+Excluding 2 bonded neighbours molecule type 'SOL'
+
+Setting gen_seed to 397313979
+
+Velocities were taken from a Maxwell distribution at 300 K
+Analysing residue names:
+There are:   216      Water residues
+
+The largest distance between excluded atoms is 0.164 nm between atom 503 and 504
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
+
+Calculated rlist for 1x1 atom pair-list as 0.887 nm, buffer size 0.037 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 0.853 nm, buffer size 0.003 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 16x16x16, spacing 0.116 0.116 0.116
+
+Estimate for the relative computational load of the PME mesh part: 0.32
+
+This run will generate roughly 0 Mb of data

@@ -1,0 +1,9 @@
+コード: lammps   ディレクトリ: examples/plumed_lammps_cu_generated
+エネルギー: 7 点、最終値 -375.526980 eV (最小 -378.170750、最大 -375.526980)
+温度: 平均 201.8 K (標準偏差 68.2、7 点、先頭 0 点を除く)
+軌跡 (traj.lammpstrj): 7 フレームのうち 7 フレームを使用 (先頭 0 を除き 1 おき)、1 フレーム 50 fs
+結合長 (最終構造): Cu1-Cu2 2.697 Å, Cu1-Cu3 2.660 Å, Cu1-Cu4 2.554 Å, Cu1-Cu10 2.541 Å, Cu1-Cu11 2.636 Å, Cu1-Cu26 2.612 Å, Cu1-Cu28 2.570 Å, Cu1-Cu34 2.457 Å, Cu1-Cu75 2.668 Å, Cu1-Cu76 2.477 Å, Cu1-Cu83 2.489 Å, Cu1-Cu100 2.447 Å …
+空間群 (最終構造、spglib 2.7.0): P1 (No. 1, symprec 1e-05 Å), P1 (No. 1, symprec 0.001 Å), P1 (No. 1, symprec 0.1 Å)
+注: エネルギーは log.lammps:40 の thermo の表の TotEng (metal 単位から eV に換算)
+注: PLUMED の出力を読みました (COLVAR)。列の意味は利用者の plumed.dat が決めるので、ADIT は値を並べるだけです。
+注: MD の温度: 目標 300 K、平均 202 K

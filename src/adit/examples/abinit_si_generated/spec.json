@@ -1,0 +1,150 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-12T21:20:57+00:00",
+    "app_version": "0.0.1",
+    "comment": "",
+    "continued_from": null,
+    "template": null,
+    "stage": null
+  },
+  "structure": {
+    "source": "bulk",
+    "source_ref": "Si diamond a=5.43",
+    "atoms": {
+      "symbols": [
+        "Si",
+        "Si"
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.3575,
+          1.3575,
+          1.3575
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          2.715,
+          2.715
+        ],
+        [
+          2.715,
+          0.0,
+          2.715
+        ],
+        [
+          2.715,
+          2.715,
+          0.0
+        ]
+      ],
+      "pbc": [
+        true,
+        true,
+        true
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {},
+    "velocities": null
+  },
+  "method": {
+    "code": "abinit",
+    "pseudos": {
+      "Si": "/home/<user>/pseudos/14si.pspnc"
+    },
+    "ecut_ha": 8.0,
+    "pawecutdg_ha": 0.0,
+    "tolerance": "toldfe",
+    "tolerance_value": 1e-08,
+    "nstep": 30,
+    "ixc": null,
+    "occopt": null,
+    "tsmear_ha": 0.0,
+    "nband": null,
+    "extra": {}
+  },
+  "kpoints": {
+    "mode": "mesh",
+    "mesh": [
+      4,
+      4,
+      4
+    ],
+    "shift": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "density": 0.0
+  },
+  "task": {
+    "type": "single_point",
+    "bands": {
+      "path": "",
+      "npoints": 60,
+      "empty_bands": 4
+    },
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVT",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 1.0,
+      "steps": 1000,
+      "dump_interval": 10,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142206709048065,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "si"
+  },
+  "handoff": null,
+  "plumed": null,
+  "provenance": {
+    "adit_version": "0.0.1",
+    "generated_utc": "2026-09-12T21:20:57+00:00",
+    "python": "3.14.7",
+    "ase": "3.29.0",
+    "files": [
+      {
+        "name": "14si.pspnc",
+        "sha256": "3fb98731545d0734058bc5fec3c2ba80447a14e83095e1b2782b62b016d5400f",
+        "bytes": 305169,
+        "source": "/home/<user>/pseudos/14si.pspnc"
+      }
+    ],
+    "generated_files": [],
+    "inputs": [
+      {
+        "name": "input.abi",
+        "sha256": "0c0569bb9ad343e815c1928f6b51ca8bb38274756b3db3d37568bc3e91359def"
+      },
+      {
+        "name": "submit.sh",
+        "sha256": "85042d1f667c5d2430e124faa0bc80b34698cb011fa739dc66f94b904b5062ab"
+      }
+    ],
+    "code_version_file": "code_version.txt"
+  }
+}

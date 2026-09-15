@@ -1,0 +1,111 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-10T07:49:48+00:00",
+    "app_version": "0.0.1",
+    "comment": ""
+  },
+  "structure": {
+    "source": "file",
+    "source_ref": "examples/vasp_h2o/POSCAR (数値を写した)",
+    "atoms": {
+      "symbols": [
+        "O",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.582098,
+          -0.7567273999999999,
+          0.0
+        ],
+        [
+          0.582098,
+          0.7567273999999999,
+          0.0
+        ]
+      ],
+      "cell": [
+        [
+          7.9376999999999995,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          7.9376999999999995,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          7.9376999999999995
+        ]
+      ],
+      "pbc": [
+        true,
+        true,
+        true
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [
+      0
+    ]
+  },
+  "method": {
+    "code": "vasp",
+    "potcar_set": "potpaw_PBE",
+    "potcar": {},
+    "binary": "std",
+    "encut": 400.0,
+    "ediff": 0.0001,
+    "nelm": 60,
+    "ismear": 0,
+    "sigma": 0.1,
+    "ispin": 1,
+    "magmom": null,
+    "ivdw": null,
+    "algo": "Normal",
+    "prec": "Normal",
+    "lreal": "Auto",
+    "extra_incar": {}
+  },
+  "kpoints": {
+    "mode": "gamma",
+    "mesh": [
+      1,
+      1,
+      1
+    ],
+    "shift": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "density": 0.0
+  },
+  "task": {
+    "type": "geometry_optimization",
+    "optimizer": "Rational",
+    "max_steps": 10,
+    "force_tolerance_ev_per_ang": 0.02,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "cluster",
+    "nodes": 1,
+    "ncpus": 8,
+    "mpiprocs": 8,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "h2o"
+  }
+}

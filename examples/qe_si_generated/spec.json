@@ -1,0 +1,102 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-10T08:29:26+00:00",
+    "app_version": "0.0.1",
+    "comment": ""
+  },
+  "structure": {
+    "source": "bulk",
+    "source_ref": "Si",
+    "atoms": {
+      "symbols": [
+        "Si",
+        "Si"
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.3575,
+          1.3575,
+          1.3575
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          2.715,
+          2.715
+        ],
+        [
+          2.715,
+          0.0,
+          2.715
+        ],
+        [
+          2.715,
+          2.715,
+          0.0
+        ]
+      ],
+      "pbc": [
+        true,
+        true,
+        true
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {}
+  },
+  "method": {
+    "code": "espresso",
+    "pseudo_set": "pslibrary",
+    "pseudo": {},
+    "ecutwfc": 44.0,
+    "ecutrho": 175.0,
+    "conv_thr": 1e-08,
+    "electron_maxstep": 100,
+    "mixing_beta": 0.7,
+    "occupations": "fixed",
+    "smearing": "gaussian",
+    "degauss": 0.0,
+    "nspin": 1,
+    "input_dft": "",
+    "extra": {}
+  },
+  "kpoints": {
+    "mode": "mesh",
+    "mesh": [
+      4,
+      4,
+      4
+    ],
+    "shift": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "density": 0.0
+  },
+  "task": {
+    "type": "geometry_optimization",
+    "optimizer": "Rational",
+    "max_steps": 20,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 2,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "si"
+  }
+}

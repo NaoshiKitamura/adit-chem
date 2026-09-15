@@ -1,0 +1,120 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-10T07:19:07+00:00",
+    "app_version": "0.0.1",
+    "comment": ""
+  },
+  "structure": {
+    "source": "file",
+    "source_ref": "examples/dftb_tio2/geometry.gen",
+    "atoms": {
+      "symbols": [
+        "Ti",
+        "Ti",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "positions": [
+        [
+          -0.01672692283925116,
+          0.016725329441157857,
+          -3.2041525323959806e-06
+        ],
+        [
+          -0.016726505918978757,
+          1.9202011693055652,
+          -7.297102897292027
+        ],
+        [
+          0.01741299782426522,
+          -0.024318617967797985,
+          2.005339137853385
+        ],
+        [
+          1.920770753428742,
+          -0.02431992239222323,
+          -4.437737763954652
+        ],
+        [
+          0.024319174400168835,
+          -0.01740430252750974,
+          -2.0053472771685614
+        ],
+        [
+          0.024317270342178555,
+          1.8861647398065942,
+          -5.291732430733527
+        ]
+      ],
+      "cell": [
+        [
+          -1.903471721,
+          1.903471721,
+          4.864738245
+        ],
+        [
+          1.903471721,
+          -1.903471721,
+          4.864738245
+        ],
+        [
+          1.903471721,
+          1.903471721,
+          -4.864738245
+        ]
+      ],
+      "pbc": [
+        true,
+        true,
+        true
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": []
+  },
+  "method": {
+    "code": "dftbplus",
+    "sk_set": "mio-ext",
+    "scc": true,
+    "scc_tolerance": 1e-05,
+    "max_scc_iterations": 100,
+    "third_order": false,
+    "dispersion": "none",
+    "d3_params": null,
+    "filling_temperature": 0.0
+  },
+  "kpoints": {
+    "mode": "mesh",
+    "mesh": [
+      4,
+      4,
+      4
+    ],
+    "shift": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "density": 0.0
+  },
+  "task": {
+    "type": "single_point",
+    "optimizer": "Rational",
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 4,
+    "walltime": "01:00:00",
+    "job_name": "tio2"
+  }
+}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}ADIT — {{ T("組にして比べる", "Compare runs") }}{% endblock %}
+{% block body %}
+{#- 組にして比べる表 (adit.analysis.compare)。行は (反応の名前, 係数, ディレクトリ)。名前が空の行は上の行と同じ反応。JS なし: 行を増やすのも送信ボタン -#}
+<form method="post" action="/compare">
+<fieldset><legend>{{ T("組にして比べる", "Compare runs") }}</legend>
+  <p class="hint">{{ T("係数 ν は生成物を正、反応物を負にします (ΔE = ΣνE)。ディレクトリは基準のディレクトリからの相対パスか絶対パス。反応の名前が空の行は、上の行と同じ反応に入ります。",
+    "The coefficient ν is positive for products and negative for reactants (ΔE = ΣνE). Directories are relative to the base directory or absolute. A row with an empty reaction name belongs to the reaction above it.") }}</p>
+  {% set h = hlp("compare_base") %}
+  <div class="row"><label for="base"{% if h and h.required %} class="required"{% endif %}{% if h %} title="{{ h.text() }}"{% endif %}>{{ lab("compare_base") }}</label>
+    <div class="inline"><input type="text" id="base" name="base" value="{{ base }}"></div></div>
+  <div class="table-wrap"><table class="scan compare-rows">
+    <thead><tr><th scope="col">{{ lab("rx_name") }}</th><th scope="col">{{ lab("rx_nu") }}</th><th scope="col">{{ lab("rx_dir") }}</th></tr></thead>
+    <tbody>{% for n, nu, d in rows %}<tr>
+      <td><input type="text" name="rx_name_{{ loop.index0 }}" value="{{ n }}" aria-label="{{ lab('rx_name') }} {{ loop.index }}"></td>
+      <td><input type="text" name="rx_nu_{{ loop.index0 }}" value="{{ nu }}" class="tiny" aria-label="{{ lab('rx_nu') }} {{ loop.index }}"></td>
+      <td><input type="text" name="rx_dir_{{ loop.index0 }}" value="{{ d }}" aria-label="{{ lab('rx_dir') }} {{ loop.index }}"></td>
+    </tr>{% endfor %}</tbody>
+  </table></div>
+  <input type="hidden" name="n_rows" value="{{ rows|length }}">
+  <div class="actions">
+    <button type="submit" class="primary" name="action" value="compare">{{ lab("compare_run") }}</button>
+    <button type="submit" name="action" value="add_rows">{{ T("行を増やす", "More rows") }}</button>
+    {% if has_json %}<button type="submit" name="action" value="load_json">{{ T("compare.json を読む", "Load compare.json") }}</button>{% endif %}
+    <a class="btn" href="/analysis">{{ T("解析へ戻る", "Back to analysis") }}</a>
+  </div>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+</fieldset>
+</form>
+{% if result %}
+<fieldset><legend>{{ T("要約", "Summary") }}</legend><pre>{{ result.summary_text() }}</pre>
+  <div class="hint">{{ T("表と図の保存先", "Tables and figure saved to") }}: {{ result.base }}</div></fieldset>
+{% include "_sections.html" %}
+{% for name, path in (result.figures or {}).items() %}
+<fieldset><legend>{{ figure_title(name) }}</legend><img class="fig" src="/file?path={{ path|urlencode }}" alt="{{ figure_title(name) }}"><div class="hint">{{ path }}</div></fieldset>
+{% endfor %}
+{% endif %}
+{% endblock %}

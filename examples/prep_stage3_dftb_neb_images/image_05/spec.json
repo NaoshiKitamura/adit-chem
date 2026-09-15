@@ -1,0 +1,188 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-11T19:02:15+00:00",
+    "app_version": "0.0.1",
+    "comment": "neb image 5/6",
+    "continued_from": null,
+    "template": null,
+    "stage": null
+  },
+  "structure": {
+    "source": "file",
+    "source_ref": "ethane staggered",
+    "atoms": {
+      "symbols": [
+        "C",
+        "C",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          -3.4794880442164666e-10,
+          -3.3062806204610726e-10,
+          0.7644444428833715
+        ],
+        [
+          2.7338753120240825e-09,
+          2.2691161243262884e-09,
+          -0.7351228572766266
+        ],
+        [
+          1.5914165337865222e-05,
+          1.0191702196204602,
+          1.1579642558951733
+        ],
+        [
+          -0.8826356108388119,
+          -0.5095718278423921,
+          1.1579642550864868
+        ],
+        [
+          0.8826196963848219,
+          -0.5095993921502672,
+          1.1579642554696703
+        ],
+        [
+          -0.7545380712578231,
+          -0.6220610664511144,
+          -1.1677381236460254
+        ],
+        [
+          -0.16145149222986457,
+          0.9644802074034816,
+          -1.1677381142276717
+        ],
+        [
+          0.9159902780203782,
+          -0.3424185543749583,
+          -1.167738114184378
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "pbc": [
+        false,
+        false,
+        false
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {},
+    "velocities": null
+  },
+  "method": {
+    "code": "dftbplus",
+    "sk_set": "mio-1-1",
+    "scc": true,
+    "scc_tolerance": 1e-05,
+    "max_scc_iterations": 100,
+    "third_order": false,
+    "dispersion": "none",
+    "d3_params": null,
+    "filling_temperature": 0.0,
+    "solvation_param_file": ""
+  },
+  "kpoints": null,
+  "task": {
+    "type": "single_point",
+    "bands": {
+      "path": "",
+      "npoints": 60,
+      "empty_bands": 4
+    },
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVT",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 1.0,
+      "steps": 1000,
+      "dump_interval": 10,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "prep"
+  },
+  "handoff": null,
+  "provenance": {
+    "adit_version": "0.0.1",
+    "generated_utc": "2026-09-11T19:02:15+00:00",
+    "python": "3.14.7",
+    "ase": "3.29.0",
+    "files": [
+      {
+        "name": "skf/C-C.skf",
+        "sha256": "a0e2fa003c192f7ff3f518045bd6fca9f146eecb79d44c90fe2ed27a361c8996",
+        "bytes": 102566,
+        "source": "/home/<user>/adit/slakos/mio-1-1/C-C.skf"
+      },
+      {
+        "name": "skf/C-H.skf",
+        "sha256": "042957334558349525498a05aaf06933f805680d2d3ee5757800ec849df3351c",
+        "bytes": 54184,
+        "source": "/home/<user>/adit/slakos/mio-1-1/C-H.skf"
+      },
+      {
+        "name": "skf/H-C.skf",
+        "sha256": "439495f6eab744f4f0644f5c0df08e112f6636fd5b08be106a4ea43e9c1b7e2c",
+        "bytes": 54183,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-C.skf"
+      },
+      {
+        "name": "skf/H-H.skf",
+        "sha256": "d43946902e4d120105025683b54c8696856cbd2b459cfd16df166164774359c8",
+        "bytes": 33182,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-H.skf"
+      },
+      {
+        "name": "skf/LICENSE",
+        "sha256": "9348ddfd44da5a127c59141981954746a860ec8e03e0412cf3af7134af0f97e2",
+        "bytes": 20133,
+        "source": "/home/<user>/adit/slakos/mio-1-1/LICENSE"
+      },
+      {
+        "name": "skf/README",
+        "sha256": "92f2a22a702ed3e8548e376a28c47bbba9fe556df8b735d42d4cbb8f67b63e15",
+        "bytes": 3427,
+        "source": "/home/<user>/adit/slakos/mio-1-1/README"
+      }
+    ],
+    "generated_files": [],
+    "code_version_file": "code_version.txt"
+  }
+}

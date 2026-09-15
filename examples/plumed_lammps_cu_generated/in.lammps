@@ -1,0 +1,18 @@
+# adit が生成した LAMMPS の入力 (コマンドは https://docs.lammps.org/ で確かめたもの)
+# 原子の型番号と元素: 1=Cu
+units metal
+atom_style atomic
+boundary p p p
+pair_style eam
+read_data data.lammps
+pair_coeff * * Cu_u3.eam
+thermo_style custom step time temp pe ke etotal press vol
+thermo 50
+velocity all create 300 12345 mom yes rot no dist gaussian
+timestep 0.001
+dump traj all custom 50 traj.lammpstrj id type element x y z
+dump_modify traj element Cu sort id
+fix integ all nvt temp 300 300 0.1
+fix adit_plumed all plumed plumedfile plumed.dat outfile plumed.log
+run 300
+write_data final.data

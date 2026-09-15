@@ -1,0 +1,4 @@
+value,dir,natoms,energy_ev,diff_from_last_mev,diff_per_atom_mev,fmax_ev_ang,pressure_gpa,note
+001,conf_001,9,-309.98849844,67.253,7.473,,,
+002,conf_002,9,-310.05575138,0.000,0.000,,,
+003,conf_003,9,-310.05575138,0.000,0.000,,,

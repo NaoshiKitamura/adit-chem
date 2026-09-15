@@ -1,0 +1,12 @@
+{
+  "kind": "adsorption",
+  "slab": {
+    "structure": "slab.extxyz"
+  },
+  "molecule": {
+    "structure": "h2o.xyz"
+  },
+  "adsorbed": {
+    "structure": "adsorbed.extxyz"
+  }
+}

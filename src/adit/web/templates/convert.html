@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}ADIT — {{ T("変換", "Convert") }}{% endblock %}
+{% block body %}
+<h2>{{ T("構造・計算コードの変換", "Convert a structure, or retarget it to another code") }}</h2>
+{% if error %}<div class="error-banner" role="alert">{{ error }}</div>{% endif %}
+{% if message %}<div class="message-banner" role="status">{{ message }}</div>{% endif %}
+<div class="cols convert-cols">
+<fieldset><legend>{{ T("プレビュー中の構造を保存", "Save the previewed structure") }}</legend>
+  <form method="post" action="/save_current_structure">
+    {% if app.spec %}
+    <div class="row"><label for="current_output">{{ T("保存先", "Output file") }}</label><input id="current_output" name="current_output" value="{{ fields.get('current_output','') }}" placeholder="structure.extxyz"></div>
+    <p class="hint">{{ T("準備画面で最後にプレビューした構造を extended XYZ で保存します。セル、周期境界、固定原子を保ちます。", "Saves the structure most recently previewed on the Prepare page as extended XYZ, preserving the cell, periodic boundaries, and fixed atoms.") }}</p>
+    <label><input type="checkbox" name="current_overwrite"> {{ T("既存のファイルを上書き", "Overwrite an existing file") }}</label>
+    <div class="actions"><button class="primary" type="submit">{{ T("現在の構造を保存", "Save current structure") }}</button></div>
+    {% else %}
+    <p class="hint">{{ T("先に準備画面で「プレビュー」を押してください。", "Press Preview on the Prepare page first.") }}</p>
+    {% endif %}
+  </form>
+</fieldset>
+<fieldset><legend>{{ T("構造ファイルの形式を変換", "Convert a structure file") }}</legend>
+  <form method="post" action="/convert_structure">
+    <div class="row"><label for="source">{{ T("変換元", "Source") }}</label><input id="source" name="source" value="{{ fields.get('source','') }}" placeholder="data.lammps / POSCAR / structure.xyz"></div>
+    <div class="row"><label for="struct_output">{{ T("変換後", "Output") }}</label><input id="struct_output" name="struct_output" value="{{ fields.get('struct_output','') }}" placeholder="structure.cif / POSCAR"></div>
+    <div class="row"><label for="input_format">{{ T("入力形式 (任意)", "Input format (optional)") }}</label><input id="input_format" name="input_format" value="{{ fields.get('input_format','') }}" placeholder="lammps-data"></div>
+    <div class="row"><label for="output_format">{{ T("出力形式 (任意)", "Output format (optional)") }}</label><input id="output_format" name="output_format" value="{{ fields.get('output_format','') }}" placeholder="vasp / extxyz / espresso-in"></div>
+    <div class="row"><label for="cell">{{ T("セル [Å]", "Cell [Å]") }}</label><input id="cell" name="cell" value="{{ fields.get('cell','') }}" placeholder="{{ T('20 または 20,20,30', '20 or 20,20,30') }}"></div>
+    <p class="hint">{{ T("形式はファイル名から判定します。XYZ などセルを持たない構造を POSCAR へ変換するときだけ、セルを指定してください。ADIT はセルの大きさを決めません。", "Formats are inferred from filenames. Specify a cell only when converting a cell-free format such as XYZ to POSCAR. ADIT does not choose the cell size.") }}</p>
+    <label><input type="checkbox" name="struct_overwrite"> {{ T("既存の出力を上書き", "Overwrite existing output") }}</label>
+    <div class="actions"><button class="primary" type="submit">{{ T("構造を変換", "Convert structure") }}</button></div>
+  </form>
+</fieldset>
+<fieldset><legend>{{ T("別の計算コード用に変換", "Convert for another calculation code") }}</legend>
+  <form method="post" action="/convert_calculation">
+    {% if templates %}
+    <div class="row"><label for="target_template">{{ T("変換先の雛形", "Target template") }}</label><select id="target_template" name="target_template">{% for t in templates %}<option value="{{ t.name }}">{{ t.name }} — {{ t.code }}{% if t.comment %} — {{ t.comment }}{% endif %}</option>{% endfor %}</select></div>
+    {% else %}<p class="hint">{{ T("変換先の雛形がありません。準備画面の「今の設定を雛形として保存」で先に作ってください。", "No target templates are available. Create one first with &quot;Save the current settings as a template&quot; on the Prepare page.") }}</p>{% endif %}
+    <div class="row"><label for="calc_output">{{ T("保存先", "Output directory") }}</label><input id="calc_output" name="calc_output" value="{{ fields.get('calc_output','') }}"></div>
+    <p class="hint">{{ T("構造・固定原子・速度・計算の種類・MD条件は準備画面の現在の設定から保ちます。計算手法、力場、カットオフ、擬ポテンシャル、k 点は変換せず、変換先の雛形から取ります。", "The structure, fixed atoms, velocities, task, and MD settings are preserved from the current Prepare settings. The method, force field, cutoffs, pseudopotentials, and k-points are not translated; they come from the target template.") }}</p>
+    <label><input type="checkbox" name="calc_overwrite"> {{ T("空でない保存先を上書き", "Overwrite a non-empty output directory") }}</label>
+    <div class="actions"><button class="primary" type="submit"{% if not templates %} disabled{% endif %}>{{ T("入力一式を生成", "Generate input files") }}</button></div>
+  </form>
+</fieldset>
+<fieldset><legend>{{ T("既存の計算入力を読み込む", "Import existing calculation input") }}</legend>
+  <form method="post" action="/native_import">
+    <div class="row"><label for="native_source">{{ T("既存入力の場所", "Existing input location") }}</label><input id="native_source" name="native_source" value="{{ fields.get('native_source','') }}" placeholder="INCAR / pw.in / in.lammps"></div>
+    <div class="row"><label for="native_code">{{ T("計算コード", "Calculation code") }}</label><select id="native_code" name="native_code">
+      {% for code, label in [('', T('自動判定', 'Detect automatically')), ('vasp', 'VASP'), ('qe', 'Quantum ESPRESSO'), ('lammps', 'LAMMPS')] %}<option value="{{ code }}"{% if fields.get('native_code','') == code %} selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select></div>
+    <div class="row"><label for="native_output">{{ T("新しい点検記録の保存先", "New review directory") }}</label><input id="native_output" name="native_output" value="{{ fields.get('native_output','') }}"></div>
+    <p class="hint">{{ T("VASP・QE の一点計算と、限定された LAMMPS 入力に対応します。元入力は変更しません。読み取れない指定も点検記録に残し、下書きの計算設定 (draft_spec.json) は対応範囲を完全に読めた場合だけ作ります。下書きは実行可能性を保証しません。", "Supports VASP and QE single-point input and a limited LAMMPS subset. The source is not changed. Unread settings remain in the report; a draft spec is written only when the supported subset is fully parsed. The draft does not establish executability.") }}</p>
+    <div class="actions"><button type="submit">{{ T("入力を点検", "Inspect input") }}</button></div>
+  </form>
+  {% if native_result %}
+  <div class="{{ 'message-banner' if native_result.spec else 'error-banner' }}" role="{{ 'status' if native_result.spec else 'alert' }}">{{ T("点検記録", "Review report") }}: {{ native_review }}/import_report.json<br>
+    {% if native_result.spec %}{{ T("確認用の下書き", "Review draft") }}: {{ native_review }}/draft_spec.json{% else %}{{ T("読み取れない指定があるため、下書きの計算設定 (draft_spec.json) は作っていません。", "No draft spec was written because some input could not be parsed.") }}{% endif %}</div>
+  <p class="hint">{{ T("対応外・不明", "Unsupported or unknown") }}: {{ (native_result.unknown + native_result.unsupported)|length }} / {{ T("元入力にない既定値", "Defaults absent from input") }}: {{ native_result.inferred_defaults|length }} / {{ T("未確認の外部依存", "Unverified external dependencies") }}: {{ native_result.unresolved_dependencies|length }}</p>
+  {% if native_result.unknown or native_result.unsupported %}<ul>{% for issue in (native_result.unknown + native_result.unsupported)[:20] %}<li>{{ issue.file }}:{{ issue.line }} — {{ issue.reason }}{% if issue.text %} ({{ issue.text|truncate(120) }}){% endif %}</li>{% endfor %}</ul>{% endif %}
+  <p class="hint">{{ T("内容と既定値を import_report.json で確認してから使ってください。", "Review the source mappings and defaults in import_report.json before using the draft.") }}</p>
+  {% endif %}
+</fieldset>
+<fieldset><legend>{{ T("生成した入力を読み戻して照合", "Verify generated input") }}</legend>
+  <form method="post" action="/native_verify">
+    <div class="row"><label for="verify_project">{{ T("生成入力のディレクトリ", "Generated-input directory") }}</label><input id="verify_project" name="verify_project" value="{{ fields.get('verify_project','') }}"></div>
+    <p class="hint">{{ T("spec.json と実際の入力のうち、対応付けられる項目だけを比較します。入力を書き換えず、計算全体の同等性や実行可能性は判定しません。", "Compares only mapped fields in spec.json and the generated input. It does not modify the input or assess whole-calculation equivalence or executability.") }}</p>
+    <div class="actions"><button type="submit">{{ T("対応項目を照合", "Check mapped fields") }}</button></div>
+  </form>
+  {% if verification %}
+  <div class="{{ 'message-banner' if verification_ok else 'error-banner' }}" role="{{ 'status' if verification_ok else 'alert' }}">{{ T("対応項目のみの点検結果: 通過", "Mapped-field check only: passed") if verification_ok else T("対応項目のみの点検結果: 不通過", "Mapped-field check only: failed") }}<br>{{ T("一致", "Matched") }}: {{ verification.preserved|length }} / {{ T("不一致", "Mismatched") }}: {{ verification.mismatched|length }} / {{ T("未確認", "Unverified") }}: {{ verification.unverifiable|length }}</div>
+  {% if verification.mismatched %}<div class="subhead">{{ T("不一致", "Mismatched fields") }}</div><ul>{% for item in verification.mismatched[:20] %}<li>{{ item.field }}</li>{% endfor %}</ul>{% endif %}
+  {% if verification.unverifiable %}<div class="subhead">{{ T("未確認", "Unverified fields") }}</div><ul>{% for item in verification.unverifiable[:20] %}<li>{{ item.field }}{% if item.get('reason') %} — {{ item.reason }}{% endif %}</li>{% endfor %}</ul>{% endif %}
+  <p class="hint">{{ T("通過しても未確認項目は検証済みになりません。", "Passing this check does not verify any unverified fields.") }}</p>
+  {% endif %}
+</fieldset>
+</div>
+{% endblock %}

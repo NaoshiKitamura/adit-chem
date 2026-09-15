@@ -1,0 +1,124 @@
+{
+  "runs": [
+    {
+      "dir": "adsorbed",
+      "path": "runs/ads/adsorbed",
+      "code": "dftbplus",
+      "task": "single_point",
+      "natoms": 11,
+      "formula": "C8H2O",
+      "composition": {
+        "C": 8,
+        "O": 1,
+        "H": 2
+      },
+      "energy_ev": -488.6238,
+      "energy_source": "output.log の Total Energy (MD では md.out の Total MD Energy)",
+      "code_g_ev": null,
+      "code_g_label": "",
+      "note": ""
+    },
+    {
+      "dir": "slab",
+      "path": "runs/ads/slab",
+      "code": "dftbplus",
+      "task": "single_point",
+      "natoms": 8,
+      "formula": "C8",
+      "composition": {
+        "C": 8
+      },
+      "energy_ev": -377.7017,
+      "energy_source": "output.log の Total Energy (MD では md.out の Total MD Energy)",
+      "code_g_ev": null,
+      "code_g_label": "",
+      "note": ""
+    },
+    {
+      "dir": "molecule",
+      "path": "runs/ads/molecule",
+      "code": "dftbplus",
+      "task": "single_point",
+      "natoms": 3,
+      "formula": "H2O",
+      "composition": {
+        "O": 1,
+        "H": 2
+      },
+      "energy_ev": -110.9604,
+      "energy_source": "output.log の Total Energy (MD では md.out の Total MD Energy)",
+      "code_g_ev": null,
+      "code_g_label": "",
+      "note": ""
+    }
+  ],
+  "reactions": [
+    {
+      "name": "adsorption",
+      "terms": "+1·adsorbed -1·slab -1·molecule",
+      "terms_list": [
+        {
+          "nu": 1.0,
+          "dir": "adsorbed"
+        },
+        {
+          "nu": -1.0,
+          "dir": "slab"
+        },
+        {
+          "nu": -1.0,
+          "dir": "molecule"
+        }
+      ],
+      "delta_e_ev": 0.03830000000000666,
+      "delta_e_kj_mol": 3.695388220311543,
+      "delta_e_kcal_mol": 0.8832189819128614,
+      "delta_g_code_ev": null,
+      "delta_g_code_kj_mol": null,
+      "balanced": true,
+      "composition_known": true,
+      "imbalance": "",
+      "differing": [
+        "structure.periodic"
+      ],
+      "partial": [
+        "kpoints",
+        "kpoints.density",
+        "kpoints.mesh",
+        "kpoints.mode",
+        "kpoints.shift",
+        "kpoints.spacing_2pi_per_A"
+      ],
+      "n_differing": 1,
+      "n_partial": 6
+    }
+  ],
+  "differing": [
+    "structure.periodic"
+  ],
+  "partial": [
+    "kpoints",
+    "kpoints.density",
+    "kpoints.mesh",
+    "kpoints.mode",
+    "kpoints.shift",
+    "kpoints.spacing_2pi_per_A"
+  ],
+  "n_differing": 1,
+  "n_partial": 6,
+  "files": {
+    "runs": "runs/ads/compare_runs.csv",
+    "reactions": "runs/ads/compare_reactions.csv",
+    "conditions": "runs/ads/compare_conditions.csv"
+  },
+  "figures": {
+    "compare_energy": "runs/ads/compare_energy.png"
+  },
+  "notes": [],
+  "units": {
+    "energy": "eV",
+    "kj_mol_per_ev": 96.485332123,
+    "kcal_mol_per_ev": 23.060547830619
+  },
+  "rule": "違う = その項目を持つ計算のあいだで値が 2 種類以上。一部だけ = その項目を持たない計算がある"
+}

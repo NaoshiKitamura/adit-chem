@@ -1,0 +1,9 @@
+{
+  "task": "geometry_optimization",
+  "method": "scf",
+  "basis": "cc-pVDZ",
+  "psi4_version": "1.11",
+  "energy_hartree": -76.0270327836679,
+  "geom_maxiter": 20,
+  "converged": true
+}

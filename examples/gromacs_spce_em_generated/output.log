@@ -1,0 +1,33 @@
+                :-) GROMACS - gmx mdrun, 2026.3-conda_forge (-:
+
+Executable:   /home/<user>/miniforge3/envs/gromacs/bin.AVX2_256/gmx
+Data prefix:  /home/<user>/miniforge3/envs/gromacs
+Working dir:  /home/<user>/adit/examples/gromacs_spce_em_generated
+Command line:
+  gmx mdrun -deffnm adit -ntmpi 1 -ntomp 1
+
+The current CPU can measure timings more accurately than the code in
+gmx mdrun was configured to use. This might affect your simulation
+speed as accurate timings are needed for load-balancing.
+Please consider rebuilding gmx mdrun with the GMX_USE_RDTSCP=ON CMake option.
+Reading file adit.tpr, VERSION 2026.3-conda_forge (single precision)
+
+Using 1 MPI thread
+Using 1 OpenMP thread 
+
+
+NOTE: Thread affinity was not set.
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+03
+   Number of steps    =           50
+
+writing lowest energy coordinates.
+
+Steepest Descents converged to Fmax < 1000 in 1 steps
+Potential Energy  = -9.9536836e+03
+Maximum force     =  8.5983990e+02 on atom 103
+Norm of force     =  2.6162654e+02
+
+GROMACS reminds you: "Between equal rights, force decides." (Karl Marx)
+

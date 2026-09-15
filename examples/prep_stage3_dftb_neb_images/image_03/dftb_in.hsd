@@ -1,0 +1,32 @@
+Geometry = GenFormat {
+  <<< "geometry.gen"
+}
+
+Driver {}
+
+Hamiltonian = DFTB {
+  Scc = Yes
+  SccTolerance = 1e-05
+  MaxSccIterations = 100
+  SlaterKosterFiles = Type2FileNames {
+    Prefix = "skf/"
+    Separator = "-"
+    Suffix = ".skf"
+  }
+  MaxAngularMomentum {
+    C = "p"
+    H = "s"
+  }
+}
+
+Options {
+  WriteResultsTag = Yes
+}
+
+Analysis {
+  PrintForces = Yes
+}
+
+ParserOptions {
+  ParserVersion = 14
+}

@@ -1,0 +1,128 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-12T21:20:51+00:00",
+    "app_version": "0.0.1",
+    "comment": "",
+    "continued_from": null,
+    "template": null,
+    "stage": null
+  },
+  "structure": {
+    "source": "preset",
+    "source_ref": "H2O",
+    "atoms": {
+      "symbols": [
+        "O",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0,
+          0.119262
+        ],
+        [
+          0.0,
+          0.763239,
+          -0.477047
+        ],
+        [
+          0.0,
+          -0.763239,
+          -0.477047
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "pbc": [
+        false,
+        false,
+        false
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {},
+    "velocities": null
+  },
+  "method": {
+    "code": "psi4",
+    "method": "scf",
+    "basis": "cc-pVDZ",
+    "reference": "",
+    "memory_mb": 0,
+    "extra_set": {}
+  },
+  "kpoints": null,
+  "task": {
+    "type": "geometry_optimization",
+    "bands": {
+      "path": "",
+      "npoints": 60,
+      "empty_bands": 4
+    },
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVT",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 1.0,
+      "steps": 1000,
+      "dump_interval": 10,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 20,
+    "force_tolerance_ev_per_ang": 0.005142206709048065,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "h2o"
+  },
+  "handoff": null,
+  "plumed": null,
+  "provenance": {
+    "adit_version": "0.0.1",
+    "generated_utc": "2026-09-12T21:20:51+00:00",
+    "python": "3.14.7",
+    "ase": "3.29.0",
+    "files": [],
+    "generated_files": [],
+    "inputs": [
+      {
+        "name": "input.dat",
+        "sha256": "c7b090e4e5cb808a0e6382547c3e195f6626a8369c5884a7208fc5998533b0f9"
+      },
+      {
+        "name": "submit.sh",
+        "sha256": "11648ef94374cdd96dbf49c5dece3d1e9b576bd3de480889488a523359eac03e"
+      }
+    ],
+    "code_version_file": "code_version.txt"
+  }
+}

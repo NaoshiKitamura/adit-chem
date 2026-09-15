@@ -1,0 +1,44 @@
+Geometry = GenFormat {
+  <<< "geometry.gen"
+}
+
+Driver = VelocityVerlet {
+  MovedAtoms = 1:-1
+  Steps = 10
+  TimeStep [fs] = 0.5
+  MDRestartFrequency = 1
+  OutputPrefix = "geo_end"
+  Velocities [AA/ps] {
+    7.2269717300 -0.5199364800 -4.2361142900
+    38.7397549000 -3.1108250800 50.0066463500
+    -153.5252881000 11.3689432300 17.2752879800
+  }
+  Thermostat = None {}
+}
+
+Hamiltonian = DFTB {
+  Scc = Yes
+  SccTolerance = 1e-05
+  MaxSccIterations = 100
+  SlaterKosterFiles = Type2FileNames {
+    Prefix = "skf/"
+    Separator = "-"
+    Suffix = ".skf"
+  }
+  MaxAngularMomentum {
+    O = "p"
+    H = "s"
+  }
+}
+
+Options {
+  WriteResultsTag = Yes
+}
+
+Analysis {
+  PrintForces = Yes
+}
+
+ParserOptions {
+  ParserVersion = 14
+}

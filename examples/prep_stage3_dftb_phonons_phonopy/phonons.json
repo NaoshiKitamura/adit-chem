@@ -1,0 +1,80 @@
+{
+  "generated_by": "adit 0.0.1",
+  "backend": "phonopy",
+  "dim": [
+    2,
+    2,
+    2
+  ],
+  "code": "dftbplus",
+  "unit_cell": {
+    "symbols": [
+      "C",
+      "C"
+    ],
+    "positions": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.89175,
+        0.89175,
+        0.89175
+      ]
+    ],
+    "cell": [
+      [
+        0.0,
+        1.7835,
+        1.7835
+      ],
+      [
+        1.7835,
+        0.0,
+        1.7835
+      ],
+      [
+        1.7835,
+        1.7835,
+        0.0
+      ]
+    ],
+    "pbc": [
+      true,
+      true,
+      true
+    ]
+  },
+  "band_points": 51,
+  "phonopy_version": "4.5.0",
+  "n_displacements": 1,
+  "distance_ang": 0.009999999999999998,
+  "primitive_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "dos_mesh": [
+    10,
+    10,
+    10
+  ],
+  "dos_width_thz": null,
+  "dirs": [
+    "disp-001"
+  ]
+}

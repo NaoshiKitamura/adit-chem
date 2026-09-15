@@ -1,0 +1,193 @@
+{
+  "version": 2,
+  "meta": {
+    "created": "2026-09-11T17:59:20+00:00",
+    "app_version": "0.0.1",
+    "comment": "continued from /home/<user>/adit/examples/dftb_md_water_generated",
+    "continued_from": {
+      "dir": "/home/<user>/adit/examples/dftb_md_water_generated",
+      "spec_sha256": "5e6525e0116f6ff24a1c900f7f4bb3f93f185954647f152e88350bb947184e60",
+      "code": "dftbplus",
+      "task": "molecular_dynamics",
+      "structure_file": "geo_end.xyz",
+      "velocities": true,
+      "carried": [
+        "位置 (geo_end.xyz から)",
+        "速度 (Å/fs に直して spec.json の structure.velocities に)"
+      ],
+      "not_carried": []
+    },
+    "template": null,
+    "stage": null
+  },
+  "structure": {
+    "source": "file",
+    "source_ref": "/home/<user>/adit/examples/dftb_md_water_generated/geo_end.xyz",
+    "atoms": {
+      "symbols": [
+        "O",
+        "H",
+        "H"
+      ],
+      "positions": [
+        [
+          0.02082565,
+          -0.87107084,
+          -0.05216553
+        ],
+        [
+          0.58262696,
+          -1.06953847,
+          0.80117174
+        ],
+        [
+          -0.91339944,
+          -0.9782352,
+          0.02737002
+        ]
+      ],
+      "cell": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "pbc": [
+        false,
+        false,
+        false
+      ]
+    },
+    "charge": 0,
+    "multiplicity": 1,
+    "fixed_atoms": [],
+    "fixed_axes": {},
+    "velocities": [
+      [
+        0.00722697173,
+        -0.0005199364800000001,
+        -0.00423611429
+      ],
+      [
+        0.0387397549,
+        -0.0031108250800000003,
+        0.050006646349999996
+      ],
+      [
+        -0.15352528810000002,
+        0.01136894323,
+        0.01727528798
+      ]
+    ]
+  },
+  "method": {
+    "code": "dftbplus",
+    "sk_set": "mio-1-1",
+    "scc": true,
+    "scc_tolerance": 1e-05,
+    "max_scc_iterations": 100,
+    "third_order": false,
+    "dispersion": "none",
+    "d3_params": null,
+    "filling_temperature": 0.0,
+    "solvation_param_file": ""
+  },
+  "kpoints": null,
+  "task": {
+    "type": "molecular_dynamics",
+    "bands": {
+      "path": "",
+      "npoints": 60,
+      "empty_bands": 4
+    },
+    "optimizer": "Rational",
+    "md": {
+      "ensemble": "NVE",
+      "thermostat": "berendsen",
+      "temperature_k": 300.0,
+      "timestep_fs": 0.5,
+      "steps": 10,
+      "dump_interval": 1,
+      "coupling_time_fs": 100.0,
+      "pressure_bar": 1.0,
+      "barostat_time_fs": 1000.0
+    },
+    "max_steps": 200,
+    "force_tolerance_ev_per_ang": 0.005142208619,
+    "relax_cell": "no"
+  },
+  "runtime": {
+    "profile": "local",
+    "nodes": 1,
+    "ncpus": 1,
+    "mpiprocs": 1,
+    "omp_threads": 1,
+    "walltime": "01:00:00",
+    "job_name": "prep"
+  },
+  "handoff": {
+    "previous_dir": "/home/<user>/adit/examples/dftb_md_water_generated",
+    "previous_task": "molecular_dynamics",
+    "previous_code": "dftbplus",
+    "at_run": false,
+    "velocities": true,
+    "files": {}
+  },
+  "provenance": {
+    "adit_version": "0.0.1",
+    "generated_utc": "2026-09-11T17:59:20+00:00",
+    "python": "3.14.7",
+    "ase": "3.29.0",
+    "files": [
+      {
+        "name": "skf/H-H.skf",
+        "sha256": "d43946902e4d120105025683b54c8696856cbd2b459cfd16df166164774359c8",
+        "bytes": 33182,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-H.skf"
+      },
+      {
+        "name": "skf/H-O.skf",
+        "sha256": "e357795fc4da4e6317fa29a1ffe57c13d17b96d8929fc840648cb2430acd1a6d",
+        "bytes": 53482,
+        "source": "/home/<user>/adit/slakos/mio-1-1/H-O.skf"
+      },
+      {
+        "name": "skf/LICENSE",
+        "sha256": "9348ddfd44da5a127c59141981954746a860ec8e03e0412cf3af7134af0f97e2",
+        "bytes": 20133,
+        "source": "/home/<user>/adit/slakos/mio-1-1/LICENSE"
+      },
+      {
+        "name": "skf/O-H.skf",
+        "sha256": "0bc4d6d3c013069ac5964cb58d52e50ea05eb7c5e2097fa76dd8255b535727bd",
+        "bytes": 53483,
+        "source": "/home/<user>/adit/slakos/mio-1-1/O-H.skf"
+      },
+      {
+        "name": "skf/O-O.skf",
+        "sha256": "423de839173a667cc1fd75bd111e6dfa46435b874544a5ce4441b84a31b80b43",
+        "bytes": 102082,
+        "source": "/home/<user>/adit/slakos/mio-1-1/O-O.skf"
+      },
+      {
+        "name": "skf/README",
+        "sha256": "92f2a22a702ed3e8548e376a28c47bbba9fe556df8b735d42d4cbb8f67b63e15",
+        "bytes": 3427,
+        "source": "/home/<user>/adit/slakos/mio-1-1/README"
+      }
+    ],
+    "generated_files": [],
+    "code_version_file": "code_version.txt"
+  }
+}

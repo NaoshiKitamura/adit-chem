@@ -1,0 +1,30 @@
+{
+  "generated_by": "adit 0.0.1",
+  "code": "dftbplus",
+  "options": {
+    "images": 5,
+    "mode": "images",
+    "interpolation": "idpp",
+    "climb": false,
+    "mic": null,
+    "vasp_spring": null,
+    "cp2k_k_spring": null,
+    "qe_opt_scheme": null
+  },
+  "n_images_total": 7,
+  "start": "start.xyz",
+  "end": "end.xyz",
+  "notes": [
+    "補間: ASE の NEB.interpolate (method = idpp、mic = False)"
+  ],
+  "images_file": "images.extxyz",
+  "path_length_ang": [
+    0.0,
+    0.29694223408007464,
+    0.5978180457033594,
+    0.8965310117916133,
+    1.195230099680756,
+    1.4961067820409957,
+    1.7930496277169556
+  ]
+}

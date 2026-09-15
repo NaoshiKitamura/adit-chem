@@ -1,0 +1,9 @@
+; SPC/E water box (GROMACS bundled oplsaa.ff/spce.itp and spc216.gro)
+#include "oplsaa.ff/forcefield.itp"
+#include "oplsaa.ff/spce.itp"
+
+[ system ]
+SPC/E water
+
+[ molecules ]
+SOL 216

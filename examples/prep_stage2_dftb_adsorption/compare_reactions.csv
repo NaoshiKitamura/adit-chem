@@ -1,0 +1,2 @@
+name,terms,delta_e_ev,delta_e_kj_mol,delta_e_kcal_mol,delta_g_code_ev,balanced,imbalance,n_differing,differing,n_partial
+adsorption,+1·adsorbed -1·slab -1·molecule,0.03830000000000666,3.695388220311543,0.8832189819128614,,True,,1,structure.periodic,6

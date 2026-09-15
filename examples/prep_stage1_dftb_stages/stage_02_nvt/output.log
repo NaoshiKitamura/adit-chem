@@ -1,0 +1,932 @@
+|===============================================================================
+|
+|  DFTB+ development version (commit: a23bfb2)
+|
+|  Copyright (C) 2006 - 2025  DFTB+ developers group
+|
+|===============================================================================
+|
+|  When publishing results obtained with DFTB+, please cite the following
+|  reference:
+|
+|    Recent Developments in DFTB+, a Software Package for Efficient Atomistic
+|    Quantum Mechanical Simulations, J. Phys. Chem. A 129, 5373−5390 (2025).
+|    [https://doi.org/10.1021/acs.jpca.5c01146]
+|
+|  You should also cite additional publications crediting the parametrization
+|  data you use. Please consult the documentation of the SK-files for the
+|  references.
+|
+|===============================================================================
+
+Reading input file 'dftb_in.hsd'
+Parser version: 14
+
+--------------------------------------------------------------------------------
+Reading SK-files:
+./skf/O-O.skf
+./skf/O-H.skf
+./skf/H-H.skf
+Done.
+
+
+Processed input in HSD format written to 'dftb_pin.hsd'
+
+Starting initialization...
+--------------------------------------------------------------------------------
+OpenMP threads:              1
+Chosen random seed:          27122417
+Current stacksize:           8 [Mb] (recommended: unlimited)
+WARNING!
+-> Current stacksize not set to unlimited or hard limit, which might cause
+   random crashes (e.g. segmentation faults). It is advised to unlimit the
+   stacksize by issuing 'ulimit -s unlimited' (Linux) or setting it to the 
+   hard limit by 'ulimit -s hard' (Mac) in advance.
+Mode:                        MD with scaling of velocities according to temperature
+                             (a.k.a. 'not' NVT ensemble using Berendsen thermostating)
+Self consistent charges:     Yes
+SCC-tolerance:                 0.100000E-04
+Max. scc iterations:                    100
+Shell resolved Hubbard:      No
+Spin polarisation:           No
+Nr. of up electrons:             4.000000
+Nr. of down electrons:           4.000000
+Periodic boundaries:         No
+Electronic solver:           Relatively robust
+Mixer:                       Broyden mixer
+Mixing parameter:                  0.200000
+Nr. of chrg. vec. in memory:            100
+Max. SCC-cycles:                        100
+Electronic temperature:              0.100000E-07 H      0.272114E-06 eV
+Time step:                     0.206707E+02
+Initial charges:             Set automatically (system chrg:   0.000E+00)
+Included shells:             O:  s, p
+                             H:  s
+Extra options:
+                             Mulliken analysis
+Force type                   original
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 0
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41438978E+01    0.00000000E+00    0.76201545E+00
+    2   -0.41468548E+01   -0.41438978E+01    0.56704478E+00
+    3   -0.41505938E+01   -0.29569934E-02    0.38907306E-02
+    4   -0.41505940E+01   -0.37390688E-02    0.23443183E-04
+    5   -0.41505940E+01   -0.17996476E-06    0.70650774E-09
+
+Total Energy:                       -4.0779379326 H         -110.9663 eV
+Extrapolated to 0K:                 -4.0779379326 H         -110.9663 eV
+Total Mermin free energy:           -4.0779379326 H         -110.9663 eV
+Force related energy:               -4.0779379326 H         -110.9663 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           2   9.5004460357391702E-004
+MD Temperature:                      0.0009500446 H          300.0000 K
+MD Kinetic Energy:                   0.0028501338 H            0.0776 eV
+Total MD Energy:                    -4.0750877987 H         -110.8888 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 1
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41514454E+01    0.00000000E+00    0.22061779E-02
+    2   -0.41514455E+01   -0.85141603E-03    0.16371110E-02
+    3   -0.41514455E+01   -0.28814073E-07    0.43667393E-04
+    4   -0.41514455E+01   -0.35866610E-07    0.20818043E-05
+
+Total Energy:                       -4.0779027188 H         -110.9654 eV
+Extrapolated to 0K:                 -4.0779027188 H         -110.9654 eV
+Total Mermin free energy:           -4.0779027188 H         -110.9654 eV
+Force related energy:               -4.0779027188 H         -110.9654 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           3   9.5004460357391702E-004
+MD Temperature:                      0.0009384661 H          296.3438 K
+MD Kinetic Energy:                   0.0028153983 H            0.0766 eV
+Total MD Energy:                    -4.0750873205 H         -110.8888 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 2
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41520571E+01    0.00000000E+00    0.21343517E-02
+    2   -0.41520572E+01   -0.61162923E-03    0.15854185E-02
+    3   -0.41520572E+01   -0.25918332E-07    0.39188027E-04
+    4   -0.41520572E+01   -0.32334600E-07    0.19446572E-05
+
+Total Energy:                       -4.0778064595 H         -110.9628 eV
+Extrapolated to 0K:                 -4.0778064595 H         -110.9628 eV
+Total Mermin free energy:           -4.0778064595 H         -110.9628 eV
+Force related energy:               -4.0778064595 H         -110.9628 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           4   9.5004460357391702E-004
+MD Temperature:                      0.0009075282 H          286.5744 K
+MD Kinetic Energy:                   0.0027225847 H            0.0741 eV
+Total MD Energy:                    -4.0750838748 H         -110.8887 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 3
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41523596E+01    0.00000000E+00    0.20079355E-02
+    2   -0.41523596E+01   -0.30241596E-03    0.14924909E-02
+    3   -0.41523596E+01   -0.21701084E-07    0.29711689E-04
+    4   -0.41523596E+01   -0.27018721E-07    0.17907919E-05
+
+Total Energy:                       -4.0776774386 H         -110.9592 eV
+Extrapolated to 0K:                 -4.0776774386 H         -110.9592 eV
+Total Mermin free energy:           -4.0776774386 H         -110.9592 eV
+Force related energy:               -4.0776774386 H         -110.9592 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           5   9.5004460357391702E-004
+MD Temperature:                      0.0008667686 H          273.7036 K
+MD Kinetic Energy:                   0.0026003059 H            0.0708 eV
+Total MD Energy:                    -4.0750771327 H         -110.8885 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 4
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41523188E+01    0.00000000E+00    0.18406596E-02
+    2   -0.41523189E+01    0.40799480E-04    0.13684712E-02
+    3   -0.41523189E+01   -0.17321749E-07    0.16595736E-04
+    4   -0.41523189E+01   -0.21462100E-07    0.18185616E-05
+
+Total Energy:                       -4.0775506668 H         -110.9558 eV
+Extrapolated to 0K:                 -4.0775506668 H         -110.9558 eV
+Total Mermin free energy:           -4.0775506668 H         -110.9558 eV
+Force related energy:               -4.0775506668 H         -110.9558 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           6   9.5004460357391702E-004
+MD Temperature:                      0.0008275894 H          261.3318 K
+MD Kinetic Energy:                   0.0024827682 H            0.0676 eV
+Total MD Energy:                    -4.0750678986 H         -110.8882 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 5
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41519462E+01    0.00000000E+00    0.16442922E-02
+    2   -0.41519462E+01    0.37265329E-03    0.12223191E-02
+    3   -0.41519463E+01   -0.13643382E-07    0.21148112E-05
+
+Total Energy:                       -4.0774508798 H         -110.9531 eV
+Extrapolated to 0K:                 -4.0774508798 H         -110.9531 eV
+Total Mermin free energy:           -4.0774508798 H         -110.9531 eV
+Force related energy:               -4.0774508798 H         -110.9531 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           7   9.5004460357391702E-004
+MD Temperature:                      0.0007978398 H          251.9376 K
+MD Kinetic Energy:                   0.0023935195 H            0.0651 eV
+Total MD Energy:                    -4.0750573602 H         -110.8880 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 6
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41513006E+01    0.00000000E+00    0.14276530E-02
+    2   -0.41513006E+01    0.64564094E-03    0.10609511E-02
+    3   -0.41513006E+01   -0.11011653E-07    0.12552088E-04
+    4   -0.41513006E+01   -0.13663688E-07    0.10218656E-05
+
+Total Energy:                       -4.0773816132 H         -110.9512 eV
+Extrapolated to 0K:                 -4.0773816132 H         -110.9512 eV
+Total Mermin free energy:           -4.0773816132 H         -110.9512 eV
+Force related energy:               -4.0773816132 H         -110.9512 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           8   9.5004460357391702E-004
+MD Temperature:                      0.0007784612 H          245.8183 K
+MD Kinetic Energy:                   0.0023353835 H            0.0635 eV
+Total MD Energy:                    -4.0750462297 H         -110.8876 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 7
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41504803E+01    0.00000000E+00    0.11969867E-02
+    2   -0.41504803E+01    0.82035348E-03    0.88933233E-03
+    3   -0.41504803E+01   -0.92850394E-08    0.25118282E-04
+    4   -0.41504803E+01   -0.11712793E-07    0.39274653E-06
+
+Total Energy:                       -4.0773270038 H         -110.9497 eV
+Extrapolated to 0K:                 -4.0773270038 H         -110.9497 eV
+Total Mermin free energy:           -4.0773270038 H         -110.9497 eV
+Force related energy:               -4.0773270038 H         -110.9497 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:           9   9.5004460357391702E-004
+MD Temperature:                      0.0007642285 H          241.3240 K
+MD Kinetic Energy:                   0.0022926854 H            0.0624 eV
+Total MD Energy:                    -4.0750343185 H         -110.8873 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 8
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41496058E+01    0.00000000E+00    0.10693830E-02
+    2   -0.41496058E+01    0.87449128E-03    0.80533061E-03
+    3   -0.41496058E+01   -0.79386728E-08    0.30309837E-04
+    4   -0.41496058E+01   -0.10249838E-07    0.21550694E-06
+
+Total Energy:                       -4.0772647456 H         -110.9480 eV
+Extrapolated to 0K:                 -4.0772647456 H         -110.9480 eV
+Total Mermin free energy:           -4.0772647456 H         -110.9480 eV
+Force related energy:               -4.0772647456 H         -110.9480 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          10   9.5004460357391702E-004
+MD Temperature:                      0.0007479993 H          236.1992 K
+MD Kinetic Energy:                   0.0022439980 H            0.0611 eV
+Total MD Energy:                    -4.0750207476 H         -110.8870 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 9
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41487989E+01    0.00000000E+00    0.10053722E-02
+    2   -0.41487989E+01    0.80697821E-03    0.75910106E-03
+    3   -0.41487989E+01   -0.64909420E-08    0.27299315E-04
+    4   -0.41487989E+01   -0.85749470E-08    0.13297924E-06
+
+Total Energy:                       -4.0771818049 H         -110.9458 eV
+Extrapolated to 0K:                 -4.0771818049 H         -110.9458 eV
+Total Mermin free energy:           -4.0771818049 H         -110.9458 eV
+Force related energy:               -4.0771818049 H         -110.9458 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          11   9.5004460357391702E-004
+MD Temperature:                      0.0007257424 H          229.1710 K
+MD Kinetic Energy:                   0.0021772272 H            0.0592 eV
+Total MD Energy:                    -4.0750045778 H         -110.8865 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 10
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41481633E+01    0.00000000E+00    0.85788571E-03
+    2   -0.41481633E+01    0.63556552E-03    0.64919097E-03
+    3   -0.41481633E+01   -0.46944262E-08    0.18809148E-04
+    4   -0.41481633E+01   -0.63195165E-08    0.77985682E-07
+
+Total Energy:                       -4.0770838104 H         -110.9431 eV
+Extrapolated to 0K:                 -4.0770838104 H         -110.9431 eV
+Total Mermin free energy:           -4.0770838104 H         -110.9431 eV
+Force related energy:               -4.0770838104 H         -110.9431 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          12   9.5004460357391702E-004
+MD Temperature:                      0.0006994635 H          220.8728 K
+MD Kinetic Energy:                   0.0020983906 H            0.0571 eV
+Total MD Energy:                    -4.0749854198 H         -110.8860 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 11
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41477730E+01    0.00000000E+00    0.63231962E-03
+    2   -0.41477730E+01    0.39035726E-03    0.47961264E-03
+    3   -0.41477730E+01   -0.27112890E-08    0.93066183E-05
+
+Total Energy:                       -4.0769939305 H         -110.9406 eV
+Extrapolated to 0K:                 -4.0769939305 H         -110.9406 eV
+Total Mermin free energy:           -4.0769939305 H         -110.9406 eV
+Force related energy:               -4.0769939305 H         -110.9406 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          13   9.5004460357391702E-004
+MD Temperature:                      0.0006767050 H          213.6863 K
+MD Kinetic Energy:                   0.0020301149 H            0.0552 eV
+Total MD Energy:                    -4.0749638157 H         -110.8854 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 12
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41476665E+01    0.00000000E+00    0.34201866E-03
+    2   -0.41476665E+01    0.10646497E-03    0.26059305E-03
+    3   -0.41476665E+01   -0.10835777E-08    0.18441653E-05
+
+Total Energy:                       -4.0769426328 H         -110.9393 eV
+Extrapolated to 0K:                 -4.0769426328 H         -110.9393 eV
+Total Mermin free energy:           -4.0769426328 H         -110.9393 eV
+Force related energy:               -4.0769426328 H         -110.9393 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          14   9.5004460357391702E-004
+MD Temperature:                      0.0006671465 H          210.6679 K
+MD Kinetic Energy:                   0.0020014395 H            0.0545 eV
+Total MD Energy:                    -4.0749411934 H         -110.8848 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 13
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41478484E+01    0.00000000E+00    0.22426110E-03
+    2   -0.41478484E+01   -0.18190200E-03    0.16849505E-03
+    3   -0.41478484E+01   -0.37350567E-09    0.61226248E-05
+
+Total Energy:                       -4.0769538031 H         -110.9396 eV
+Extrapolated to 0K:                 -4.0769538031 H         -110.9396 eV
+Total Mermin free energy:           -4.0769538031 H         -110.9396 eV
+Force related energy:               -4.0769538031 H         -110.9396 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          15   9.5004460357391702E-004
+MD Temperature:                      0.0006780940 H          214.1249 K
+MD Kinetic Energy:                   0.0020342821 H            0.0554 eV
+Total MD Energy:                    -4.0749195210 H         -110.8842 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 14
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41482927E+01    0.00000000E+00    0.44966906E-03
+    2   -0.41482927E+01   -0.44430408E-03    0.33447541E-03
+    3   -0.41482927E+01   -0.10998269E-08    0.68638514E-05
+
+Total Energy:                       -4.0770335284 H         -110.9417 eV
+Extrapolated to 0K:                 -4.0770335284 H         -110.9417 eV
+Total Mermin free energy:           -4.0770335284 H         -110.9417 eV
+Force related energy:               -4.0770335284 H         -110.9417 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          16   9.5004460357391702E-004
+MD Temperature:                      0.0007109320 H          224.4943 K
+MD Kinetic Energy:                   0.0021327959 H            0.0580 eV
+Total MD Energy:                    -4.0749007325 H         -110.8837 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 15
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41489468E+01    0.00000000E+00    0.69932115E-03
+    2   -0.41489468E+01   -0.65405939E-03    0.52041299E-03
+    3   -0.41489468E+01   -0.33727261E-08    0.18370068E-04
+    4   -0.41489468E+01   -0.43231676E-08    0.74536641E-07
+
+Total Energy:                       -4.0771664817 H         -110.9453 eV
+Extrapolated to 0K:                 -4.0771664817 H         -110.9453 eV
+Total Mermin free energy:           -4.0771664817 H         -110.9453 eV
+Force related energy:               -4.0771664817 H         -110.9453 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          17   9.5004460357391702E-004
+MD Temperature:                      0.0007601352 H          240.0314 K
+MD Kinetic Energy:                   0.0022804057 H            0.0621 eV
+Total MD Energy:                    -4.0748860760 H         -110.8833 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 16
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41497344E+01    0.00000000E+00    0.96516835E-03
+    2   -0.41497345E+01   -0.78765709E-03    0.72694496E-03
+    3   -0.41497345E+01   -0.66872392E-08    0.26774214E-04
+    4   -0.41497345E+01   -0.85914778E-08    0.19394498E-06
+
+Total Energy:                       -4.0773219159 H         -110.9496 eV
+Extrapolated to 0K:                 -4.0773219159 H         -110.9496 eV
+Total Mermin free energy:           -4.0773219159 H         -110.9496 eV
+Force related energy:               -4.0773219159 H         -110.9496 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          18   9.5004460357391702E-004
+MD Temperature:                      0.0008154092 H          257.4855 K
+MD Kinetic Energy:                   0.0024462275 H            0.0666 eV
+Total MD Energy:                    -4.0748756884 H         -110.8830 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 17
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41505601E+01    0.00000000E+00    0.12173390E-02
+    2   -0.41505601E+01   -0.82560546E-03    0.90508231E-03
+    3   -0.41505601E+01   -0.10500730E-07    0.32736028E-04
+    4   -0.41505601E+01   -0.13419520E-07    0.38982027E-06
+
+Total Energy:                       -4.0774670059 H         -110.9535 eV
+Extrapolated to 0K:                 -4.0774670059 H         -110.9535 eV
+Total Mermin free energy:           -4.0774670059 H         -110.9535 eV
+Force related energy:               -4.0774670059 H         -110.9535 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          19   9.5004460357391702E-004
+MD Temperature:                      0.0008660945 H          273.4907 K
+MD Kinetic Energy:                   0.0025982835 H            0.0707 eV
+Total MD Energy:                    -4.0748687224 H         -110.8828 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 18
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41513154E+01    0.00000000E+00    0.14691412E-02
+    2   -0.41513154E+01   -0.75534173E-03    0.10916660E-02
+    3   -0.41513155E+01   -0.14163530E-07    0.34371410E-04
+    4   -0.41513155E+01   -0.17922284E-07    0.67980209E-06
+
+Total Energy:                       -4.0775810513 H         -110.9566 eV
+Extrapolated to 0K:                 -4.0775810513 H         -110.9566 eV
+Total Mermin free energy:           -4.0775810513 H         -110.9566 eV
+Force related energy:               -4.0775810513 H         -110.9566 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          20   9.5004460357391702E-004
+MD Temperature:                      0.0009056779 H          285.9901 K
+MD Kinetic Energy:                   0.0027170337 H            0.0739 eV
+Total MD Energy:                    -4.0748640176 H         -110.8827 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 19
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41518914E+01    0.00000000E+00    0.17003798E-02
+    2   -0.41518915E+01   -0.57597538E-03    0.12629184E-02
+    3   -0.41518915E+01   -0.17299087E-07    0.30147847E-04
+    4   -0.41518915E+01   -0.21633726E-07    0.11371053E-05
+
+Total Energy:                       -4.0776627698 H         -110.9588 eV
+Extrapolated to 0K:                 -4.0776627698 H         -110.9588 eV
+Total Mermin free energy:           -4.0776627698 H         -110.9588 eV
+Force related energy:               -4.0776627698 H         -110.9588 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          21   9.5004460357391702E-004
+MD Temperature:                      0.0009339620 H          294.9215 K
+MD Kinetic Energy:                   0.0028018861 H            0.0762 eV
+Total MD Energy:                    -4.0748608837 H         -110.8826 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 20
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41521942E+01    0.00000000E+00    0.18983716E-02
+    2   -0.41521942E+01   -0.30268203E-03    0.14095008E-02
+    3   -0.41521942E+01   -0.19886750E-07    0.20003125E-04
+    4   -0.41521942E+01   -0.24600471E-07    0.20166836E-05
+
+Total Energy:                       -4.0777261974 H         -110.9606 eV
+Extrapolated to 0K:                 -4.0777261974 H         -110.9606 eV
+Total Mermin free energy:           -4.0777261974 H         -110.9606 eV
+Force related energy:               -4.0777261974 H         -110.9606 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          22   9.5004460357391702E-004
+MD Temperature:                      0.0009555724 H          301.7455 K
+MD Kinetic Energy:                   0.0028667172 H            0.0780 eV
+Total MD Energy:                    -4.0748594802 H         -110.8826 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 21
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41521626E+01    0.00000000E+00    0.20525116E-02
+    2   -0.41521626E+01    0.31633547E-04    0.15234678E-02
+    3   -0.41521626E+01   -0.22173374E-07    0.59889027E-05
+
+Total Energy:                       -4.0777872286 H         -110.9622 eV
+Extrapolated to 0K:                 -4.0777872286 H         -110.9622 eV
+Total Mermin free energy:           -4.0777872286 H         -110.9622 eV
+Force related energy:               -4.0777872286 H         -110.9622 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          23   9.5004460357391702E-004
+MD Temperature:                      0.0009755801 H          308.0635 K
+MD Kinetic Energy:                   0.0029267404 H            0.0796 eV
+Total MD Energy:                    -4.0748604882 H         -110.8826 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 22
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41517823E+01    0.00000000E+00    0.21549760E-02
+    2   -0.41517823E+01    0.38030506E-03    0.15988199E-02
+    3   -0.41517824E+01   -0.24404414E-07    0.86425406E-05
+
+Total Energy:                       -4.0778492221 H         -110.9639 eV
+Extrapolated to 0K:                 -4.0778492221 H         -110.9639 eV
+Total Mermin free energy:           -4.0778492221 H         -110.9639 eV
+Force related energy:               -4.0778492221 H         -110.9639 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          24   9.5004460357391702E-004
+MD Temperature:                      0.0009949789 H          314.1891 K
+MD Kinetic Energy:                   0.0029849366 H            0.0812 eV
+Total MD Energy:                    -4.0748642855 H         -110.8827 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 23
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41510901E+01    0.00000000E+00    0.22002633E-02
+    2   -0.41510901E+01    0.69225341E-03    0.16313252E-02
+    3   -0.41510902E+01   -0.26585140E-07    0.24945545E-04
+    4   -0.41510902E+01   -0.32603193E-07    0.26768911E-05
+
+Total Energy:                       -4.0778974328 H         -110.9652 eV
+Extrapolated to 0K:                 -4.0778974328 H         -110.9652 eV
+Total Mermin free energy:           -4.0778974328 H         -110.9652 eV
+Force related energy:               -4.0778974328 H         -110.9652 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          25   9.5004460357391702E-004
+MD Temperature:                      0.0010090650 H          318.6371 K
+MD Kinetic Energy:                   0.0030271950 H            0.0824 eV
+Total MD Energy:                    -4.0748702378 H         -110.8829 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 24
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41501667E+01    0.00000000E+00    0.21830754E-02
+    2   -0.41501667E+01    0.92348599E-03    0.16169756E-02
+    3   -0.41501668E+01   -0.28029119E-07    0.37632510E-04
+    4   -0.41501668E+01   -0.34444443E-07    0.21215902E-05
+
+Total Energy:                       -4.0779062224 H         -110.9655 eV
+Extrapolated to 0K:                 -4.0779062224 H         -110.9655 eV
+Total Mermin free energy:           -4.0779062224 H         -110.9655 eV
+Force related energy:               -4.0779062224 H         -110.9655 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          26   9.5004460357391702E-004
+MD Temperature:                      0.0010098662 H          318.8901 K
+MD Kinetic Energy:                   0.0030295986 H            0.0824 eV
+Total MD Energy:                    -4.0748766239 H         -110.8830 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 25
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41491206E+01    0.00000000E+00    0.21002584E-02
+    2   -0.41491206E+01    0.10461720E-02    0.15537005E-02
+    3   -0.41491206E+01   -0.27948717E-07    0.46109907E-04
+    4   -0.41491206E+01   -0.34379450E-07    0.17069821E-05
+
+Total Energy:                       -4.0778542680 H         -110.9641 eV
+Extrapolated to 0K:                 -4.0778542680 H         -110.9641 eV
+Total Mermin free energy:           -4.0778542680 H         -110.9641 eV
+Force related energy:               -4.0778542680 H         -110.9641 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          27   9.5004460357391702E-004
+MD Temperature:                      0.0009910115 H          312.9363 K
+MD Kinetic Energy:                   0.0029730346 H            0.0809 eV
+Total MD Energy:                    -4.0748812334 H         -110.8832 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 26
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41480690E+01    0.00000000E+00    0.19499276E-02
+    2   -0.41480690E+01    0.10516572E-02    0.14405485E-02
+    3   -0.41480690E+01   -0.25561510E-07    0.48568045E-04
+    4   -0.41480690E+01   -0.31396112E-07    0.13101322E-05
+
+Total Energy:                       -4.0777380515 H         -110.9609 eV
+Extrapolated to 0K:                 -4.0777380515 H         -110.9609 eV
+Total Mermin free energy:           -4.0777380515 H         -110.9609 eV
+Force related energy:               -4.0777380515 H         -110.9609 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          28   9.5004460357391702E-004
+MD Temperature:                      0.0009519600 H          300.6048 K
+MD Kinetic Energy:                   0.0028558800 H            0.0777 eV
+Total MD Energy:                    -4.0748821715 H         -110.8832 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 27
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41471211E+01    0.00000000E+00    0.17340776E-02
+    2   -0.41471211E+01    0.94798339E-03    0.12795100E-02
+    3   -0.41471211E+01   -0.20788291E-07    0.44263609E-04
+    4   -0.41471211E+01   -0.25419021E-07    0.91716191E-06
+
+Total Energy:                       -4.0775761911 H         -110.9565 eV
+Extrapolated to 0K:                 -4.0775761911 H         -110.9565 eV
+Total Mermin free energy:           -4.0775761911 H         -110.9565 eV
+Force related energy:               -4.0775761911 H         -110.9565 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          29   9.5004460357391702E-004
+MD Temperature:                      0.0008992265 H          283.9529 K
+MD Kinetic Energy:                   0.0026976796 H            0.0734 eV
+Total MD Energy:                    -4.0748785115 H         -110.8831 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 28
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41463668E+01    0.00000000E+00    0.14604931E-02
+    2   -0.41463669E+01    0.75426729E-03    0.10767041E-02
+    3   -0.41463669E+01   -0.14508436E-07    0.33142378E-04
+    4   -0.41463669E+01   -0.17600697E-07    0.57872444E-06
+
+Total Energy:                       -4.0774029555 H         -110.9518 eV
+Extrapolated to 0K:                 -4.0774029555 H         -110.9518 eV
+Total Mermin free energy:           -4.0774029555 H         -110.9518 eV
+Force related energy:               -4.0774029555 H         -110.9518 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          30   9.5004460357391702E-004
+MD Temperature:                      0.0008441607 H          266.5645 K
+MD Kinetic Energy:                   0.0025324821 H            0.0689 eV
+Total MD Energy:                    -4.0748704734 H         -110.8829 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 29
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41458722E+01    0.00000000E+00    0.11433006E-02
+    2   -0.41458722E+01    0.49468596E-03    0.84261811E-03
+    3   -0.41458722E+01   -0.83107663E-08    0.16025747E-04
+    4   -0.41458722E+01   -0.99674997E-08    0.37370259E-06
+
+Total Energy:                       -4.0772550646 H         -110.9478 eV
+Extrapolated to 0K:                 -4.0772550646 H         -110.9478 eV
+Total Mermin free energy:           -4.0772550646 H         -110.9478 eV
+Force related energy:               -4.0772550646 H         -110.9478 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          31   9.5004460357391702E-004
+MD Temperature:                      0.0007986251 H          252.1856 K
+MD Kinetic Energy:                   0.0023958754 H            0.0652 eV
+Total MD Energy:                    -4.0748591892 H         -110.8826 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 30
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41456775E+01    0.00000000E+00    0.80183226E-03
+    2   -0.41456775E+01    0.19467438E-03    0.59124220E-03
+    3   -0.41456775E+01   -0.37997188E-08    0.39198366E-05
+
+Total Energy:                       -4.0771582254 H         -110.9451 eV
+Extrapolated to 0K:                 -4.0771582254 H         -110.9451 eV
+Total Mermin free energy:           -4.0771582254 H         -110.9451 eV
+Force related energy:               -4.0771582254 H         -110.9451 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          32   9.5004460357391702E-004
+MD Temperature:                      0.0007706666 H          243.3570 K
+MD Kinetic Energy:                   0.0023119997 H            0.0629 eV
+Total MD Energy:                    -4.0748462257 H         -110.8822 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 31
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41457974E+01    0.00000000E+00    0.51994299E-03
+    2   -0.41457974E+01   -0.11990919E-03    0.39159792E-03
+    3   -0.41457975E+01   -0.18650947E-08    0.21048983E-04
+    4   -0.41457975E+01   -0.23684805E-08    0.16430528E-07
+
+Total Energy:                       -4.0771188894 H         -110.9440 eV
+Extrapolated to 0K:                 -4.0771188894 H         -110.9440 eV
+Total Mermin free energy:           -4.0771188894 H         -110.9440 eV
+Force related energy:               -4.0771188894 H         -110.9440 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          33   9.5004460357391702E-004
+MD Temperature:                      0.0007619500 H          240.6045 K
+MD Kinetic Energy:                   0.0022858500 H            0.0622 eV
+Total MD Energy:                    -4.0748330394 H         -110.8818 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 32
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41462191E+01    0.00000000E+00    0.58243828E-03
+    2   -0.41462191E+01   -0.42169300E-03    0.44346580E-03
+    3   -0.41462191E+01   -0.22305517E-08    0.80873506E-05
+
+Total Energy:                       -4.0771241177 H         -110.9442 eV
+Extrapolated to 0K:                 -4.0771241177 H         -110.9442 eV
+Total Mermin free energy:           -4.0771241177 H         -110.9442 eV
+Force related energy:               -4.0771241177 H         -110.9442 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          34   9.5004460357391702E-004
+MD Temperature:                      0.0007678721 H          242.4745 K
+MD Kinetic Energy:                   0.0023036162 H            0.0627 eV
+Total MD Energy:                    -4.0748205015 H         -110.8815 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 33
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41469000E+01    0.00000000E+00    0.76043963E-03
+    2   -0.41469000E+01   -0.68088557E-03    0.57840264E-03
+    3   -0.41469000E+01   -0.38850958E-08    0.14007097E-04
+    4   -0.41469000E+01   -0.53976112E-08    0.68142075E-07
+
+Total Energy:                       -4.0771494787 H         -110.9449 eV
+Extrapolated to 0K:                 -4.0771494787 H         -110.9449 eV
+Total Mermin free energy:           -4.0771494787 H         -110.9449 eV
+Force related energy:               -4.0771494787 H         -110.9449 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          35   9.5004460357391702E-004
+MD Temperature:                      0.0007802720 H          246.3901 K
+MD Kinetic Energy:                   0.0023408161 H            0.0637 eV
+Total MD Energy:                    -4.0748086626 H         -110.8812 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 34
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41477667E+01    0.00000000E+00    0.94721101E-03
+    2   -0.41477667E+01   -0.86669873E-03    0.71857545E-03
+    3   -0.41477668E+01   -0.53931233E-08    0.25294663E-04
+    4   -0.41477668E+01   -0.73665829E-08    0.71603916E-07
+
+Total Energy:                       -4.0771719481 H         -110.9455 eV
+Extrapolated to 0K:                 -4.0771719481 H         -110.9455 eV
+Total Mermin free energy:           -4.0771719481 H         -110.9455 eV
+Force related energy:               -4.0771719481 H         -110.9455 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          36   9.5004460357391702E-004
+MD Temperature:                      0.0007916709 H          249.9896 K
+MD Kinetic Energy:                   0.0023750127 H            0.0646 eV
+Total MD Energy:                    -4.0747969354 H         -110.8809 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 35
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41487185E+01    0.00000000E+00    0.10142674E-02
+    2   -0.41487185E+01   -0.95172883E-03    0.76804107E-03
+    3   -0.41487185E+01   -0.60177392E-08    0.33771724E-04
+    4   -0.41487185E+01   -0.80617584E-08    0.86194488E-07
+
+Total Energy:                       -4.0771822923 H         -110.9458 eV
+Extrapolated to 0K:                 -4.0771822923 H         -110.9458 eV
+Total Mermin free energy:           -4.0771822923 H         -110.9458 eV
+Force related energy:               -4.0771822923 H         -110.9458 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          37   9.5004460357391702E-004
+MD Temperature:                      0.0007991983 H          252.3666 K
+MD Kinetic Energy:                   0.0023975949 H            0.0652 eV
+Total MD Energy:                    -4.0747846974 H         -110.8805 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 36
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41496372E+01    0.00000000E+00    0.96217563E-03
+    2   -0.41496372E+01   -0.91866644E-03    0.72696977E-03
+    3   -0.41496372E+01   -0.56836180E-08    0.37078620E-04
+    4   -0.41496372E+01   -0.74151032E-08    0.86816937E-07
+
+Total Energy:                       -4.0771905833 H         -110.9460 eV
+Extrapolated to 0K:                 -4.0771905833 H         -110.9460 eV
+Total Mermin free energy:           -4.0771905833 H         -110.9460 eV
+Force related energy:               -4.0771905833 H         -110.9460 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          38   9.5004460357391702E-004
+MD Temperature:                      0.0008061883 H          254.5738 K
+MD Kinetic Energy:                   0.0024185650 H            0.0658 eV
+Total MD Energy:                    -4.0747720184 H         -110.8802 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 37
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41504038E+01    0.00000000E+00    0.83064626E-03
+    2   -0.41504038E+01   -0.76658776E-03    0.61470560E-03
+    3   -0.41504038E+01   -0.50111231E-08    0.30826754E-04
+    4   -0.41504038E+01   -0.62976877E-08    0.88919170E-07
+
+Total Energy:                       -4.0772209023 H         -110.9468 eV
+Extrapolated to 0K:                 -4.0772209023 H         -110.9468 eV
+Total Mermin free energy:           -4.0772209023 H         -110.9468 eV
+Force related energy:               -4.0772209023 H         -110.9468 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          39   9.5004460357391702E-004
+MD Temperature:                      0.0008202959 H          259.0286 K
+MD Kinetic Energy:                   0.0024608876 H            0.0670 eV
+Total MD Energy:                    -4.0747600147 H         -110.8799 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 38
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41509185E+01    0.00000000E+00    0.91630916E-03
+    2   -0.41509185E+01   -0.51473935E-03    0.67777204E-03
+    3   -0.41509185E+01   -0.48315423E-08    0.13515814E-04
+    4   -0.41509185E+01   -0.58666831E-08    0.16484718E-06
+
+Total Energy:                       -4.0772968279 H         -110.9489 eV
+Extrapolated to 0K:                 -4.0772968279 H         -110.9489 eV
+Total Mermin free energy:           -4.0772968279 H         -110.9489 eV
+Force related energy:               -4.0772968279 H         -110.9489 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          40   9.5004460357391702E-004
+MD Temperature:                      0.0008487410 H          268.0109 K
+MD Kinetic Energy:                   0.0025462229 H            0.0693 eV
+Total MD Energy:                    -4.0747506050 H         -110.8796 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 39
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41511197E+01    0.00000000E+00    0.99287091E-03
+    2   -0.41511197E+01   -0.20115604E-03    0.73401689E-03
+    3   -0.41511197E+01   -0.57073075E-08    0.68181802E-05
+
+Total Energy:                       -4.0774250185 H         -110.9524 eV
+Extrapolated to 0K:                 -4.0774250185 H         -110.9524 eV
+Total Mermin free energy:           -4.0774250185 H         -110.9524 eV
+Force related energy:               -4.0774250185 H         -110.9524 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          41   9.5004460357391702E-004
+MD Temperature:                      0.0008931372 H          282.0301 K
+MD Kinetic Energy:                   0.0026794115 H            0.0729 eV
+Total MD Energy:                    -4.0747456071 H         -110.8795 eV
+
+--------------------------------------------------------------------------------
+
+***  Geometry step: 40
+
+ iSCC Total electronic   Diff electronic      SCC error    
+    1   -0.41509947E+01    0.00000000E+00    0.10706398E-02
+    2   -0.41509947E+01    0.12495378E-03    0.79135597E-03
+    3   -0.41509948E+01   -0.76833278E-08    0.26394366E-04
+    4   -0.41509948E+01   -0.94601598E-08    0.22419824E-06
+
+Total Energy:                       -4.0775870555 H         -110.9568 eV
+Extrapolated to 0K:                 -4.0775870555 H         -110.9568 eV
+Total Mermin free energy:           -4.0775870555 H         -110.9568 eV
+Force related energy:               -4.0775870555 H         -110.9568 eV
+
+>> Charges saved for restart in charges.bin
+ TempProfile:          42   9.5004460357391702E-004
+MD Temperature:                      0.0009470995 H          299.0700 K
+MD Kinetic Energy:                   0.0028412985 H            0.0773 eV
+Total MD Energy:                    -4.0747457569 H         -110.8795 eV
+
+Molecular dynamics completed
+MD information accumulated in md.out
+
+--------------------------------------------------------------------------------
+DFTB+ running times                          cpu [s]             wall clock [s]
+--------------------------------------------------------------------------------
+SCC                                    +       0.08 ( 78.6%)       0.14 ( 83.6%)
+Post-SCC processing                    +       0.02 ( 17.5%)       0.03 ( 15.2%)
+--------------------------------------------------------------------------------
+Missing                                +       0.00 (  3.9%)       0.00 (  1.2%)
+Total                                  =       0.10 (100.0%)       0.17 (100.0%)
+--------------------------------------------------------------------------------

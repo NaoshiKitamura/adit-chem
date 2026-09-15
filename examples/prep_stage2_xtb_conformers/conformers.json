@@ -1,0 +1,125 @@
+{
+  "generated_by": "adit 0.0.1",
+  "source": "CCO",
+  "requested": 10,
+  "embedded": 10,
+  "kept": 3,
+  "seed": 12345,
+  "force_field": "MMFF94",
+  "max_iters": 200,
+  "rmsd_threshold_ang": 0.3,
+  "rmsd_atoms": "all",
+  "energy_unit": "kcal/mol (force field)",
+  "conformers": [
+    {
+      "rdkit_id": 1,
+      "energy_kcal_mol": -1.5170975768690231,
+      "relative_kcal_mol": 0.0,
+      "converged": true,
+      "kept": true,
+      "rank": 1,
+      "dir": "conf_001",
+      "duplicate_of_rdkit_id": null,
+      "rmsd_to_duplicate_ang": null
+    },
+    {
+      "rdkit_id": 9,
+      "energy_kcal_mol": -1.5170975730467116,
+      "relative_kcal_mol": 3.822311578360882e-09,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 1,
+      "rmsd_to_duplicate_ang": 7.809750248613485e-06
+    },
+    {
+      "rdkit_id": 6,
+      "energy_kcal_mol": -1.3368570640331376,
+      "relative_kcal_mol": 0.1802405128358855,
+      "converged": true,
+      "kept": true,
+      "rank": 2,
+      "dir": "conf_002",
+      "duplicate_of_rdkit_id": null,
+      "rmsd_to_duplicate_ang": null
+    },
+    {
+      "rdkit_id": 7,
+      "energy_kcal_mol": -1.3368570638845014,
+      "relative_kcal_mol": 0.1802405129845217,
+      "converged": true,
+      "kept": true,
+      "rank": 3,
+      "dir": "conf_003",
+      "duplicate_of_rdkit_id": null,
+      "rmsd_to_duplicate_ang": null
+    },
+    {
+      "rdkit_id": 3,
+      "energy_kcal_mol": -1.3368570637951842,
+      "relative_kcal_mol": 0.18024051307383893,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 7,
+      "rmsd_to_duplicate_ang": 2.657294829257407e-06
+    },
+    {
+      "rdkit_id": 2,
+      "energy_kcal_mol": -1.3368570636020827,
+      "relative_kcal_mol": 0.18024051326694046,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 7,
+      "rmsd_to_duplicate_ang": 1.1506424137409735e-06
+    },
+    {
+      "rdkit_id": 5,
+      "energy_kcal_mol": -1.3368570634559243,
+      "relative_kcal_mol": 0.18024051341309888,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 7,
+      "rmsd_to_duplicate_ang": 2.012974744912148e-06
+    },
+    {
+      "rdkit_id": 0,
+      "energy_kcal_mol": -1.3368570629107142,
+      "relative_kcal_mol": 0.18024051395830898,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 6,
+      "rmsd_to_duplicate_ang": 2.3362689161418262e-06
+    },
+    {
+      "rdkit_id": 8,
+      "energy_kcal_mol": -1.3368570628495346,
+      "relative_kcal_mol": 0.18024051401948848,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 7,
+      "rmsd_to_duplicate_ang": 1.7421830327461468e-06
+    },
+    {
+      "rdkit_id": 4,
+      "energy_kcal_mol": -1.3368570609608164,
+      "relative_kcal_mol": 0.18024051590820678,
+      "converged": true,
+      "kept": false,
+      "rank": null,
+      "dir": null,
+      "duplicate_of_rdkit_id": 6,
+      "rmsd_to_duplicate_ang": 6.810046227236452e-06
+    }
+  ]
+}
