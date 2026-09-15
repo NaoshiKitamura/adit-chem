@@ -36,7 +36,7 @@ class MlipMethodPanel(QWidget):
         self.pip = QLabel(""); self.pip.setObjectName("hint"); self.pip.setWordWrap(True); self.pip.setTextInteractionFlags(
             self.pip.textInteractionFlags())
         info = QLabel("分子でも周期系でも使えます。全電荷とスピン多重度は使いません (0 と 1 のまま)。k 点はありません。"
-                      "計算は生成物の run_mlip.py (ASE) が行い、ADIT 自身はモデルのパッケージを使いません")
+                      "計算は生成した run_mlip.py (ASE) が行い、ADIT 自身はモデルのパッケージを使いません")
         info.setObjectName("hint"); info.setWordWrap(True)
 
         form = QFormLayout(self); form.setVerticalSpacing(ROW_SPACING)

@@ -1,4 +1,4 @@
-# examples/prep_stage1_dftb_stages —— 段に分けた MD (最小化 → NVT → NVE) の生成物と実走の結果
+# examples/prep_stage1_dftb_stages —— 段階に分けた MD (最小化 → NVT → NVE) の生成したファイルと実際に実行した結果
 
 `adit.stages.write_stages` (コマンド行なら `adit-gen spec.json out/ --stages stages.json`) で作ったもの。構造はテスト用の歪んだ水 (tests/conftest.py の water_spec)、
 SK セットは mio-1-1、DFTB+ 25.1 (conda-forge、開発バージョンの表示)。`bash submit.sh` を 1 回実行した (OMP 1 スレッド、2026-09-12)。

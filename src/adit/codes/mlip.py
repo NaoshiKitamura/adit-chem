@@ -250,7 +250,7 @@ class MlipGenerator(InputGenerator):
     def files_to_copy(self, spec: CalculationSpec, res) -> dict[str, Path]:
         mf = self._model_file(spec)
         if mf is not None and mf.name in (SCRIPT_FILE, SETTINGS_FILE, STRUCTURE_FILE):
-            raise GenerationError(L(f"モデルのファイル名 {mf.name} は生成物の名前と重なります。名前を変えてください", f"the model file name {mf.name} clashes with a generated file; rename it"))
+            raise GenerationError(L(f"モデルのファイル名 {mf.name} は生成した名前と重なります。名前を変えてください", f"the model file name {mf.name} clashes with a generated file; rename it"))
         return {mf.name: mf} if mf is not None else {}
 
     def run_command(self, spec: CalculationSpec, profile: Profile) -> str:

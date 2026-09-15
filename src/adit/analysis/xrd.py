@@ -78,7 +78,7 @@ def powder_pattern(atoms: Atoms, radiation: str = DEFAULT_RADIATION,
     if not len(pattern.x):
         raise XrdError(L(f"2θ = {lo:g}〜{hi:g} 度にピークがありません", f"no peaks between 2-theta = {lo:g} and {hi:g} degrees"))
     note = L(f"pymatgen の XRDCalculator ({radiation}、λ = {calc.wavelength:.5g} Å、2θ = {lo:g}〜{hi:g} 度)。"
-             "強度は最大を 100 にそろえた相対値です。実測との一致は判定していません。"
+             "強度は最大を 100 にそろえた相対値です。測定との一致は判定していません。"
              "熱振動 (デバイ・ワラー因子) と選択配向は入れていません。指数 hkl は、与えた構造のセルでの値です (基本セルと慣用セルでは指数の付き方が変わります)。",
              f"pymatgen's XRDCalculator ({radiation}, lambda = {calc.wavelength:.5g} Å, 2-theta = {lo:g}-{hi:g} degrees). "
              "Intensities are relative with the maximum set to 100; agreement with a measurement is not assessed. "
@@ -92,7 +92,7 @@ def powder_pattern(atoms: Atoms, radiation: str = DEFAULT_RADIATION,
 def read_measured(path: Path | str) -> tuple[np.ndarray, np.ndarray]:
     p = Path(path).expanduser()
     if not p.is_file():
-        raise XrdError(L(f"実測のファイルがありません: {p}", f"no such measured-pattern file: {p}"))
+        raise XrdError(L(f"測定データのファイルがありません: {p}", f"no such measured-pattern file: {p}"))
     xs: list[float] = []
     ys: list[float] = []
     for line in p.read_text(encoding="utf-8", errors="replace").splitlines():

@@ -68,7 +68,7 @@ class DftbPlusGenerator(InputGenerator):
             if not p.is_file():
                 errs.append(ValidationError("method.solvation_param_file", L(f"溶媒のパラメータファイルがありません: {p}", f"solvation parameter file not found: {p}")))
             elif p.name in (INPUT_FILE, GEOMETRY_FILE, "dftb_pin.hsd", "detailed.out") or p.name.startswith("submit"):
-                errs.append(ValidationError("method.solvation_param_file", L(f"ファイル名 {p.name} は生成物の名前と重なります。名前を変えてください", f"the file name {p.name} clashes with a generated file; rename it")))
+                errs.append(ValidationError("method.solvation_param_file", L(f"ファイル名 {p.name} は生成した名前と重なります。名前を変えてください", f"the file name {p.name} clashes with a generated file; rename it")))
             if spec.structure.periodic:
                 errs.append(ValidationError("method.solvation_param_file", L("DFTB+ の GeneralisedBorn は有限の系 (分子) だけです (マニュアル 2.4.19 節)", "DFTB+ GeneralisedBorn is for finite systems only (manual 2.4.19)")))
         if m.seed < 1:

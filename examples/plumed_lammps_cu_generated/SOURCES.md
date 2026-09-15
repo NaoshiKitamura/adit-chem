@@ -1,4 +1,4 @@
-# examples/plumed_lammps_cu_generated —— LAMMPS の MD に PLUMED をつないだ例 (2026-09-13 に実走)
+# examples/plumed_lammps_cu_generated —— LAMMPS の MD に PLUMED をつないだ例 (2026-09-13 に実行)
 
 `examples/lammps_cu_nvt_generated` と同じ Cu の NVT MD に、**利用者が書いた PLUMED の入力**を足したもの。
 **ADIT は集合変数もバイアスも作りません。**`plumed.dat` の中身はこの例のために人が書いたものです。
@@ -11,7 +11,7 @@
 | つなぎ方 | `in.lammps` の `run` の直前に `fix adit_plumed all plumed plumedfile plumed.dat outfile plumed.log` |
 | 実行 | LAMMPS 22 Jul 2025 (conda-forge、PLUMED パッケージ入り)、PLUMED 2.10、1 プロセス・1 スレッド |
 
-## 単位に注意 (実走で確かめた)
+## 単位に注意 (実際に実行して確かめた)
 
 LAMMPS の `metal` 単位では距離は Å ですが、**PLUMED の既定の単位は nm** です。
 `COLVAR` の `d1` は 0.2556 前後で、これは 2.556 Å (Cu の最近接距離) を nm で書いた値です。

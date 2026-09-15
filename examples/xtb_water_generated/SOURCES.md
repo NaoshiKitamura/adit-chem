@@ -1,7 +1,7 @@
-# examples/xtb_water_generated —— 生成器が作った xtb の入力と、実走の結果
+# examples/xtb_water_generated —— 生成器が作った xtb の入力と、実際に実行した結果
 
 adit の生成器 (`codes/xtb.py`) が作った水分子の構造最適化 (GFN2-xTB) と、xtb 6.7.1 (conda-forge) で実行した結果。
-xtb にはパラメータファイルが無いので、生成物はこれで完結する。
+xtb にはパラメータファイルが無いので、生成したファイルはこれで完結する。
 
 | 項目 | 内容 |
 |---|---|

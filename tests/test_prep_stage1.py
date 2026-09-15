@@ -373,7 +373,7 @@ def test_provenance_in_spec_and_readme(cfg, tmp_path):
     names = {f["name"]: f["sha256"] for f in prov["files"]}
     assert names["skf/H-O.skf"] == hashlib.sha256((out / "skf" / "H-O.skf").read_bytes()).hexdigest()
     readme = (out / "README.txt").read_text(encoding="utf-8")
-    assert "== 来歴 ==" in readme and names["skf/H-O.skf"] in readme
+    assert "== 作成時の記録 ==" in readme and names["skf/H-O.skf"] in readme
     sub = (out / "submit.sh").read_text(encoding="utf-8")
     assert "trap 'grep -m1 -E" in sub and sub.rstrip().splitlines()[-1] == "dftb+ > output.log 2>&1"
     cp = build_project(cp2k_h2o(), cfg)

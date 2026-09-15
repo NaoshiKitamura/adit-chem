@@ -900,13 +900,13 @@ def run_analysis(run_dir: Path | str, opts: AnalysisOptions | None = None) -> An
             peak = int(np.argmax(ram))
             res.notes.append(L(
                 f"ラマン活性を {len(ram)} 本読みました (最大は {freqs[peak]:.1f} cm⁻¹ の {ram[peak]:.3g})。"
-                "赤外の強度とは別の量です。実測との一致は判定しません",
+                "赤外の強度とは別の量です。測定との一致は判定しません",
                 f"read {len(ram)} Raman activities (the largest is {ram[peak]:.3g} at {freqs[peak]:.1f} cm⁻¹); "
                 "this is a different quantity from the infrared intensity, and agreement with experiment is not judged"))
         res.notes.append(L(
             "振動数と強度の表を frequencies.csv に書きました (1 列目 cm⁻¹、2 列目 赤外の強度、3 列目 ラマン活性)。"
             "図は幅 47 cm⁻¹ (半値全幅) のガウス関数で広げたものです。強度の単位はコードが書いたままで、"
-            "実測と重ねるときは縦軸を自分で合わせてください",
+            "測定と重ねるときは縦軸を自分で合わせてください",
             "the frequencies and intensities are in frequencies.csv (cm^-1, IR intensity, Raman activity); "
             "the figure broadens them with a Gaussian of 47 cm^-1 FWHM. The intensity unit is whatever the code "
             "printed, so scale the vertical axis yourself when overlaying a measured spectrum"))
@@ -1348,7 +1348,7 @@ def _measured_spectrum(res: AnalysisResult, opts: AnalysisOptions):
         return None
     path = Path(opts.spectrum_measured).expanduser()
     if not path.is_file():
-        res.notes.append(L(f"実測のファイルがありません: {path}", f"measured spectrum not found: {path}"))
+        res.notes.append(L(f"測定データのファイルがありません: {path}", f"measured spectrum not found: {path}"))
         return None
     rows = []
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
@@ -1361,7 +1361,7 @@ def _measured_spectrum(res: AnalysisResult, opts: AnalysisOptions):
         except (ValueError, IndexError):
             continue
     if len(rows) < 2:
-        res.notes.append(L(f"{path.name} から実測の点を 2 つ以上 読めません (1 列目 波数 [cm⁻¹]、2 列目 強度)",
+        res.notes.append(L(f"{path.name} から測定の点を 2 つ以上 読めません (1 列目 波数 [cm⁻¹]、2 列目 強度)",
                            f"cannot read two or more points from {path.name} (column 1 wavenumber in cm^-1, column 2 intensity)"))
         return None
     arr = np.array(sorted(rows))
@@ -1371,7 +1371,7 @@ def _measured_spectrum(res: AnalysisResult, opts: AnalysisOptions):
         res.notes.append(L(f"{path.name} の強度がすべて 0 です", f"all intensities in {path.name} are zero"))
         return None
     res.notes.append(L(
-        f"実測のスペクトル {path.name} を重ねました ({arr.shape[0]} 点、"
+        f"測定したスペクトル {path.name} を重ねました ({arr.shape[0]} 点、"
         f"{arr[0, 0]:.1f}〜{arr[-1, 0]:.1f} cm⁻¹)。縦軸は互いの最大値で合わせただけで、一致の良し悪しは判定しません",
         f"overlaid the measured spectrum {path.name} ({arr.shape[0]} points, "
         f"{arr[0, 0]:.1f}-{arr[-1, 0]:.1f} cm^-1); the vertical axes are matched at their maxima only, "
@@ -1831,7 +1831,7 @@ def _add_xrd(res: AnalysisResult, data: RunData, out: Path, opts: AnalysisOption
             res.notes.append(str(ex))
         else:
             ax.plot(mx, scale_to_100(my), color="#888", lw=1.0, label="measured (scaled to a maximum of 100)")
-            measured_note = L(f" 実測 {Path(opts.xrd_measured).name} ({len(mx)} 点) を重ねました。"
+            measured_note = L(f" 測定 {Path(opts.xrd_measured).name} ({len(mx)} 点) を重ねました。"
                               "どちらも最大を 100 にそろえてあります。一致・不一致は判定していません。",
                               f" The measurement {Path(opts.xrd_measured).name} ({len(mx)} points) is overlaid; "
                               "both are scaled to a maximum of 100 and no agreement is assessed.")

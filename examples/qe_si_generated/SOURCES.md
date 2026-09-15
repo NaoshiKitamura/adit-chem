@@ -1,4 +1,4 @@
-# examples/qe_si_generated —— 生成器が作った pw.x の入力と、実走の結果
+# examples/qe_si_generated —— 生成器が作った pw.x の入力と、実際に実行した結果
 
 adit の生成器 (`codes/espresso.py`) が作ったダイヤモンド Si (2 原子、ASE の参照状態 a = 5.43 Å) の構造緩和と、
 Quantum ESPRESSO 7.5 (conda-forge) の pw.x で実行した結果。`pseudo/` (UPF) はリポジトリに入れていない。

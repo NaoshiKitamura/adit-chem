@@ -92,7 +92,7 @@ def write_top(out: Path, cfg, spec: CalculationSpec, dirs: list[Path], readme_li
         lines.append(L(f"  bash submit.sh   ({what_ja}を順に実行します。1 つずつ実行するなら、各ディレクトリで bash submit.sh)",
                        f"  bash submit.sh   (runs the {what_en} in order; or run bash submit.sh inside each directory)"))
     else:
-        lines.append(L("  この生成物はクラスタのプロファイル用です。この PC で実行するなら、プロファイルを direct のものにして生成し直します。",
+        lines.append(L("  この生成したファイルはクラスタのプロファイル用です。この PC で実行するなら、プロファイルを direct のものにして生成し直します。",
                        "  These files are for a cluster profile; to run on this PC, generate again with a direct profile."))
     lines += ["", L("== クラスタで実行する (ADIT は投入しません) ==", "== Running on a cluster (ADIT does not submit) =="),
               L("  各ディレクトリの submit.sh をクラスタのプロファイルで生成したうえで、このディレクトリで次のように投入します (互いに独立)。",

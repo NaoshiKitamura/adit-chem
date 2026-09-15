@@ -1,4 +1,4 @@
-# examples/openmm_spce_nvt_generated —— OpenMM で SPC/E 水 216 分子の NVT MD (2026-09-13 に実走)
+# examples/openmm_spce_nvt_generated —— OpenMM で SPC/E 水 216 分子の NVT MD (2026-09-13 に実行)
 
 ADIT が生成した OpenMM の計算ディレクトリと、それを実際に実行した結果。**ADIT は力場・原子型・電荷を作らない。**
 トポロジーと座標は `examples/gromacs_spce/`(GROMACS 同梱の SPC/E の箱)をそのまま写したもので、出典とライセンスは
@@ -31,5 +31,5 @@ SPC/E の文献値 (Berendsen, Grigera, Straatsma, J. Phys. Chem. 91, 6269 (1987
 ## 出典
 
 - OpenMM の使い方と API: https://docs.openmm.org/latest/userguide/application/02_running_sims.html 、
-  https://docs.openmm.org/latest/api-python/app.html (引数は openmm 8.6.1 の定義で確かめ、8.4.0.dev でも実走した)
+  https://docs.openmm.org/latest/api-python/app.html (引数は openmm 8.6.1 の定義で確かめ、8.4.0.dev でも実際に実行した)
 - OpenMM の文献: Eastman ほか, PLoS Comput. Biol. 13, e1005659 (2017), doi:10.1371/journal.pcbi.1005659

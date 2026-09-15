@@ -119,7 +119,7 @@ _EN: dict[str, str] = {
     "例 PBE、BLYP、PBE0 (CP2K の XC_FUNCTIONAL の名前)": "e.g. PBE, BLYP, PBE0 (a CP2K XC_FUNCTIONAL name)",
     "[節の道筋] の行のあとに、その節の末尾に足す行 (例\n[FORCE_EVAL/DFT/SCF]\nSCF_GUESS ATOMIC)":
         "Lines after a [section path] line are appended to that section (e.g.\n[FORCE_EVAL/DFT/SCF]\nSCF_GUESS ATOMIC)",
-    "基底関数と擬ポテンシャルは CP2K の data ディレクトリのファイルから読み、使う項目だけを生成物に写します。data ディレクトリの場所は環境設定 (cp2k_data) に書きます":
+    "基底関数と擬ポテンシャルは CP2K の data ディレクトリのファイルから読み、使う項目だけを生成したファイルに写します。data ディレクトリの場所は環境設定 (cp2k_data) に書きます":
         "Basis sets and pseudopotentials are read from the files in the CP2K data directory, and only the entries used are copied into the output. Set the data directory as cp2k_data in the settings",
     "単位系 (units)": "Units", "原子の形式 (atom_style)": "Atom style", "data ファイル": "Data file", "型番号の元素": "Elements of atom types",
     "写すファイル": "Files to copy", "read_data の前の行": "Commands before read_data", "pair_coeff の後の行": "Commands after pair_coeff", "乱数の種": "Random seed",
@@ -128,7 +128,7 @@ _EN: dict[str, str] = {
     "型番号 1, 2, … の元素を順に空白区切りで (例 O H)。空欄なら構造の元素の順": "Elements of types 1, 2, … in order, space separated (e.g. O H). Empty = order in the structure",
     "例 eam、eam/alloy、reaxff NULL、mace no_domain_decomposition": "e.g. eam, eam/alloy, reaxff NULL, mace no_domain_decomposition",
     "pair_coeff の行 (行頭の pair_coeff は省けます。例 * * Cu_u3.eam)": "pair_coeff lines (the leading pair_coeff may be omitted; e.g. * * Cu_u3.eam)",
-    "生成物へ写すファイル (力場・モデル) を 1 行に 1 つ。入力の中ではファイル名だけで書きます": "Files (force field, model) copied into the output, one per line; refer to them by file name only in the input",
+    "生成先へ写すファイル (力場・モデル) を 1 行に 1 つ。入力の中ではファイル名だけで書きます": "Files (force field, model) copied into the output, one per line; refer to them by file name only in the input",
     "例 bond_style harmonic / special_bonds lj/coul 0 0 0.5": "e.g. bond_style harmonic / special_bonds lj/coul 0 0 0.5",
     "例 kspace_style pppm 1e-4 / neigh_modify every 1": "e.g. kspace_style pppm 1e-4 / neigh_modify every 1",
     "相互作用は外部のもの (力場のファイル、data ファイル、機械学習ポテンシャルのモデル) をそのまま使います。全電荷とスピン多重度は使いません (0 と 1 のまま)。k 点はありません":
@@ -166,7 +166,7 @@ _EN.update({
     "空欄ならパッケージの既定 (例 cpu、cuda)": "Empty = the package default (e.g. cpu, cuda)",
     "(パッケージの既定)": "(package default)",
     "分子でも周期系でも使えます。全電荷とスピン多重度は使いません (0 と 1 のまま)。k 点はありません。"
-    "計算は生成物の run_mlip.py (ASE) が行い、ADIT 自身はモデルのパッケージを使いません":
+    "計算は生成した run_mlip.py (ASE) が行い、ADIT 自身はモデルのパッケージを使いません":
         "Works for molecules and periodic systems. Total charge and multiplicity are not used (leave 0 and 1). There are no k-points. "
         "The generated run_mlip.py (ASE) does the calculation; ADIT itself does not use the model packages",
     "遷移状態の探索 (OptTS)": "Transition-state search (OptTS)", "最初にヘシアンを計算 (Calc_Hess)": "Compute the Hessian first (Calc_Hess)",
@@ -296,7 +296,7 @@ _EN.update({
     "Bader の価電子数": "Valence electrons for Bader",
     "粉末回折の線源": "Radiation for the powder pattern",
     "粉末回折の 2θ の範囲 [度]": "2-theta range for the powder pattern [deg]",
-    "重ねる実測のファイル": "Measured pattern to overlay",
+    "重ねる測定データのファイル": "Measured pattern to overlay",
     "粘度 (Green-Kubo)": "Viscosity (Green-Kubo)",
     "面平均を取る軸": "Axis for the plane average",
     "cube の値の単位": "Unit of the cube values",
@@ -307,7 +307,7 @@ _EN.update({
 _EN.update({
     "計算コードの指定": "Code (when there is no input file)",
     "振動数の補正係数": "Frequency scaling factor",
-    "重ねる実測のスペクトル": "Measured spectrum to overlay",
+    "重ねる測定したスペクトル": "Measured spectrum to overlay",
 })
 
 _EN.update({
@@ -318,7 +318,7 @@ _EN.update({
     "条件の表 (CSV)": "Conditions table (CSV)",
     "結果の表 (CSV)": "Results table (CSV)",
     "再現パッケージ (.zip)": "Reproducibility bundle (.zip)",
-    "入力の指紋を照合する": "Verify the input fingerprints",
+    "入力の照合用のハッシュを照合する": "Verify the input fingerprints",
     "報告を作る": "Build",
 })
 

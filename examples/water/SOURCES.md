@@ -44,7 +44,7 @@
 - 警告 2 件。いずれも計算結果には影響しない
   1. `CalculateForces` が `PrintForces` に改名された旨 (パーサのバージョン 12 → 14 の自動変換)
   2. スタックサイズが 8 MB で、大きな系では `ulimit -s unlimited` を推奨する旨
-- 生成物: `output.log` (標準出力)、`dftb_pin.hsd` (既定値を全展開した入力)、`detailed.out`、`band.out`、
+- 生成したファイル: `output.log` (標準出力)、`dftb_pin.hsd` (既定値を全展開した入力)、`detailed.out`、`band.out`、
   `charges.bin`、`geom.out.gen`、`geom.out.xyz`。`output.log` と `dftb_pin.hsd`、`detailed.out`、`geom.out.*` は
   参照用にリポジトリへ入れる。`charges.bin` は `.gitignore` で除外
 - skf 末尾の文書で軌道を確認: H-H.skf は `<Shells>1s </Shells>`、O-O.skf は `<Shells>2s 2p </Shells>`。

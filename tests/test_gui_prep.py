@@ -289,7 +289,7 @@ def test_settings_dialog_has_templates_dir(app, boxes, tmp_path):
 
 def test_provenance_is_shown_small(app, sk_root, tmp_path):
     win = make_window(sk_root, tmp_path)
-    assert win.preview.prov.text().startswith("来歴: ADIT") and "SHA-256" in win.preview.prov.text()
+    assert win.preview.prov.text().startswith("作成時の記録: ADIT") and "SHA-256" in win.preview.prov.text()
     win.preview.btn_prov.setChecked(True)
     assert "skf/H-O.skf" in win.preview.prov_text.toPlainText()
 

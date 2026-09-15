@@ -1,4 +1,4 @@
-# examples/gromacs_spce_nvt_generated —— GROMACS の生成器の出力 (NVT) と実走の結果
+# examples/gromacs_spce_nvt_generated —— GROMACS の生成器の出力 (NVT) と実際に実行した結果
 
 `examples/gromacs_spce_em_generated` の最後の構造 (`adit.gro`) を構造のファイルに指定して作った NVT。GROMACS 2026.3 (conda-forge)。
 

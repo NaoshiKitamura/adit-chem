@@ -423,7 +423,7 @@ for name in {names}; do
   printf '%s  %s  %s\\n' "$name" "$(grep -m1 TITEL "$f" | sed 's/^ *//')" "$(grep -m1 ZVAL "$f" | sed 's/^ *//')" >> potcar.used
 done
 if command -v sha256sum >/dev/null 2>&1; then
-  sha256sum POTCAR > potcar.sha256  # 来歴: 組み立てた POTCAR の SHA-256 (中身の指紋。POTCAR 自体は配れないので値だけを残す)
+  sha256sum POTCAR > potcar.sha256  # 作成時の記録: 組み立てた POTCAR の SHA-256 (中身の照合用のハッシュ。POTCAR 自体は配れないので値だけを残す)
 fi
 echo "POTCAR を作りました ($(grep -c TITEL POTCAR) 個。内訳は potcar.used) / wrote POTCAR ($(grep -c TITEL POTCAR) entries; see potcar.used)"
 '''

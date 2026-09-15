@@ -161,6 +161,6 @@ def test_the_macos_bundle_is_prepared():
     assert "BUNDLE(" in spec and "darwin" in spec
     workflow = (repo / ".github" / "workflows" / "macos-app.yml").read_text(encoding="utf-8")
     assert "macos-14" in workflow and "macos-13" not in workflow  # Intel は作らない (実行環境の提供が終わった)
-    doc = (repo / "docs" / "MACOS_BUILD.md").read_text(encoding="utf-8")
+    doc = (repo / "docs" / "INSTALL.md").read_text(encoding="utf-8")
     assert "署名" in doc and "公証" in doc
-    assert "まだ実機で通していません" in doc
+    assert "実機" in doc          # macOS は実機で確かめていないことを書いてある

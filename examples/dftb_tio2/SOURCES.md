@@ -21,5 +21,5 @@
 - 終了コード 0。周期境界 Yes、k 点 32 個(4×4×4、シフト 0.5)
 - SCC 反復 5 回で収束。全エネルギー -15.6210745499 Hartree(-425.0711 eV)
 - 警告 3 件: パーサのバージョン 12→14 の変換、周期系での双極子は定義されない旨、スタックサイズ。いずれも結果に影響しない
-- 生成物: output.log、dftb_pin.hsd、detailed.out、band.out、dos_ti.{1,2,3}.out、dos_o.{1,2}.out(`charges.bin` は .gitignore)
+- 生成したファイル: output.log、dftb_pin.hsd、detailed.out、band.out、dos_ti.{1,2,3}.out、dos_o.{1,2}.out(`charges.bin` は .gitignore)
 - レシピ集は続けて `dp_dos` で状態密度を出すが、ここでは基準として SCC 計算までを置く

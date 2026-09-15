@@ -4,7 +4,7 @@
 出力ディレクトリに写され、計算機の上で submit.sh から `python3 handoff.py <コード> <前の段> [--velocities]` と呼ばれる。
 クラスタに ADIT や ASE が入っているとは限らないので、同じ処理を ADIT の続き (continuation.py) と共用する。
 
-読むファイル (各生成器が書かせる名前。実走した examples/*_generated の出力で確かめた):
+読むファイル (各生成器が書かせる名前。実際に実行した examples/*_generated の出力で確かめた):
   dftbplus  MD: geo_end.xyz の最後のフレーム (記号 x y z [電荷] vx vy vz。速度は Å/ps、マニュアル 2.3.8 節)
             最適化: geom.out.gen   それ以外: geometry.gen
   vasp      CONTCAR (速度は位置のあとの空行に続く欄。Cartesian で Å/fs、VASP wiki の POSCAR ページ)

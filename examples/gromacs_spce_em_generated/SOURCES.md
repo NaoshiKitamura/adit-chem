@@ -1,4 +1,4 @@
-# examples/gromacs_spce_em_generated —— GROMACS の生成器の出力 (エネルギー最小化) と実走の結果
+# examples/gromacs_spce_em_generated —— GROMACS の生成器の出力 (エネルギー最小化) と実際に実行した結果
 
 ADIT の生成器 (`codes/gromacs.py`) が作った、SPC/E 水 216 分子の箱のエネルギー最小化と、GROMACS 2026.3 (conda-forge `gromacs`、
 混合精度、thread-MPI) で実行した結果。続きの NVT は `examples/gromacs_spce_nvt_generated`。

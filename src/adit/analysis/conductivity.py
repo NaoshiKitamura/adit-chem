@@ -30,7 +30,7 @@ class Conductivity:
                 "temperature_k": self.temperature_k, "d_cm2_s": self.d_cm2_s,
                 "formula": "sigma = N q^2 D / (V k_B T)",
                 "note": L("Nernst–Einstein の式です。イオンどうしの相関を無視しているので、"
-                          "実測の伝導度より大きく出るのが普通です (その比が Haven 比)。"
+                          "測定の伝導度より大きく出るのが普通です (その比が Haven 比)。"
                           "電荷は利用者が指定した値で、ADIT は酸化数を決めません。",
                           "The Nernst-Einstein relation. It ignores correlations between ions, so it is usually larger "
                           "than a measured conductivity (their ratio is the Haven ratio). The charge is the value you gave; "
@@ -60,7 +60,7 @@ def summary_line(c: Conductivity) -> str:
     return L(f"イオン伝導度 (Nernst–Einstein): {c.sigma_s_per_cm:.4g} S/cm "
              f"({c.sigma_s_per_cm * 1e3:.4g} mS/cm)。{c.n_ions} 個の電荷 {c.charge:+g} のイオン、"
              f"D = {c.d_cm2_s:.4g} cm²/s、体積 {c.volume_ang3:.1f} Å³、温度 {c.temperature_k:g} K。"
-             "イオンどうしの相関を無視した式なので、実測より大きく出るのが普通です",
+             "イオンどうしの相関を無視した式なので、測定より大きく出るのが普通です",
              f"ionic conductivity (Nernst-Einstein): {c.sigma_s_per_cm:.4g} S/cm "
              f"({c.sigma_s_per_cm * 1e3:.4g} mS/cm) from {c.n_ions} ions of charge {c.charge:+g}, "
              f"D = {c.d_cm2_s:.4g} cm^2/s, volume {c.volume_ang3:.1f} A^3, temperature {c.temperature_k:g} K. "

@@ -1,4 +1,4 @@
-# フォノン (有限変位、phonopy なし = ASE の Phonons) の実走 — DFTB+ 25.1、mio-1-1 (2026-09-12)
+# フォノン (有限変位、phonopy なし = ASE の Phonons) の実行 — DFTB+ 25.1、mio-1-1 (2026-09-12)
 
 ## 何の例か
 

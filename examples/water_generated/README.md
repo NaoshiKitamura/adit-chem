@@ -4,7 +4,7 @@
 **adit の生成器 (`codes/dftbplus.py`) が作った入力**で実行した結果。フェーズ 3 の検証用。
 
 - 生成の条件: `spec.json`(mio-1-1、SCC、Rational 最適化、MaxSteps 100、GradElem 1e-4)
-- 生成物: `dftb_in.hsd`, `geometry.gen`(`skf/` は CC BY-SA 4.0 のデータなのでリポジトリには入れない)
+- 生成したファイル: `dftb_in.hsd`, `geometry.gen`(`skf/` は CC BY-SA 4.0 のデータなのでリポジトリには入れない)
 - 実行結果: `output.log`, `dftb_pin.hsd`, `detailed.out`, `geom.out.gen`, `results.tag`
 - 結果: 完走(Geometry converged、10 ステップ)。全エネルギー -4.0779379326 Hartree。
   最終座標は `examples/water/geom.out.gen` と同一

@@ -1,4 +1,4 @@
-# examples/prep_stage1_xtb_alpb_water —— xtb の溶媒 (ALPB、水) の生成物と実走の結果
+# examples/prep_stage1_xtb_alpb_water —— xtb の溶媒 (ALPB、水) の生成したファイルと実際に実行した結果
 
 XtbMethod(solvation="alpb", solvent="water") の一点計算。submit.sh の xtb の行に `--alpb water` が入る。xtb 6.7.1 (conda-forge)、2026-09-12。
 

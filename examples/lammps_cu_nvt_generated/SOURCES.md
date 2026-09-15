@@ -1,4 +1,4 @@
-# examples/lammps_cu_nvt_generated —— LAMMPS の生成器の出力と実走の結果
+# examples/lammps_cu_nvt_generated —— LAMMPS の生成器の出力と実際に実行した結果
 
 ADIT の生成器 (`codes/lammps.py`) が作った Cu の NVT と、LAMMPS (22 Jul 2025 update 5、conda-forge `lammps`) で実行した結果。
 
@@ -13,4 +13,4 @@ ADIT の生成器 (`codes/lammps.py`) が作った Cu の NVT と、LAMMPS (22 J
 | 軌跡 | `traj.lammpstrj` (dump custom、列は id type element x y z、7 フレーム)。`final.data` は最後の構造 |
 
 温度の値は、300 ステップ (0.3 ps) では熱浴の時定数 (0.1 ps) の 3 倍しか経っていないので、揺らいでいる途中の値である。
-この例は「生成物がエラーなく走る」ことを確かめるためのもので、物性の値として使うものではない。
+この例は「生成したファイルがエラーなく走る」ことを確かめるためのもので、物性の値として使うものではない。

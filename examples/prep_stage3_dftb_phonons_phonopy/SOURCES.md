@@ -1,4 +1,4 @@
-# フォノン (有限変位、phonopy 4.5.0) の実走 — DFTB+ 25.1、mio-1-1 (2026-09-12)
+# フォノン (有限変位、phonopy 4.5.0) の実行 — DFTB+ 25.1、mio-1-1 (2026-09-12)
 
 ## 何の例か
 
@@ -7,7 +7,7 @@ DFTB+ の条件で、変位を phonopy で作ったもの。phonopy は対称性
 `adit-gen spec.json out/ --phonons 2x2x2 --phonon-backend phonopy --phonon-dos-mesh 10x10x10` (`src/adit/phonon_setup.py`) と同じ処理を
 API で呼んで生成し、実行したあと `python phonon_collect.py` で集めた。
 
-- phonopy は ADIT の依存ではない。この実走では phonopy 4.5.0 (PyPI、BSD-3-Clause) を開発機の一時的な場所に入れて使った
+- phonopy は ADIT の依存ではない。この実行では phonopy 4.5.0 (PyPI、BSD-3-Clause) を開発機の一時的な場所に入れて使った
   (依存として phonors・symfc・PyYAML・h5py・spglib などを宣言している。`pip install phonopy` ならまとめて入る)
 - 基本セルの選び方と変位の大きさは phonopy の既定。状態密度は q 点 10×10×10 (この例で選んだ値) で、phonopy の既定のテトラヘドロン法。
   phonopy は「偶数のメッシュの半分ずらしが基本セルの点群を保たないので、対称性の削減を切った」と警告した

@@ -112,7 +112,7 @@ class AbinitGenerator(InputGenerator):
         names = [Path(v).name for v in m.pseudos.values() if v.strip()]
         if len(set(names)) != len(names):
             errs.append(ValidationError("method.pseudos", L(
-                "擬ポテンシャルのファイル名が重なっています。生成物では同じ名前で写すので、名前を分けてください",
+                "擬ポテンシャルのファイル名が重なっています。生成したファイルでは同じ名前で写すので、名前を分けてください",
                 "two pseudopotential files share a name; they are copied under the same names, so rename them")))
         if spec.kpoints is None:
             errs.append(ValidationError("kpoints", L("周期系では k 点を指定してください", "give the k-points for a periodic system")))

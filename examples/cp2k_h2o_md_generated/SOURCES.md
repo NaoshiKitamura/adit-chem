@@ -1,4 +1,4 @@
-# examples/cp2k_h2o_md_generated —— CP2K の生成器の出力 (数ステップの MD) と実走の結果
+# examples/cp2k_h2o_md_generated —— CP2K の生成器の出力 (数ステップの MD) と実際に実行した結果
 
 `examples/cp2k_h2o_generated` と同じ電子状態の条件で、NVT の MD を 5 ステップだけ実行したもの。CP2K 2026.2 (conda-forge)。
 

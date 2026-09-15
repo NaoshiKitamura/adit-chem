@@ -1,4 +1,4 @@
-# インストール方法
+# 各 OS のインストール方法
 
 ADIT を入れて、最初の計算を実行するまでの手順です。
 
@@ -148,19 +148,152 @@ python analyze.py                            # 図と要約を analysis/ に書�
 
 各ディレクトリの `README.txt` に、そのディレクトリでの手順が書かれています。
 
-## ダブルクリックで起動する形 (.exe) を作る
+## 実行ファイル (.exe / .app) を自分で作る
 
-配布されている実行ファイルは、この手順で作っています。自分で作り直すこともできます。
+配布している実行ファイルは、この手順で作っています。`v` で始まるタグ (例 `v0.1.0`) を押し上げると、
+GitHub Actions が Windows の `.exe` と macOS の `.app` を作り、Releases に添付します。
+手元で作るときは、下の手順です。
 
-`v` で始まるタグ (例 `v0.1.0a1`) を押し上げると、GitHub Actions が Windows の `.exe` と macOS の `.app` を作り、
-Releases に添付します (`.github/workflows/windows-exe.yml`、`macos-app.yml`)。手元で作る手順と確認の項目は
-[Windows の実行ファイルを作る](WINDOWS_BUILD.md)。**Windows の .exe は Windows 上でしか作れません。**
-出来上がりは 300〜500 MB です。
+### Windows
 
-`pyinstaller packaging/adit.spec` builds a standalone bundle; see `docs/WINDOWS_BUILD.md`. A Windows `.exe`
-can only be built on Windows (a manual GitHub Actions workflow is included).
+#### 1 Windows の PC で作る
 
-## インストールと起動 (Linux / macOS / 慣れている人向け)
+PowerShell で、リポジトリを置いた場所に移動してから:
+
+```powershell
+py -3.12 -m venv build-env
+build-env\Scripts\activate
+pip install -e ".[gui,smiles,analysis]" pyinstaller
+pyinstaller packaging\adit.spec --noconfirm
+```
+
+`dist\adit\` に**実行ファイルが 2 つ**出来ます。フォルダごと配ってください (中のファイルが要ります)。
+
+| ファイル | 使いみち |
+|---|---|
+| `ADIT.exe` | 画面 (デスクトップ版)。黒い画面が出ない代わりに、**標準出力を持たないので CLI には使えません** |
+| `adit-cli.exe` | CLI。`adit-cli.exe gen ...` / `analyze` / `report` / `convert` / `web` |
+
+2 つに分けるのは Windows の決まりのためです。画面用の実行ファイル (GUI サブシステム) には標準出力が無く、
+**1 つにすると CLI の表示が何も出ません** (2026-09-13 に実際に作って確かめました)。
+1 つの .exe にまとめたいときは `packaging/adit.spec` の `ONEFILE = False` を `True` に変えます
+(起動のたびに一時フォルダへ展開するので、開くまで数秒かかります)。
+
+#### 2 出来た実行ファイルの確認 (作った人が必ず通す)
+
+```powershell
+dist\adit\ADIT.exe                             # 画面が開く。日本語が □ になっていないか
+dist\adit\adit-cli.exe gen --list-samples      # サンプルの一覧が出るか (同梱の examples を読めているか)
+dist\adit\adit-cli.exe gen --sample water_generated mine.json
+dist\adit\adit-cli.exe gen mine.json out\run1  # 入力・submit.sh・README.txt が書けるか
+dist\adit\adit-cli.exe analyze out\run1        # 実行していないディレクトリでは理由を言って止まるか (終了コード 2)
+dist\adit\adit-cli.exe web                     # ブラウザで http://127.0.0.1:8765 が開くか
+```
+
+**画面の日本語が □ (豆腐) になるとき**は、フォントが同梱されていません。conda の環境で
+`conda install -c conda-forge font-ttf-noto-cjk` を入れてから作り直すか、`ADIT_FONT_DIR` に
+`NotoSansCJKjp-VF.ttf` のあるフォルダを指定して作り直します。
+
+#### 3 同梱するもの・しないもの
+
+| 同梱する | 理由 |
+|---|---|
+| `adit/scripts/templates/*.j2`、`adit/web/templates/*.html` | submit.sh と画面の雛形 |
+| `examples/*/spec.json` | `gen --list-samples` / `--sample` が読む |
+| `fonts/NotoSansCJKjp-VF.ttf` (あれば) | 画面と図の日本語 |
+
+| 同梱しない | 理由 |
+|---|---|
+| DFTB+・xtb・Quantum ESPRESSO などの計算ソフト | 配布条件が別。**Windows では実行ボタンが無効**なので、そもそも要らない |
+| Slater-Koster セット、擬ポテンシャル、POTCAR | ライセンス上、ADIT が配ってはいけない |
+
+#### 4 分かっている制限
+
+- **Windows では計算を実行できません。**実行ボタンは押せず、「生成した入力を Linux のサーバーに転送して使います」
+  と出ます (`gui/main_window.py`)。exe で出来るのは入力の生成と、手元にある出力の解析です
+- **大きさは 300〜500 MB** (PySide6 と matplotlib と SciPy を同梱するため)。`ONEFILE = True` でも縮みません
+- **署名していません。**SmartScreen が「発行元不明」と警告します。配るなら署名するか、受け取る人に
+  「詳細情報 → 実行」を案内してください
+- **RDKit を入れた環境で作ると SMILES から構造を作れます**。入れずに作ると、その欄だけが使えません
+- この設定は **Linux で実際に作って、CLI が動くところまで確かめました** (2026-09-13)。
+  確かめたのは `gen --list-samples` / `--sample` / 入力の生成 / `analyze` (未実行のディレクトリで終了コード 2) /
+  `report` / `convert verify` の 6 つと、**画面が起動して窓を作るところまで** (`QT_QPA_PLATFORM=offscreen`)。
+  **Windows での生成したファイルは未確認**です (Windows の実行ファイルは Windows 上でしか作れないため)。
+  上の「2 出来た実行ファイルの確認」を必ず通してください
+- 作ってみて分かったこと 2 つ (どちらも spec に入れてあります):
+  1. **ASE は形式ごとのモジュールを名前で動的に読み込む**ので、`hiddenimports` に `ase.io` を入れないと
+     `.gen` の書き出しが `UnknownFileTypeError` で落ちる
+  2. Linux では **conda の `libOpenGL.so.0` を同梱しないと画面が起動しない** (Windows の PySide6 は
+     OpenGL の DLL を自分で持っているので、この処理は Linux でだけ働く)
+  3. **画面用の実行ファイルは標準出力を持たない**ので、CLI 用に console 版 (`adit-cli.exe`) を別に作る
+  4. 窓の大きさの既定 (1800x1000) が **1536x864 の画面からはみ出した**ので、画面の 95 % に収めるようにした
+     (`gui/main_window.py`)
+
+
+### macOS
+
+#### 作る
+
+GitHub の Actions から手で動かします。
+
+`v` で始まるタグ (例 `v0.1.0a1`) を押し上げると自動で作られ、Releases に `ADIT-arm64.zip` が添付されます。
+手で動かすこともできます。
+
+1. リポジトリの **Actions** → **macos-app** → **Run workflow**
+2. Apple Silicon (arm64) の 1 つが走ります
+3. 終わると成果物 (artifact) に `adit-macos-arm64` が出ます。中身は
+   - `ADIT-arm64.zip` … 二重クリックで開く `ADIT.app` (`ditto` でまとめたもの。Finder の権限が保たれます)
+   - `dist/adit/` … 画面を使わない人向けの一式 (`adit-cli` が入っています)
+
+手元の Mac で作るなら:
+
+```bash
+python -m pip install -e ".[gui,smiles,analysis]" pyinstaller
+pyinstaller packaging/adit.spec --noconfirm
+open dist/ADIT.app          # 画面
+./dist/adit/adit-cli gen --list-samples   # コマンド
+```
+
+#### 署名と公証をしていません
+
+Apple の開発者登録 (有料) が要るため、**署名 (codesign) も公証 (notarization) もしていません。**
+そのため、受け取った人が初めて開くときは次のどちらかが要ります。
+
+- Finder で `ADIT.app` を**右クリック → 開く** → 出てくる確認で「開く」
+- または `xattr -dr com.apple.quarantine /Applications/ADIT.app`
+
+**この手順を配布物の案内に必ず書いてください。**書かないと「壊れているから開けません」と表示され、
+利用者は原因が分かりません。
+
+署名するときは、Apple Developer Program に登録したうえで
+
+```bash
+codesign --deep --force --options runtime --sign "Developer ID Application: <名前> (<チーム ID>)" dist/ADIT.app
+xcrun notarytool submit dist/ADIT-arm64.zip --apple-id <id> --team-id <team> --password <app 用パスワード> --wait
+xcrun stapler staple dist/ADIT.app
+```
+
+#### 確認 (実機で最初に通すこと)
+
+Windows と同じ 7 点です (上の節)。**通ったものに印を付けて、この文書を更新してください。**
+
+1. `ADIT.app` を二重クリックして画面が出る (日本語が豆腐 □ にならない)
+2. 構造を作り、入力を生成できる (`adit-cli gen --sample water_generated` → 生成 → `README.txt` がある)
+3. 解析が図まで出る (`adit-cli analyze <ディレクトリ>`)
+4. Draw が開き、描いた分子が SMILES になる (RDKit が同梱されているか)
+5. ウェブ版が開く (`adit-cli web` → ブラウザで 127.0.0.1:8765)
+6. 3D 表示が回る (画面の「構造」タブと、ウェブ版の「構造 (3D)」)
+7. 別の Mac (作った機械ではない Mac) に写して、上の 1〜6 が通る
+
+**7 が最も大事です。**作った機械では動いて、他の機械では足りないものがあって動かない、が起きます。
+
+#### Intel の Mac
+
+**配っているのは Apple Silicon (arm64) 版だけです。**GitHub が Intel の実行環境 (`macos-13`) の提供を
+終えたため、CI では作れません。Intel の Mac では pip で入れてください。
+1 つにまとめた universal2 は、PySide6 と RDKit が両対応の wheel を配っていないと作れないので、していません。
+
+#### インストールと起動 (Linux / macOS / 慣れている人向け)
 
 Python 3.11 以上が必要です。仮想環境 (conda か venv) を作り、pip でインストールします。Windows で初めての人は上の節から進めてください。
 依存パッケージは ASE、pydantic、Jinja2、matplotlib、SciPy、tomli-w と、デスクトップ版には PySide6 です。SMILES と Draw (分子を描く機能) を使うには RDKit も必要です。
@@ -181,7 +314,7 @@ pip install "adit-chem[gui] @ git+<配布元の URL>"   # URL は配布元に聞
 | コマンドライン (変換) | `adit-convert structure ...` / `adit-convert calculation ...` | 構造形式を変換するか、共通条件を保って別の計算コードの入力を生成します |
 | コマンドライン (解析) | `adit-analyze <計算結果のディレクトリ> --rdf --msd --dos` | 図と要約を `analysis/` に書きます |
 
-### 構造形式と計算コードの変換
+##### 構造形式と計算コードの変換
 
 
 構造ファイルは、ASE が対応する形式の間で変換できます。入力と出力の形式は通常、ファイル名から判定されます。
@@ -200,6 +333,6 @@ adit-convert openbabel source.sdf target.mol2 --input-format sdf --output-format
 adit-convert dock6 prepared/dock.in ready/
 ```
 
-GOAT、ORCA DOCKER、DCDFTBMD 2.0、DOCK6 の入力整理、Open Babel の変換入口は、[GOAT・DOCKER ほかの機能](EXTRA_ENTRY_POINTS.md)に日英の手順と制限を記載しています。これらの GUI/Web 欄はまだありません。
+GOAT、ORCA DOCKER、DCDFTBMD 2.0、DOCK6 の入力整理、Open Babel の変換入口は、[対応ソフトウェア](SOFTWARE.md)に日英の手順と制限を記載しています。これらの GUI/Web 欄はまだありません。
 
-See [GOAT, DOCKER and other entry points](EXTRA_ENTRY_POINTS.md) for bilingual instructions and limitations for GOAT, ORCA DOCKER, DCDFTBMD 2.0, DOCK6 input packaging, and Open Babel conversion. GUI/Web controls have not been added.
+See [Supported software](SOFTWARE.md) for bilingual instructions and limitations for GOAT, ORCA DOCKER, DCDFTBMD 2.0, DOCK6 input packaging, and Open Babel conversion. GUI/Web controls have not been added.

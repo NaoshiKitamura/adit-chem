@@ -68,9 +68,9 @@ def test_a_measured_spectrum_can_be_overlaid(tmp_path):
     measured.write_text("# cm-1 intensity\n800 0.2\n1600 1.0\n", encoding="utf-8")
     r = _run([str(VIB), "-o", str(tmp_path / "o"), "--spectrum-measured", str(measured)])
     assert r.returncode == 0, r.stderr
-    assert "実測のスペクトル" in r.stdout
+    assert "測定したスペクトル" in r.stdout
     bad = _run([str(VIB), "-o", str(tmp_path / "o2"), "--spectrum-measured", str(tmp_path / "none.txt")])
-    assert "実測のファイルがありません" in bad.stdout
+    assert "測定データのファイルがありません" in bad.stdout
 
 
 def test_a_directory_with_only_an_output_can_be_analyzed(tmp_path):
@@ -118,11 +118,9 @@ def test_the_file_count_message_shows_what_is_in_subdirectories(tmp_path, sk_roo
 
 def test_the_readme_shows_how_to_start():
     text = (REPO / "README.md").read_text(encoding="utf-8")
-    assert "## インストール" in text and "## 使ってみる" in text
-    start = text.index("## 使ってみる")
-    recipe = text[start:text.index("##", start + 5)]
-    for step in ("生成", "bash submit.sh", "解析を実行", "![") :
-        assert step in recipe, step
+    assert "## インストール" in text and "## できること" in text
+    assert "[チュートリアル](docs/USAGE.md)" in text          # 手順そのものはチュートリアルにある
+    assert text.count("![") >= 4                              # 画面の写真で見せる
     assert len(text.splitlines()) < 150
     usage = (REPO / "docs" / "USAGE.md").read_text(encoding="utf-8")
     for command in ("--list-samples", "--sample water_generated", "adit-analyze"):

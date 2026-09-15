@@ -178,7 +178,7 @@ def _top_readme(plan: list[PlannedStage], profile) -> str:
         tail = (L("  ← 前の段階の最終構造" + ("と速度" if h.velocities else "") + "から", "  <- from the final structure" + (" and velocities" if h.velocities else "") + " of the previous stage")
                 if h else "")
         lines.append(f"  {p.dir:<24} {_describe(p.spec)}{tail}")
-    lines += ["", L("各段階のディレクトリは、通常の ADIT の生成物と同じ形です (中の README.txt に、その段階の入力と出力の説明があります)。",
+    lines += ["", L("各段階のディレクトリは、通常の ADIT の生成したファイルと同じ形です (中の README.txt に、その段階の入力と出力の説明があります)。",
                     "Each stage directory has the usual ADIT layout (its README.txt explains its inputs and outputs)."),
               L("2 段階目からの submit.sh は、実行する直前に前の段階の出力から構造 (と速度) を写します。前の段階が終わっていなければ止まります。",
                 "From stage 2 on, submit.sh copies the structure (and velocities) from the previous stage right before running; it stops if that stage has not finished.")]
@@ -189,7 +189,7 @@ def _top_readme(plan: list[PlannedStage], profile) -> str:
     if profile.kind == "direct":
         lines += [L("  bash submit.sh   (段階を順に実行します。途中の段階が失敗したら、そこで止まります)", "  bash submit.sh   (runs the stages in order; stops at the first stage that fails)")]
     else:
-        lines += [L("  この生成物はクラスタのプロファイル用です。この PC で実行するなら、プロファイルを direct のものにして生成し直します。",
+        lines += [L("  この生成したファイルはクラスタのプロファイル用です。この PC で実行するなら、プロファイルを direct のものにして生成し直します。",
                     "  These files are for a cluster profile; to run on this PC, generate again with a direct profile.")]
     lines += ["", L("== クラスタで実行する (依存付きの投入の例。ADIT は投入しません) ==", "== Running on a cluster (example of dependent submission; ADIT does not submit) =="),
               L("  各段階の submit.sh をクラスタのプロファイルで生成したうえで、このディレクトリで次のように投入すると、",

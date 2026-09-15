@@ -136,7 +136,7 @@ def main(argv: list[str] | None = None) -> int:
         "振動数に掛ける補正係数 (例 0.96)。ADIT は既定値を持たず、使った値を図と要約に書きます",
         "scaling factor applied to the frequencies (e.g. 0.96); ADIT has no default and records the value you used"))
     ap.add_argument("--spectrum-measured", default="", metavar="FILE", help=L(
-        "赤外・ラマンの図に重ねる実測の表 (1 列目 波数 [cm⁻¹]、2 列目 強度)。強度は最大値で規格化して重ねます",
+        "赤外・ラマンの図に重ねる測定の表 (1 列目 波数 [cm⁻¹]、2 列目 強度)。強度は最大値で規格化して重ねます",
         "measured spectrum to overlay on the IR and Raman plots (column 1 wavenumber in cm^-1, column 2 intensity); "
         "both are normalised to their maximum"))
     ap.add_argument("--plot-colors", default="", metavar="色,色,...", help=L(
@@ -255,7 +255,7 @@ def main(argv: list[str] | None = None) -> int:
         "compute a powder XRD pattern from the final (periodic) structure (default radiation CuKa; needs pymatgen)"))
     ap.add_argument("--xrd-range", default="5,90", metavar="LO,HI", help=L("粉末回折の 2θ の範囲 [度]", "2-theta range for the powder pattern, in degrees"))
     ap.add_argument("--xrd-measured", default=None, metavar="FILE", help=L(
-        "重ねて描く実測のパターン (1 列目 2θ [度]、2 列目 強度。カンマか空白区切り)。一致は判定しない",
+        "重ねて描く測定のパターン (1 列目 2θ [度]、2 列目 強度。カンマか空白区切り)。一致は判定しない",
         "a measured pattern to overlay (column 1: 2-theta in degrees, column 2: intensity); agreement is not assessed"))
     ap.add_argument("--cube-unit", choices=("ev", "ry", "hartree"), default="", help=L(
         "cube の値の単位 (ファイルには書かれていません。QE の pp.x は Ry、Gaussian は Hartree のことが多い)。"
@@ -285,7 +285,7 @@ def main(argv: list[str] | None = None) -> int:
         "--audit-with の点検対象: msd (既定) または energy",
         "what --audit-with checks: msd (default) or energy"))
     ap.add_argument("--compare", nargs="?", const="", default=None, metavar="REACTIONS", help=L(
-        "組にして比べる表。「名前=係数:ディレクトリ,…」(係数は生成物が正、反応物が負。反応は ; で区切る。ディレクトリは run_dir からの相対パス)。"
+        "組にして比べる表。「名前=係数:ディレクトリ,…」(係数は生成したファイルが正、反応物が負。反応は ; で区切る。ディレクトリは run_dir からの相対パス)。"
         "値を省くと run_dir/compare.json を読む。例 --compare \"ads=1:slab_mol,-1:slab,-1:mol\"",
         "table comparing runs: name=coef:dir,... (products positive, reactants negative; separate reactions with ;; dirs relative to run_dir). "
         "Without a value, run_dir/compare.json is read. e.g. --compare \"ads=1:slab_mol,-1:slab,-1:mol\""))

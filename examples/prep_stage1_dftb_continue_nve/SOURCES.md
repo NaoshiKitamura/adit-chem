@@ -1,4 +1,4 @@
-# examples/prep_stage1_dftb_continue_nve —— 前の計算の続き (DFTB+ の MD → NVE) の生成物と実走の結果
+# examples/prep_stage1_dftb_continue_nve —— 前の計算の続き (DFTB+ の MD → NVE) の生成したファイルと実際に実行した結果
 
 `adit.continuation.continue_from("examples/dftb_md_water_generated", 条件)` で作ったもの (コマンド行なら `adit-gen --continue-from …`)。
 条件は元の spec.json の MD を NVE・10 ステップ・毎ステップ出力にしたもの。位置と速度は元の geo_end.xyz の最後のフレーム

@@ -442,7 +442,7 @@ def continuation_summary(spec) -> str:
 def provenance_summary(prov: dict | None) -> tuple[str, list[str]]:
     if not prov:
         return "", []
-    head = L(f"来歴: ADIT {prov.get('adit_version')} / Python {prov.get('python')} / ASE {prov.get('ase')}",
+    head = L(f"作成時の記録: ADIT {prov.get('adit_version')} / Python {prov.get('python')} / ASE {prov.get('ase')}",
              f"Provenance: adit {prov.get('adit_version')} / Python {prov.get('python')} / ASE {prov.get('ase')}")
     files = list(prov.get("files") or []) + list(prov.get("generated_files") or [])
     if files:

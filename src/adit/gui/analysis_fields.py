@@ -85,7 +85,7 @@ LABELS: dict[str, tuple[str, str]] = {
     "bader_valence": ("Bader の価電子数", "Valence electrons for Bader"),
     "xrd": ("粉末回折の線源", "Radiation for the powder pattern"),
     "xrd_range": ("粉末回折の 2θ の範囲 [度]", "2-theta range for the powder pattern [deg]"),
-    "xrd_measured": ("重ねる実測のファイル", "Measured pattern to overlay"),
+    "xrd_measured": ("重ねる測定データのファイル", "Measured pattern to overlay"),
     "viscosity": ("粘度 (Green-Kubo)", "Viscosity (Green-Kubo)"),
     "plane_average": ("面平均を取る軸", "Axis for the plane average"),
     "cube_unit": ("cube の値の単位", "Unit of the cube values"),
@@ -93,7 +93,7 @@ LABELS: dict[str, tuple[str, str]] = {
     "heavy_limit": ("その場で計算する上限 [秒]", "Limit for computing here [s]"),
     "code": ("計算コードの指定", "Code (when there is no input file)"),
     "freq_scale": ("振動数の補正係数", "Frequency scaling factor"),
-    "spectrum_measured": ("重ねる実測のスペクトル", "Measured spectrum to overlay"),
+    "spectrum_measured": ("重ねる測定したスペクトル", "Measured spectrum to overlay"),
     "plot_colors": ("図の線の色", "Line colors"),
     "plot_ticks": ("目盛りの向き", "Tick direction"),
     "plot_grid": ("目盛り線", "Grid lines"),
@@ -660,7 +660,7 @@ def compare_sections(cres) -> list[Section]:
                              L("コードの G の差 ΣνG [eV]", "Difference of code G, ΣνG [eV]"), L("組成の釣り合い", "Composition balance"),
                              L("条件が違う項目", "Settings that differ")],
                             rows, [False, False, True, True, True, True, False, False],
-                            [L("ν は生成物が正、反応物が負。組成の釣り合いは Σν·(元素ごとの原子数)", "ν is positive for products and negative for reactants; balance is Σν·(atoms per element)")]),
+                            [L("ν は生成したファイルが正、反応物が負。組成の釣り合いは Σν·(元素ごとの原子数)", "ν is positive for products and negative for reactants; balance is Σν·(atoms per element)")]),
                     cres.files.get("reactions", "")))
     rows = [[r["dir"], r["code"] or "-", r["task"] or "-", r["formula"] or "-", "-" if r["natoms"] is None else str(r["natoms"]),
              _g(r["energy_ev"], ".6f"), r["energy_source"] or "-", r["note"] or ""] for r in cres.runs]

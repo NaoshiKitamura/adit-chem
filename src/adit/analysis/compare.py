@@ -31,7 +31,7 @@ _ENERGY_SOURCE = {
     "lammps": ("log.lammps の thermo の表 (MD は TotEng、それ以外は PotEng)", "thermo table in log.lammps (TotEng for MD, PotEng otherwise)"),
     "gromacs": ("GROMACS のエネルギーの表 (readers_extra の読み)", "GROMACS energy table (readers_extra)"),
     "cp2k": ("CP2K の output.log (readers_extra の読み)", "CP2K output.log (readers_extra)"),
-    "openmm": ("md.log の Total Energy と results.json (run_openmm.py の生成物)", "Total Energy in md.log and results.json (written by run_openmm.py)"),
+    "openmm": ("md.log の Total Energy と results.json (run_openmm.py の生成したファイル)", "Total Energy in md.log and results.json (written by run_openmm.py)"),
     "abinit": ("output.log の Total energy (etotal) [Ha] (無ければ input.abo の最後の etotal)", "Total energy (etotal) [Ha] in output.log (or the final etotal in input.abo)"),
     "psi4": ("results.json の energy_hartree (入力の末尾の数行が書いた Psi4 の返り値)", "energy_hartree in results.json (the Psi4 return value written by the last lines of the input)"),
 }

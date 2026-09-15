@@ -208,7 +208,7 @@ def structure_factor(r: np.ndarray, g: np.ndarray, number_density: float, q: np.
             "rmax_A": float(r[-1]), "reliable_above_q": float(2 * np.pi / r[-1]),
             "note": L(f"g(r) を {r[-1]:.1f} Å まで積んだ S(q) です (Lorch 窓を掛けて打ち切りのリップルを抑えています)。"
                       f"q が {2 * np.pi / r[-1]:.2f} Å⁻¹ より小さいところは、積む範囲が有限なことの影響を受けます。"
-                      "実測との一致は判定していません。",
+                      "測定との一致は判定していません。",
                       f"S(q) from g(r) integrated to {r[-1]:.1f} Å with a Lorch window to damp truncation ripples; "
                       f"below q = {2 * np.pi / r[-1]:.2f} A^-1 the finite integration range matters. "
                       "No comparison with experiment is judged.")}

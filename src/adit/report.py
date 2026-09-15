@@ -100,7 +100,7 @@ def load_run_report(run_dir: Path | str) -> RunReport:
     if summary.is_file():
         report.analysis_summary = summary.read_text(encoding="utf-8", errors="replace").strip()
     if not report.provenance:
-        report.notes.append(L("来歴 (生成した ADIT のバージョン・ファイルの指紋) が spec.json にありません",
+        report.notes.append(L("作成時の記録 (生成した ADIT のバージョン・ファイルの照合用のハッシュ) が spec.json にありません",
                               "the provenance (ADIT version, file fingerprints) is not in spec.json"))
     return report
 
@@ -255,13 +255,13 @@ def parameter_notes(report: RunReport) -> list[str]:
                          f"the pseudopotentials referenced by the input ({', '.join(missing)}) are not in this directory; "
                          "the functional is recorded only in those files, so it cannot be identified from this report."))
     if spec.method.code == "vasp":
-        out.append(L("VASP の POTCAR はライセンスのため生成物へ写しません。使った POTCAR の TITEL (汎関数を含む) は、"
+        out.append(L("VASP の POTCAR はライセンスのため生成先へ写しません。使った POTCAR の TITEL (汎関数を含む) は、"
                      "計算した環境の POTCAR か OUTCAR で確かめてください。",
                      "VASP POTCAR files are not copied into the generated directory for licensing reasons; check the TITEL "
                      "line (which names the functional) in the POTCAR or OUTCAR of the machine that ran the calculation."))
     if spec.method.code == "dftbplus":
         out.append(L("Slater-Koster のパラメータに交換相関汎関数の記載はありません (DFTB のパラメータ化そのものが近似です)。"
-                     "使ったセットの名前と指紋は上の表にあります。",
+                     "使ったセットの名前と照合用のハッシュは上の表にあります。",
                      "Slater-Koster parameters record no exchange-correlation functional (the parameterisation itself is the "
                      "approximation); the set name and fingerprints are in the table above."))
     return out
@@ -390,7 +390,7 @@ def _table(header: tuple[str, ...], rows: list[tuple[str, ...]]) -> list[str]:
 
 def methods_section(reports: list[RunReport]) -> list[str]:
     lines = [L("# 計算条件 (方法)", "# Computational details (methods)"), "",
-             L("この文書は、ADIT が生成した計算ディレクトリの `spec.json`(来歴つき) と `code_version.txt` から"
+             L("この文書は、ADIT が生成した計算ディレクトリの `spec.json`(作成時の記録つき) と `code_version.txt` から"
                "**記録に残っている事実だけ**を書き写したものです。"
                "記録が無い項目は「未記録」と書きます。推奨値や、ADIT が確かめていない説明は入れません。",
                "This document copies **only the facts that are on record** from the `spec.json` (with provenance) and "
@@ -400,7 +400,7 @@ def methods_section(reports: list[RunReport]) -> list[str]:
         lines += [L(f"## {i}. {report.run_dir.name}", f"## {i}. {report.run_dir.name}"), "",
                   methods_sentence(report), ""]
         if not input_names(report):
-            lines += [L("> **この計算の入力ファイルを特定できません。**指紋の記録が無く、`spec.json` から作り直すこともできませんでした。"
+            lines += [L("> **この計算の入力ファイルを特定できません。**照合用のハッシュの記録が無く、`spec.json` から作り直すこともできませんでした。"
                         "再現パッケージ (`--bundle`) にも入力は入りません。生成し直すか、入力を手で添えてください。",
                         "> **The input files of this run could not be identified.** No fingerprints are recorded and the inputs could not be "
                         "rebuilt from `spec.json`, so a `--bundle` package will not contain them. Regenerate the directory or attach the inputs by hand."), ""]
@@ -443,9 +443,9 @@ def methods_section(reports: list[RunReport]) -> list[str]:
                         "The machine, OS, compiler and numerical libraries are not recorded by ADIT; add them yourself if needed."), ""]
         fingerprints = _fingerprint_rows(report)
         if fingerprints:
-            lines += [L("### 入力とパラメータの指紋 (SHA-256)", "### Fingerprints of inputs and parameters (SHA-256)"), ""]
+            lines += [L("### 入力とパラメータの照合用のハッシュ (SHA-256)", "### Fingerprints of inputs and parameters (SHA-256)"), ""]
             lines += _table((L("ファイル", "File"), "SHA-256", L("種類", "Kind")), fingerprints)
-            lines += [L("`adit-report <ディレクトリ> --check` で、いまのファイルがこの指紋と同じかを確かめられます。",
+            lines += [L("`adit-report <ディレクトリ> --check` で、いまのファイルがこの照合用のハッシュと同じかを確かめられます。",
                         "Run `adit-report <directory> --check` to confirm that the files still match these fingerprints."), ""]
         if report.analysis_summary:
             lines += [L("### 結果 (解析の要約)", "### Results (analysis summary)"), "",
@@ -619,10 +619,10 @@ def input_names(report: RunReport) -> list[str]:
 
         names = sorted(build_project(report.spec, load_config()).texts)
     except Exception:
-        report.notes.append(L("入力の指紋の記録が無く、spec.json から作り直すこともできないので、入力ファイルの一覧は分かりません",
+        report.notes.append(L("入力の照合用のハッシュの記録が無く、spec.json から作り直すこともできないので、入力ファイルの一覧は分かりません",
                               "the input fingerprints are not recorded and the inputs cannot be rebuilt from spec.json, so the list of input files is unknown"))
         return []
-    report.notes.append(L("入力の指紋の記録が無いので、spec.json から作り直して入力ファイルの名前だけを求めました (中身は突き合わせていません)",
+    report.notes.append(L("入力の照合用のハッシュの記録が無いので、spec.json から作り直して入力ファイルの名前だけを求めました (中身は突き合わせていません)",
                           "the input fingerprints are not recorded, so the input file names were obtained by rebuilding from spec.json (the contents were not compared)"))
     return [n for n in names if (report.run_dir / n).is_file()]
 
@@ -698,7 +698,7 @@ def check_lines(report: RunReport) -> tuple[list[str], str]:
     if not results:
         made = (report.provenance or {}).get("generated_utc")
         when = L(f" (spec.json に記録されている生成日時: {made})", f" (generation time on record: {made})") if made else ""
-        return ([L(f"{report.run_dir}: 指紋の記録がないので確かめられません。この spec.json には入力の SHA-256 がありません{when}",
+        return ([L(f"{report.run_dir}: 照合用のハッシュの記録がないので確かめられません。この spec.json には入力の SHA-256 がありません{when}",
                    f"{report.run_dir}: cannot check — this spec.json records no input fingerprints{when}")],
                 "unknown")
     lines = []
@@ -718,7 +718,7 @@ def check_lines(report: RunReport) -> tuple[list[str], str]:
         else:
             missing += 1
             lines.append(L(f"  ありません {item['name']}  ({kind})", f"  missing   {item['name']}  ({kind})"))
-    head = L(f"{report.run_dir}: 生成したときの指紋と突き合わせました ({len(results)} 件)",
+    head = L(f"{report.run_dir}: 生成したときの照合用のハッシュと突き合わせました ({len(results)} 件)",
              f"{report.run_dir}: compared with the fingerprints recorded at generation ({len(results)} files)")
     if not (changed or missing):
         tail = [L("  → すべて生成したときのままです", "  → all files are as generated")]
@@ -742,7 +742,7 @@ def check_lines(report: RunReport) -> tuple[list[str], str]:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         prog="adit-report",
-        description=L("ADIT が生成した計算ディレクトリから、方法の節・条件の表・入力の指紋を書き出します",
+        description=L("ADIT が生成した計算ディレクトリから、方法の節・条件の表・入力の照合用のハッシュを書き出します",
                       "Write the methods section, settings table and input fingerprints of directories generated by ADIT"))
     p.add_argument("run_dirs", nargs="+", help=L("計算ディレクトリ (spec.json のある場所)", "calculation directories (where spec.json is)"))
     p.add_argument("-o", "--out", metavar="methods.md", help=L("方法の節の書き出し先 (既定は画面)", "where to write the methods section (default: screen)"))
@@ -754,7 +754,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--bundle", metavar="pack.zip", help=L("再現に要るファイルと manifest.json をまとめる (.zip かディレクトリ)",
                                                           "collect the files needed to reproduce plus manifest.json (.zip or a directory)"))
     p.add_argument("--check", action="store_true", help=L(
-        "生成したときの指紋と、いまのファイル (入力・写した擬ポテンシャルや力場) を突き合わせる。終了コード 0 = 一致、1 = 不一致、2 = 記録が無くて確かめられない",
+        "生成したときの照合用のハッシュと、いまのファイル (入力・写した擬ポテンシャルや力場) を突き合わせる。終了コード 0 = 一致、1 = 不一致、2 = 記録が無くて確かめられない",
         "compare the current files (inputs and copied pseudopotentials or force fields) with the fingerprints recorded at generation; "
         "exit code 0 = all match, 1 = mismatch, 2 = nothing on record to check against"))
     args = p.parse_args(argv)
@@ -772,7 +772,7 @@ def main(argv: list[str] | None = None) -> int:
         if "bad" in verdicts:
             return 1
         if "unknown" in verdicts:
-            print(L("指紋の記録が無いディレクトリがあるので、一致は確かめられていません (終了コード 2)。",
+            print(L("照合用のハッシュの記録が無いディレクトリがあるので、一致は確かめられていません (終了コード 2)。",
                     "Some directories have no recorded fingerprints, so nothing could be confirmed (exit code 2)."))
             return 2
         return 0

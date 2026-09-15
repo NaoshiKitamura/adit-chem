@@ -1,4 +1,4 @@
-# examples/cp2k_h2o_generated —— CP2K の生成器の出力 (一点計算) と実走の結果
+# examples/cp2k_h2o_generated —— CP2K の生成器の出力 (一点計算) と実際に実行した結果
 
 ADIT の生成器 (`codes/cp2k.py`) が作った水分子の一点計算と、CP2K 2026.2 (conda-forge `cp2k`、`cp2k.psmp`) で実行した結果。
 

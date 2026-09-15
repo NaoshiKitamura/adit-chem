@@ -14,7 +14,7 @@ LABELS: dict[str, tuple[str, str]] = {
     "rep_conditions": ("条件の表 (CSV)", "Conditions table (CSV)"),
     "rep_results": ("結果の表 (CSV)", "Results table (CSV)"),
     "rep_bundle": ("再現パッケージ (.zip)", "Reproducibility bundle (.zip)"),
-    "rep_check": ("入力の指紋を照合する", "Verify the input fingerprints"),
+    "rep_check": ("入力の照合用のハッシュを照合する", "Verify the input fingerprints"),
     "rep_run": ("報告を作る", "Build"),
 }
 
@@ -111,9 +111,9 @@ def build(req: ReportRequest) -> ReportOutcome:
             out.lines += lines
             verdicts.append(verdict)
         out.check_verdict = ("bad" if "bad" in verdicts else "unknown" if "unknown" in verdicts else "ok")
-        out.lines.append({"ok": L("指紋: すべて一致しました", "fingerprints: everything matches"),
-                          "bad": L("指紋: 生成したときと違うファイルがあります", "fingerprints: some files differ from when they were generated"),
-                          "unknown": L("指紋: 記録が無くて確かめられないものがあります",
+        out.lines.append({"ok": L("照合用のハッシュ: すべて一致しました", "fingerprints: everything matches"),
+                          "bad": L("照合用のハッシュ: 生成したときと違うファイルがあります", "fingerprints: some files differ from when they were generated"),
+                          "unknown": L("照合用のハッシュ: 記録が無くて確かめられないものがあります",
                                        "fingerprints: some files have no record and cannot be verified")}[out.check_verdict])
     if out.written:
         out.lines.append(L("書き出したファイル: " + ", ".join(str(p) for p in out.written),

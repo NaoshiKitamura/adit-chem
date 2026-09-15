@@ -184,7 +184,7 @@ def test_template_save_and_load(web, tmp_path):
 def test_provenance_in_preview(web):
     app, base = web
     page = h.unescape(_post(base + "/preview", _base(app)))
-    assert "来歴: ADIT" in page and "skf/H-O.skf" in page
+    assert "作成時の記録: ADIT" in page and "skf/H-O.skf" in page
 
 
 def test_english_page(web):

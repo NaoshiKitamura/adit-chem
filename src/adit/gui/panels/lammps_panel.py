@@ -29,7 +29,7 @@ class LammpsMethodPanel(QWidget):
         self.pair_coeff = QPlainTextEdit(); self.pair_coeff.setMaximumHeight(70)
         self.pair_coeff.setPlaceholderText("pair_coeff の行 (行頭の pair_coeff は省けます。例 * * Cu_u3.eam)")
         self.potential_files = QPlainTextEdit(); self.potential_files.setMaximumHeight(70)
-        self.potential_files.setPlaceholderText("生成物へ写すファイル (力場・モデル) を 1 行に 1 つ。入力の中ではファイル名だけで書きます")
+        self.potential_files.setPlaceholderText("生成先へ写すファイル (力場・モデル) を 1 行に 1 つ。入力の中ではファイル名だけで書きます")
         self.style_commands = QPlainTextEdit(); self.style_commands.setMaximumHeight(60)
         self.style_commands.setPlaceholderText("例 bond_style harmonic / special_bonds lj/coul 0 0 0.5")
         self.extra_commands = QPlainTextEdit(); self.extra_commands.setMaximumHeight(60)
