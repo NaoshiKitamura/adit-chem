@@ -103,3 +103,19 @@ def test_local_submit_runs(tmp_path):
     assert r.returncode == 0, r.stderr
     log = (out / "output.log").read_text(encoding="utf-8")
     assert "Geometry converged" in log and (out / "results.tag").is_file()
+
+
+def test_the_transfer_and_submit_commands_are_written_for_a_cluster(tmp_path, cfg):
+    from adit.spec import Runtime
+
+    out = tmp_path / "calc"
+    spec = water_spec(runtime=Runtime(profile="cluster", ncpus=8, walltime="01:00:00", job_name="w"))
+    plain = build_project(spec, cfg, output_dir=out).texts["transfer_and_submit.sh"]
+    assert "<ユーザー名>@<クラスタのホスト名>" in plain and "qsub submit.sh" in plain
+    cfg.profiles["cluster"].host = "cluster.example.ac.jp"
+    cfg.profiles["cluster"].user = "me"
+    cfg.profiles["cluster"].remote_dir = "/work/me"
+    filled = build_project(spec, cfg, output_dir=out).texts["transfer_and_submit.sh"]
+    assert 'rsync -av "$HERE" me@cluster.example.ac.jp:/work/me/' in filled
+    assert "cd /work/me/calc && qsub submit.sh" in filled and "<" not in filled
+    assert "transfer_and_submit.sh" not in build_project(water_spec(), cfg, output_dir=out).texts   # local profile

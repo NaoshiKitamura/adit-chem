@@ -7,7 +7,7 @@ name = "adit-chem"  # the import name is "adit"; the PyPI name "adit" is a diffe
 version = "0.1.0a1"
 description = "Prepare atomistic simulations and analyse their results: structures, input sets for DFTB+, VASP, xtb, Quantum ESPRESSO, ORCA, CP2K, LAMMPS, GROMACS, and analysis"
 readme = "README.md"
-authors = [{ name = "ADIT contributors (https://github.com/NaoshiKitamura/adit-chem)" }]
+authors = [{ name = "The ADIT project" }]
 license = "MIT"
 license-files = ["LICENSE"]
 keywords = ["computational chemistry", "DFT", "molecular dynamics", "input generation", "analysis",
@@ -36,12 +36,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-gui = ["PySide6>=6.6", "pyqtdarktheme-fork>=2.3"]  # the theme package is optional
+gui = ["PySide6>=6.6", "pyqtdarktheme-fork>=2.3",     # the theme package is optional
+       "pyte>=0.8", "ptyprocess>=0.7; sys_platform != 'win32'", "pywinpty>=2; sys_platform == 'win32'"]
+# pyte and the pty packages drive the terminal in the workspace tab; without them that tab says so
 smiles = ["rdkit"]
 analysis = ["spglib>=2"]  # space groups; analysis works without it, that field is then absent
 xrd = ["pymatgen>=2024"]  # powder X-ray diffraction
 phonons = ["phonopy>=4.5"]  # finite-displacement phonons; ASE Phonons is used when absent
-dev = ["pytest", "PySide6>=6.6", "pyqtdarktheme-fork>=2.3"]
+dev = ["pytest", "PySide6>=6.6", "pyqtdarktheme-fork>=2.3",
+       "pyte>=0.8", "ptyprocess>=0.7; sys_platform != 'win32'", "pywinpty>=2; sys_platform == 'win32'"]
 
 [project.urls]
 Homepage = "https://github.com/NaoshiKitamura/adit-chem"

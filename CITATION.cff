@@ -3,7 +3,7 @@ title: "ADIT: Atomistic Design and Interpretation Toolkit"
 message: "If you use this software in your research, please cite it as below, together with the simulation codes you ran."
 type: software
 authors:
-  - name: "NaoshiKitamura"
+  - name: "The ADIT project"
 repository-code: "https://github.com/NaoshiKitamura/adit-chem"
 license: MIT
 version: 0.1.0a1

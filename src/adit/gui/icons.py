@@ -313,6 +313,10 @@ def _draw(name: str, p: QPainter, t: Tokens) -> None:
         _draw("file", p, t)
     elif name == "tab_run":
         _draw("run", p, t)
+    elif name == "tab_workspace":
+        _pen(p, muted, 7); p.setBrush(Qt.BrushStyle.NoBrush); p.drawRoundedRect(QRectF(16, 24, 68, 52), 6, 6)
+        _poly(p, [(32, 44), (44, 54), (32, 64)], accent, 7, close=False)
+        _line(p, 52, 64, 70, 64, accent, 7)
     elif name == "tab_analysis":
         _fill(p, muted); p.drawRoundedRect(QRectF(18, 54, 16, 32), 4, 4)
         _fill(p, accent); p.drawRoundedRect(QRectF(42, 30, 16, 56), 4, 4)

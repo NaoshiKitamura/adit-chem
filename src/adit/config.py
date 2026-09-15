@@ -31,6 +31,9 @@ class Profile(BaseModel):
     submit_command: str = ""
     status_command: str = ""
     description: str = ""
+    host: str = ""          # cluster host name, for the transfer and submit commands
+    user: str = ""          # login name on that host (empty: the local one)
+    remote_dir: str = ""    # work directory on that host
 
     def modules_for(self, code: str) -> list[str]:
         return list(self.modules) + list(self.code_modules.get(code, []))
@@ -41,6 +44,14 @@ class Profile(BaseModel):
     @property
     def submit(self) -> str:
         return self.submit_command or SUBMIT_DEFAULT[self.kind]
+
+    @property
+    def target(self) -> str:
+        """`user@host`, `host`, or "" when no host is configured."""
+        if not self.host.strip():
+            return ""
+        user = self.user.strip()
+        return f"{user}@{self.host.strip()}" if user else self.host.strip()
 
     @property
     def status(self) -> str:

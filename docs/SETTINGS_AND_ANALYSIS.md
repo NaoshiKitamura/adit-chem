@@ -26,6 +26,8 @@ description = "この PC で bash submit.sh を実行"
 下の例の `<...>` はそのままでは動かないので、クラスタの管理者か研究室の先輩に確かめて置き換えてください。置き換え忘れがあると、生成の前の検証で「仮の値のままです」と表示されます。
 使わない行は、行頭に `#` を付けて無効にしたままにします。
 
+`host` と `remote_dir` を書いておくと、生成物の `transfer_and_submit.sh` に、そのまま貼れる `rsync` と `ssh`、投入コマンドが書き出されます (**ADIT は実行しません**)。
+
 ```toml
 [profiles.remote]
 kind = "pbs"                        # または "slurm"
@@ -34,6 +36,9 @@ select_extra = ""                   # PBS の select 行の末尾に付ける文
 header_extra = ["#PBS -q <キュー名>"]  # ヘッダに追加する行 (queue / partition / account など。Slurm なら "#SBATCH --partition=<パーティション名>")
 submit_command = "qsub"             # 投入コマンド名 (README.txt に書くだけで、ADIT は実行しません)
 status_command = "qstat -u $USER"   # 状態確認のコマンド (同上)
+host = "<クラスタのホスト名>"          # 転送と投入のコマンドに使います (空でも生成できます。その場合は <...> のまま出ます)
+user = "<ログイン名>"                 # 空なら手元のログイン名を使う想定で、host だけを書きます
+remote_dir = "<クラスタでの作業ディレクトリ>"  # 転送先
 
 [profiles.remote.code_modules]   # 計算コードごとに module load するもの (クラスタで module avail と打つと一覧が出ます)
 dftbplus = ["<DFTB+ の module 名>"]

@@ -71,6 +71,7 @@ class MainWindow(QMainWindow):
         self.right_tabs.setCurrentWidget(self.structure_view)
         from adit.gui.style import current_theme
         self.structure_view.set_dark(current_theme() == "dark")
+        self._dark = current_theme() == "dark"
 
         limit_combo_popups()
         self.act_open = QAction(icons.icon("open", 32), "計算設定 (spec.json) を開く…", self); self.act_open.setShortcut("Ctrl+O"); self.act_open.setIconText("開く")
@@ -133,10 +134,15 @@ class MainWindow(QMainWindow):
 
         analysis_scroll = QScrollArea(); analysis_scroll.setWidget(self.analysis); analysis_scroll.setWidgetResizable(True)
 
+        from adit.gui.panels.workspace_panel import WorkspacePanel
+
+        start = Path(self.runtime.output_dir() or "~").expanduser().parent
+        self.workspace = WorkspacePanel(root=start if start.is_dir() else Path.home(), dark=self._dark)
         self.main_stack = QStackedWidget()
-        for w in (structure_scroll, scroll, analysis_scroll):
+        for w in (structure_scroll, scroll, analysis_scroll, self.workspace):
             self.main_stack.addWidget(w)
-        self.mode_bar = ModeBar([("tab_structure", "構造"), ("settings", "計算条件"), ("tab_analysis", "解析")])
+        self.mode_bar = ModeBar([("tab_structure", "構造"), ("settings", "計算条件"), ("tab_analysis", "解析"),
+                                 ("tab_workspace", "ワークスペース")])
         self.mode_bar.changed.connect(self.set_mode)
 
         split = QSplitter(); split.addWidget(self.main_stack); split.addWidget(self.right_tabs); split.setSizes([1200, 580])
@@ -246,12 +252,13 @@ class MainWindow(QMainWindow):
         if not self.focus_error(getattr(self, "_error_index", -1) + 1):
             self.right_tabs.setCurrentWidget(self.files_pane)
 
-    MODE_STRUCTURE, MODE_SETTINGS, MODE_ANALYSIS = 0, 1, 2
+    MODE_STRUCTURE, MODE_SETTINGS, MODE_ANALYSIS, MODE_WORKSPACE = 0, 1, 2, 3
 
     def set_mode(self, index: int) -> None:
         if not 0 <= index < self.main_stack.count():
             return
         self.main_stack.setCurrentIndex(index)
+        self.right_tabs.setVisible(index != self.MODE_WORKSPACE)   # ワークスペースは画面を広く使う
         self.mode_bar.set_current(index)
         if hasattr(self, "_mode_actions"):
             self._mode_actions[index].setChecked(True)
@@ -478,6 +485,7 @@ class MainWindow(QMainWindow):
             return
         self.last_written = out
         self.analysis.set_run_dir(out, spec.elements)
+        self.workspace.set_root(out)          # ワークスペースのツリーも、いま作った場所へ
         self.last_written_kind = self.cfg.profiles[spec.runtime.profile].kind
         from adit.codes import GENERATORS
         self.last_written_exe = self._executable_of(GENERATORS[spec.method.code].run_command(spec, self.cfg.profiles[spec.runtime.profile]))
@@ -646,7 +654,8 @@ class MainWindow(QMainWindow):
         self.right_tabs.currentChanged.connect(lambda i: 0 <= i < len(self._tab_actions) and self._tab_actions[i].setChecked(True))
         self._mode_actions = []
         mode_group = QActionGroup(self); mode_group.setExclusive(True)
-        for i, (icon_name, text) in enumerate((("tab_structure", "構造"), ("settings", "計算条件"), ("tab_analysis", "解析"))):
+        for i, (icon_name, text) in enumerate((("tab_structure", "構造"), ("settings", "計算条件"), ("tab_analysis", "解析"),
+                                               ("tab_workspace", "ワークスペース"))):
             a = QAction(icons.icon(icon_name, 32), text, self)
             a.setCheckable(True); a.setChecked(i == 0); mode_group.addAction(a)
             a.triggered.connect(lambda _c=False, i=i: self.set_mode(i)); self._mode_actions.append(a)

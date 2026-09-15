@@ -18,6 +18,7 @@ from adit.validate import ValidationError, validate
 SPEC_FILE = "spec.json"
 SUBMIT_FILE = "submit.sh"
 README_FILE = "README.txt"
+TRANSFER_FILE = "transfer_and_submit.sh"
 ANALYZE_FILE = "analyze.py"
 
 
@@ -45,6 +46,40 @@ def version_trap(probe: tuple[str, str]) -> str:
     name, pattern = probe
     return (f"adit_dir=$(pwd)\n"
             f"trap 'grep -m1 -E \"{pattern}\" \"$adit_dir/{name}\" > \"$adit_dir/{VERSION_FILE}\" 2>/dev/null' EXIT")
+
+
+def _transfer_commands(profile, output_dir) -> str:
+    """The copy-and-paste commands for sending this directory to the cluster and submitting it there.
+
+    ADIT never runs them: the person does, in a terminal."""
+    here = Path(output_dir).expanduser().resolve() if output_dir else None
+    name = shlex.quote(here.name) if here else L("<このディレクトリの名前>", "<directory name>")
+    host = profile.target or L("<ユーザー名>@<クラスタのホスト名>", "<user>@<cluster host name>")
+    work = profile.remote_dir.strip() or L("<クラスタでの作業ディレクトリ>", "<work directory on the cluster>")
+    todo = "" if profile.target and profile.remote_dir.strip() else L(
+        "# <...> の部分は自分の値に置き換えてください (環境設定のプロファイルに host と remote_dir を書くと、ここが埋まります)。",
+        "# Replace the <...> parts with your own values (set host and remote_dir in the profile to fill them in).")
+    return "\n".join(x for x in [
+        L("# ADIT が書き出したコマンドです。ADIT は実行しません。ターミナルに貼って使います。",
+          "# Commands written by ADIT. ADIT does not run them; paste them into a terminal."),
+        todo,
+        "",
+        L("# このファイルのある場所を自分で調べます (フォルダを移動しても、そのまま使えます)",
+          "# Work out where this file is, so the commands keep working if the folder is moved"),
+        'HERE="$(cd "$(dirname "$0")" && pwd)"',
+        "",
+        L("# 1. このディレクトリをクラスタへ送る", "# 1. Send this directory to the cluster"),
+        f'rsync -av "$HERE" {host}:{work}/',
+        "",
+        L("# 2. クラスタにログインして投入する", "# 2. Log in to the cluster and submit"),
+        f"ssh {host}",
+        f"cd {work}/{name} && {profile.submit} {SUBMIT_FILE}",
+        f"{profile.status}",
+        "",
+        L("# 3. 終わったら結果を手元へ戻す", "# 3. Bring the results back when it has finished"),
+        f'rsync -av {host}:{work}/{name} "$(dirname "$HERE")"/',
+        "",
+    ] if x is not None) + ""
 
 
 def build_project(spec: CalculationSpec, cfg: Config, *, output_dir: Path | str | None = None,
@@ -97,6 +132,8 @@ def build_project(spec: CalculationSpec, cfg: Config, *, output_dir: Path | str 
         files.texts[ANALYZE_FILE] = analyze_script_text()
     files.texts[README_FILE] = _readme(spec, profile, notes, output_dir, prov=prov, extra=extra_readme,
                                      settings_path=cfg.source_path)
+    if profile.kind != "direct":
+        files.texts[TRANSFER_FILE] = _transfer_commands(profile, output_dir)
     return files
 
 
@@ -230,8 +267,8 @@ def _readme(spec: CalculationSpec, profile, notes: ReadmeNotes, output_dir: Path
     else:
         dir_name = L("<このディレクトリの名前>", "<directory name>")
     local_dir = L("'<この計算ディレクトリのパス>'", "'<path to this calculation directory>'")
-    host = L("<ユーザー名>@<クラスタのホスト名>", "<user>@<cluster host name>")
-    work = L("<クラスタでの作業ディレクトリ>", "<work directory on the cluster>")
+    host = profile.target or L("<ユーザー名>@<クラスタのホスト名>", "<user>@<cluster host name>")
+    work = profile.remote_dir.strip() or L("<クラスタでの作業ディレクトリ>", "<work directory on the cluster>")
     back = L("<手元の置き場所>", "<local folder>")
     kind = profile.kind
     where = {"direct": L("この PC で直接実行する", "run directly on this PC"), "pbs": L("PBS のクラスタ", "a PBS cluster"),
