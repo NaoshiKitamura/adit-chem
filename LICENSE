@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-NOTE: This MIT licence covers ADIT's own code and documentation.
-The directories examples/ and tests/data/ also contain files taken from other projects
-(LAMMPS, CP2K, GROMACS, Quantum ESPRESSO, the VASP wiki, the DFTB+ recipes, cclib, pymatgen).
-Those files keep their original licences (GPL-2.0, LGPL-2.1, GNU FDL 1.2, CC BY-SA 4.0, BSD-3, MIT).
-See THIRD_PARTY_NOTICES.md and the SOURCES.md in each directory; full licence texts are in licenses/.
