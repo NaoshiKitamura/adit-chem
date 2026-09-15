@@ -17,8 +17,6 @@ timer.dat
 # local working copies for review (not published)
 /review/
 
-# local notes for the maintainers (not published)
-/CLAUDE.md
 # internal notes kept locally, never published
 /design.md
 /docs/CMMDE_COMPAT.md
