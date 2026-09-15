@@ -74,6 +74,7 @@ def test_nothing_generated_yet(sk_root):
     assert "生成" in reason or "generate" in reason
 
 
+@pytest.mark.skipif(os.name == "nt", reason="Windows では submit.sh を実行しない (block_reason で止める)")
 def test_it_runs_and_reports_the_exit_code(tmp_path):
     d = tmp_path / "fake"
     d.mkdir()

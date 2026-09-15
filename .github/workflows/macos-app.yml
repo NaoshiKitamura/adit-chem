@@ -36,7 +36,8 @@ jobs:
       - name: Minimal smoke test (command line only; no display on the runner)
         run: |
           dist/adit/adit-cli gen --list-samples
-          dist/adit/adit-cli gen --sample water_generated mine.json
+          dist/adit/adit-cli gen --sample xtb_water_generated mine.json
+          mkdir -p out
           dist/adit/adit-cli gen mine.json out/run1
           ls -l out/run1
           test -d dist/ADIT.app || (echo "ADIT.app was not produced" && exit 1)

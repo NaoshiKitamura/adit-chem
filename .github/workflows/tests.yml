@@ -40,10 +40,16 @@ jobs:
       - uses: mamba-org/setup-micromamba@v1
         with:
           environment-name: qc
-          # xtb 6.6.1 aborts during geometry optimisation (format string in optimizer.f90),
-          # so pin a newer release
-          create-args: python=3.12 dftbplus=*=nompi_* xtb=6.7 qe
+          create-args: python=3.12 dftbplus=*=nompi_* qe
           init-shell: bash
+      # xtb lives in its own environment: xtb 6.7 and DFTB+ 25 need different versions of
+      # simple-dftd3, and solving them together silently downgrades DFTB+ to 21.
+      # (xtb 6.6.1 cannot be used: it aborts during geometry optimisation.)
+      - name: Install xtb in a separate environment
+        shell: bash -l {0}
+        run: |
+          micromamba create -y -n xtb -c conda-forge "xtb=6.7"
+          echo "${MAMBA_ROOT_PREFIX}/envs/xtb/bin" >> "$GITHUB_PATH"
       - name: Fetch Slater-Koster set (mio-1-1, CC BY-SA 4.0) and a pseudopotential (pslibrary, GPL)
         shell: bash -l {0}
         run: |

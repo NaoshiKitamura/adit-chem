@@ -28,7 +28,8 @@ jobs:
       - name: Minimal smoke test (command line only; no display on the runner)
         run: |
           dist\adit\adit-cli.exe gen --list-samples
-          dist\adit\adit-cli.exe gen --sample water_generated mine.json
+          dist\adit\adit-cli.exe gen --sample xtb_water_generated mine.json
+          mkdir out
           dist\adit\adit-cli.exe gen mine.json out\run1
           dir out\run1
       - name: Zip the build
