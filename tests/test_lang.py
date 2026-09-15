@@ -42,7 +42,7 @@ def test_english_outputs_have_no_japanese(cfg, english, profile):
     for name in ("README.txt", "submit.sh", "analyze.py"):
         assert not _JA.search(files.texts[name]), name
     r = files.texts["README.txt"]
-    assert "== Reading the results ==" in r and "== Citation ==" in r
+    assert "== Reading the results ==" in r
     if profile == "cluster":
         assert "Copy this whole directory to the cluster" in r and "qsub submit.sh" in r
         assert "module command not available" in files.texts["submit.sh"]

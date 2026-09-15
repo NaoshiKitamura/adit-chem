@@ -136,14 +136,12 @@ class XtbGenerator(InputGenerator):
                                      "  xtb.trj       MD trajectory (xyz format, every dump interval); mdrestart is for continuing the run")],
             "vibrations": [L("  vibspectrum / g98.out   振動数 (cm⁻¹) と IR 強度", "  vibspectrum / g98.out   frequencies (cm⁻¹) and IR intensities")],
         }.get(t, [])
-        cite = [L("  xtb の引用要件は https://xtb-docs.readthedocs.io/ を参照してください (GFN2-xTB: J. Chem. Theory Comput. 2019, 15, 1652 など)。",
-                  "  See https://xtb-docs.readthedocs.io/ (e.g. GFN2-xTB: J. Chem. Theory Comput. 2019, 15, 1652).")]
         prepare = []
         if t == "molecular_dynamics":
             m = spec.method
             prepare = [L(f"  xtb.inp には水素の質量 hmass = {m.md_hmass:g} u、結合拘束 shake = {m.md_shake}、MD 中の SCC 精度 sccacc = {m.md_sccacc:g} を明記しています。",
                          f"  xtb.inp explicitly records the hydrogen mass hmass = {m.md_hmass:g} u, bond constraint setting shake = {m.md_shake}, and MD SCC accuracy sccacc = {m.md_sccacc:g}.")]
-        return ReadmeNotes(program="xtb", files=files, prepare=prepare, outputs=out, citation=cite)
+        return ReadmeNotes(program="xtb", files=files, prepare=prepare, outputs=out)
 
     def xyz(self, spec: CalculationSpec) -> str:
         buf = io.StringIO()

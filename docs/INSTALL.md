@@ -83,7 +83,7 @@ pip install "adit-chem[gui] @ git+<配布元の URL>"
 計算コードによっては、元素ごとのパラメータのファイルが要ります。ADIT には入っていないので、配布元から入手します。
 Windows のブラウザでダウンロードしたファイルは、WSL の中からは `/mnt/c/Users/<Windows のユーザー名>/Downloads/` に見えます。
 
-**DFTB+ の Slater-Koster パラメータ** (元素の組ごとの `.skf` ファイル。ライセンスは CC BY-SA 4.0 で、論文では引用が必要です)
+**DFTB+ の Slater-Koster パラメータ** (元素の組ごとの `.skf` ファイル。ライセンスは CC BY-SA 4.0 です)
 
 入手先: https://dftb.org/parameters/download.html (水や有機分子なら mio が入り口です。mio が扱う元素は H, C, N, O, S, P)
 
@@ -137,7 +137,7 @@ pseudo_root = "/home/<ユーザー名>/pseudo"    # Quantum ESPRESSO を使う�
 adit-web --open                             # ブラウザが開かなければ、Windows のブラウザで http://127.0.0.1:8765/ を開きます
 ```
 
-ブラウザの画面で、構造「プリセット」の H2O、計算コード DFTB+、Slater-Koster パラメータ mio-1-1、プロファイル local のまま「プレビュー」→「入力を生成」→「生成した入力をこの PC で実行」→「解析へ進む」と進みます。
+ブラウザの画面で、構造「プリセット」の H2O、計算コード DFTB+、Slater-Koster パラメータ mio-1-1、プロファイル local のまま「プレビュー」→「生成」→「生成した入力をこの PC で実行」→「解析へ進む」と進みます。
 ターミナルだけで行う場合は、画面で保存した計算設定 (spec.json) から次のように作れます。
 
 ```bash
@@ -200,6 +200,6 @@ adit-convert openbabel source.sdf target.mol2 --input-format sdf --output-format
 adit-convert dock6 prepared/dock.in ready/
 ```
 
-GOAT、ORCA DOCKER、DCDFTBMD 2.0、DOCK6 の入力整理、Open Babel の変換入口は、[追加の入口](EXTRA_ENTRY_POINTS.md)に日英の手順と制限を記載しています。これらの GUI/Web 欄はまだありません。
+GOAT、ORCA DOCKER、DCDFTBMD 2.0、DOCK6 の入力整理、Open Babel の変換入口は、[GOAT・DOCKER ほかの機能](EXTRA_ENTRY_POINTS.md)に日英の手順と制限を記載しています。これらの GUI/Web 欄はまだありません。
 
-See [Additional entry points](EXTRA_ENTRY_POINTS.md) for bilingual instructions and limitations for GOAT, ORCA DOCKER, DCDFTBMD 2.0, DOCK6 input packaging, and Open Babel conversion. GUI/Web controls have not been added.
+See [GOAT, DOCKER and other entry points](EXTRA_ENTRY_POINTS.md) for bilingual instructions and limitations for GOAT, ORCA DOCKER, DCDFTBMD 2.0, DOCK6 input packaging, and Open Babel conversion. GUI/Web controls have not been added.

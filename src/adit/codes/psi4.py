@@ -184,9 +184,7 @@ class Psi4Generator(InputGenerator):
         if t == "vibrations":
             outputs.append(L("  results.json の frequencies_cm1   振動数 [cm^-1] (虚数は負の数で入ります)",
                              "  frequencies_cm1 in results.json   vibrational frequencies in cm^-1 (imaginary ones appear as negative)"))
-        citation = [L(f"  Psi4: Smith ほか, J. Chem. Phys. 152, 184108 (2020), doi:10.1063/5.0006002。使い方は {DOC}。",
-                      f"  Psi4: Smith et al., J. Chem. Phys. 152, 184108 (2020), doi:10.1063/5.0006002. Documentation: {DOC}.")]
-        return ReadmeNotes(program=DEFAULT_COMMAND, files=files, prepare=prepare, outputs=outputs, citation=citation)
+        return ReadmeNotes(program=DEFAULT_COMMAND, files=files, prepare=prepare, outputs=outputs)
 
 
 register(Psi4Generator())

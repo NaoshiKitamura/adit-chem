@@ -264,9 +264,7 @@ class AbinitGenerator(InputGenerator):
         if t == "geometry_optimization":
             outputs.append(L("  構造最適化では、各段階のエネルギーと力が output.log に並びます (ADIT はエネルギーの推移として読みます)",
                              "  For a geometry optimization, the energy and forces of each step appear in output.log (ADIT reads them as the energy trace)"))
-        citation = [L(f"  ABINIT: Gonze ほか, Comput. Phys. Commun. 248, 107042 (2020), doi:10.1016/j.cpc.2019.107042。変数の説明は {DOC}。擬ポテンシャルの出典も引用してください。",
-                      f"  ABINIT: Gonze et al., Comput. Phys. Commun. 248, 107042 (2020), doi:10.1016/j.cpc.2019.107042. Variable reference: {DOC}. Cite the pseudopotentials as well.")]
-        return ReadmeNotes(program=DEFAULT_COMMAND, files=files, prepare=prepare, outputs=outputs, citation=citation)
+        return ReadmeNotes(program=DEFAULT_COMMAND, files=files, prepare=prepare, outputs=outputs)
 
 
 register(AbinitGenerator())

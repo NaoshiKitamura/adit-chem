@@ -267,11 +267,7 @@ class Cp2kGenerator(InputGenerator):
         }.get(t.type, [])
         if t.type == "molecular_dynamics" and t.md.ensemble == "NPT":
             out.append(L(f"  {PROJECT}-1.cell   各ステップのセル", f"  {PROJECT}-1.cell   cell at each step"))
-        cite = [L("  CP2K の引用は https://www.cp2k.org/ の「Citing CP2K」を参照してください。基底関数と擬ポテンシャルは、",
-                  "  For CP2K see 'Citing CP2K' at https://www.cp2k.org/. Cite the references given in the headers of the basis-set and"),
-                L(f"  {m.basis_file} と {m.potential_file} の冒頭に書かれた文献を引用します。",
-                  f"  pseudopotential files ({m.basis_file}, {m.potential_file}).")]
-        return ReadmeNotes(program=profile_program(), files=files, prepare=prep, outputs=out, citation=cite)
+        return ReadmeNotes(program=profile_program(), files=files, prepare=prep, outputs=out)
 
     # ---- cp2k.inp ----
     def cp2k_inp(self, spec: CalculationSpec, data: Cp2kData) -> str:

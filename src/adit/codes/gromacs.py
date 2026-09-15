@@ -283,8 +283,6 @@ class GromacsGenerator(InputGenerator):
             out += [L("  adit.xtc     MD の軌跡 (dump の間隔ごと。VMD や MDAnalysis で開けます)", "  adit.xtc     MD trajectory (every dump interval; opens in VMD or MDAnalysis)"),
                     L("  adit.cpt     チェックポイント (続きから実行するための状態)。次の段階 (NVT → NPT → 本計算) を ADIT で作るとき「前の段階の .cpt」に指定します",
                       "  adit.cpt     checkpoint; give it as the previous-stage .cpt when making the next stage (NVT → NPT → production) in ADIT")]
-        cite = [L("  GROMACS の引用は https://manual.gromacs.org/current/ の「Citation information」、力場はその文献を引用します。",
-                  "  For GROMACS see 'Citation information' in https://manual.gromacs.org/current/; cite the force-field references.")]
         prepare = []
         if t == "molecular_dynamics":
             dt = spec.task.md.timestep_fs
@@ -297,9 +295,7 @@ class GromacsGenerator(InputGenerator):
             files.append(L(f"  {PLUMED_FILE}    PLUMED の入力 (利用者が書いたもの)", f"  {PLUMED_FILE}    the PLUMED input (written by you)"))
             prepare += plumed_prepare(spec)
             out += plumed_outputs(spec)
-            cite.append(L("  PLUMED も引用してください (使った機能の文献は PLUMED のログの最後に並びます)。",
-                          "  Cite PLUMED as well (the references for the features you used are listed at the end of the PLUMED log)."))
-        return ReadmeNotes(program="gmx", files=files, prepare=prepare, outputs=out, citation=cite)
+        return ReadmeNotes(program="gmx", files=files, prepare=prepare, outputs=out)
 
     # ---- mdp ----
     def mdp(self, spec: CalculationSpec) -> str:

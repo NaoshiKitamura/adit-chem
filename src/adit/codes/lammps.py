@@ -228,14 +228,10 @@ class LammpsGenerator(InputGenerator):
             "molecular_dynamics": [L(f"  {DUMP_FILE}  MD の軌跡 (dump custom 形式、id type element x y z。OVITO や VMD でそのまま開けます)。{FINAL_DATA} は最後の構造",
                                      f"  {DUMP_FILE}  MD trajectory (dump custom, id type element x y z; opens as is in OVITO or VMD); {FINAL_DATA} is the final structure")],
         }.get(t, [])
-        cite = [L("  LAMMPS の引用は https://docs.lammps.org/Intro_citing.html、力場・モデルはその配布元の文献を引用します。",
-                  "  For LAMMPS see https://docs.lammps.org/Intro_citing.html; cite the sources of the force field / model.")]
         if spec.plumed is not None:
             files.append(L(f"  {PLUMED_FILE}   PLUMED の入力 (利用者が書いたもの)", f"  {PLUMED_FILE}   the PLUMED input (written by you)"))
             out += plumed_outputs(spec)
-            cite.append(L("  PLUMED も引用してください (使った機能の文献は PLUMED のログの最後に並びます)。",
-                          "  Cite PLUMED as well (the references for the features you used are listed at the end of the PLUMED log)."))
-        return ReadmeNotes(program="lmp", files=files, prepare=plumed_prepare(spec), outputs=out, citation=cite)
+        return ReadmeNotes(program="lmp", files=files, prepare=plumed_prepare(spec), outputs=out)
 
     # ---- data ----
     def data(self, spec: CalculationSpec) -> str:

@@ -121,7 +121,7 @@ def test_the_readme_shows_how_to_start():
     assert "## インストール" in text and "## 使ってみる" in text
     start = text.index("## 使ってみる")
     recipe = text[start:text.index("##", start + 5)]
-    for step in ("入力を生成", "この PC で実行", "解析を実行", "![") :
+    for step in ("生成", "この PC で実行", "解析を実行", "![") :
         assert step in recipe, step
     assert len(text.splitlines()) < 150
     usage = (REPO / "docs" / "USAGE.md").read_text(encoding="utf-8")

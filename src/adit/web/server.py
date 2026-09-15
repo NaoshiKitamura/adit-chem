@@ -206,7 +206,7 @@ class WebApp:
         try:
             written = write_project(self.spec, self.cfg, out, overwrite=overwrite)
         except OutputNotEmpty as ex:
-            return "", str(ex) + "\n" + L("中のファイルを上書きしてよければ、「上書きを許可」に印を付けてから、もう一度「入力を生成」を押してください。",
+            return "", str(ex) + "\n" + L("中のファイルを上書きしてよければ、「上書きを許可」に印を付けてから、もう一度「生成」を押してください。",
                                           "To overwrite the files inside, tick \"Allow overwrite\" and press \"Generate input\" again.")
         except ProjectError as ex:
             return "", str(ex)

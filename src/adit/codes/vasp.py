@@ -232,9 +232,7 @@ class VaspGenerator(InputGenerator):
             "band_structure": [L("  bands/EIGENVAL, bands/vasprun.xml   経路上の各 k 点のエネルギー準位 (図は ADIT の解析タブか analyze.py で描けます)",
                                  "  bands/EIGENVAL, bands/vasprun.xml   energy levels at each k-point on the path (plot them with the ADIT analysis tab or analyze.py)")],
         }.get(t, [])
-        cite = [L("  VASP の引用要件は https://www.vasp.at/ を参照してください。POTCAR は配布物のライセンスに従います。",
-                  "  See https://www.vasp.at/ for VASP; POTCAR follows the license of its distribution.")]
-        return ReadmeNotes(program=f"vasp_{m.binary}", files=files, prepare=prep, outputs=out, citation=cite)
+        return ReadmeNotes(program=f"vasp_{m.binary}", files=files, prepare=prep, outputs=out)
 
     @staticmethod
     def _ordered_atoms(spec: CalculationSpec):

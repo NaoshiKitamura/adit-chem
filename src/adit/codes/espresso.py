@@ -286,15 +286,7 @@ class EspressoGenerator(InputGenerator):
                          f"                the dipole correction is on (edir = {spec.method.dipole_direction}); the lines "
                          "'Computed dipole along edir' in output.log give the dipole per step in Debye. "
                          "Check on the structure that the vacuum region (emaxpos / eopreg) contains no atoms."))
-        cite = [
-            L(f"  擬ポテンシャルの配布物 ({lib.pseudo_set}) のライセンスと引用要件に従ってください"
-              + (f" (同梱: {', '.join(docs)})" if docs else " (セットのディレクトリに LICENSE / README が無かったため含めていません。配布元で確認してください)") + "。",
-              f"  Follow the license and citation requirements of the pseudopotential distribution ({lib.pseudo_set})"
-              + (f" (included: {', '.join(docs)})" if docs else " (no LICENSE / README in the set directory, so none included; check with the distributor)") + "."),
-            L("  Quantum ESPRESSO 自体の引用は https://www.quantum-espresso.org/ を参照してください。",
-              "  For Quantum ESPRESSO itself see https://www.quantum-espresso.org/."),
-        ]
-        return ReadmeNotes(program="pw.x", files=files, outputs=out, citation=cite)
+        return ReadmeNotes(program="pw.x", files=files, outputs=out)
 
     # ---- pw.in ----
     def pw_in(self, spec: CalculationSpec, lib: UpfLibrary, bands=None) -> str:

@@ -435,9 +435,7 @@ class OpenmmGenerator(InputGenerator):
             files.append(L(f"  {PLUMED_FILE}   PLUMED の入力 (利用者が書いたもの)", f"  {PLUMED_FILE}   the PLUMED input (written by you)"))
             prepare += plumed_prepare(spec)
             outputs += plumed_outputs(spec)
-        citation = [L(f"  OpenMM: Eastman ほか, PLoS Comput. Biol. 13, e1005659 (2017), doi:10.1371/journal.pcbi.1005659。使い方は {DOC}。力場の文献も引用してください。",
-                      f"  OpenMM: Eastman et al., PLoS Comput. Biol. 13, e1005659 (2017), doi:10.1371/journal.pcbi.1005659. Usage: {DOC}. Cite the force field as well.")]
-        return ReadmeNotes(program="python3", files=files, prepare=prepare, outputs=outputs, citation=citation)
+        return ReadmeNotes(program="python3", files=files, prepare=prepare, outputs=outputs)
 
 
 register(OpenmmGenerator())

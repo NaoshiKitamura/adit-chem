@@ -218,9 +218,7 @@ class OrcaGenerator(InputGenerator):
             if m.docker_assume_neutral_singlet:
                 prep.append(L("  GUEST の XYZ コメント行に電荷・多重度がないフレームは、ORCA の既定 (0, 1) として扱われます (明示指定で許可)。",
                               "  GUEST XYZ frames without charge and multiplicity in the comment use ORCA's default (0, 1), as explicitly allowed."))
-        cite = [L("  ORCA の引用要件は出力の末尾と https://orcaforum.kofo.mpg.de/ を参照してください。",
-                  "  See the end of the output and https://orcaforum.kofo.mpg.de/.")]
-        return ReadmeNotes(program="orca", files=files, prepare=prep, outputs=out, citation=cite)
+        return ReadmeNotes(program="orca", files=files, prepare=prep, outputs=out)
 
     def orca_inp(self, spec: CalculationSpec) -> str:
         m, t, st, r = spec.method, spec.task, spec.structure, spec.runtime

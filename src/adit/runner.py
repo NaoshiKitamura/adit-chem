@@ -58,7 +58,7 @@ def block_reason(cfg, target: RunTarget | None, *, running: bool = False, cfg_pa
     if running:
         return L("実行中", "running")
     if target is None:
-        return L("先に「入力を生成」を押してください", "Press Generate first")
+        return L("先に「生成」を押してください", "Press Generate first")
     if not (target.run_dir / SUBMIT).is_file():
         return L(f"{target.run_dir} に {SUBMIT} がありません", f"{target.run_dir} has no {SUBMIT}")
     if target.kind != "direct":

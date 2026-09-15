@@ -1,4 +1,4 @@
-# 追加の入口 / Additional entry points
+# ORCA GOAT・DOCKER ほかの機能 / GOAT, DOCKER and other entry points
 
 ADIT は計算条件を推測せず、ジョブも投入しません。次の機能はコマンドラインから使えます。デスクトップ画面の操作欄はまだありません。ORCA の GOAT / DOCKER の条件は spec.json を画面で読み込んで保存しても保持されますが、画面上では編集できません。生成する前にプレビューで入力を確認してください。DCDFTBMD の spec.json は画面では開けないので、コマンドラインを使います。
 

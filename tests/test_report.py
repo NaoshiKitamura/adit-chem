@@ -33,7 +33,6 @@ def test_reads_spec_and_says_what_is_missing(run_dir):
     assert report.code == "dftbplus"
     assert report.code_version == ""
     assert any("バージョンは未記録" in n for n in report.notes)
-    assert report.citations and any("DFTB+" in c or "Slater" in c for c in report.citations)
     assert report.provenance["adit_version"]
 
 
@@ -253,10 +252,6 @@ def test_warns_when_the_inputs_cannot_be_identified(run_dir):
     text = methods_markdown([load_run_report(run_dir)], "ja")
     assert "この計算の入力ファイルを特定できません" in text
 
-
-def test_citations_say_which_language_they_came_from(run_dir):
-    text = methods_markdown([load_run_report(run_dir)], "ja")
-    assert "生成時の言語のまま" in text
 
 
 def test_analysis_stops_when_the_calculation_has_not_run(run_dir, capsys):

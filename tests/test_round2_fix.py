@@ -87,7 +87,7 @@ def test_run_reason_like_desktop_and_cleared_on_code_change(sk_root, tmp_path, j
     monkeypatch.setattr("shutil.which", lambda name: None)
     assert (os.name == "nt") or "が見つかりません (インストールされていないか" in app.run_block_reason()
     app.preview({**f, "code": "xtb"})
-    assert app.written is None and "先に「入力を生成」" in app.run_block_reason()
+    assert app.written is None and "先に「生成」" in app.run_block_reason()
 
 
 def test_analysis_page_not_run_notice_and_md_defaults(sk_root, tmp_path, ja):

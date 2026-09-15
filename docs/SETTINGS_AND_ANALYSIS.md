@@ -66,7 +66,7 @@ ssh <クラスタ> 'qstat -u $USER'                                      # 3. �
 
 | 計算コード | 本体 | パラメータ |
 |---|---|---|
-| DFTB+ | conda-forge の `dftbplus` など。`dftb+` を PATH に | Slater-Koster パラメータを https://dftb.org/parameters/download.html から取得し、`sk_root` の下に置きます (CC BY-SA 4.0、論文で引用が必要)。必要な元素ペアの skf ファイルと LICENSE / README が出力ディレクトリの `skf/` にコピーされます |
+| DFTB+ | conda-forge の `dftbplus` など。`dftb+` を PATH に | Slater-Koster パラメータを https://dftb.org/parameters/download.html から取得し、`sk_root` の下に置きます (CC BY-SA 4.0)。必要な元素ペアの skf ファイルと LICENSE / README が出力ディレクトリの `skf/` にコピーされます |
 | VASP | ライセンスを持つ利用者が用意します。実行パスを `commands.vasp` に | POTCAR ライブラリを `potpaw_PBE/<名前>/POTCAR` の階層で置き、親ディレクトリを `env.VASP_PP_PATH` に。**POTCAR 自体は出力に含めません** (`potcar.spec` と `make_potcar.sh` を書き、実行時に連結します) |
 | xtb | conda-forge の `xtb` を PATH に (LGPL-3.0) | 不要 (計算手法に内蔵) |
 | Quantum ESPRESSO | conda-forge の `qe` などで `pw.x` を PATH に | UPF ファイルを `pseudo_root/<セット名>/` に置きます (pslibrary、SSSP https://www.materialscloud.org/discover/sssp など。ライセンスは配布元で確認してください)。必要な元素の UPF と付属文書が `pseudo/` にコピーされます |
@@ -223,7 +223,7 @@ adit-analyze out/ --scan
 adit-web --open        # http://127.0.0.1:8765/
 ```
 
-デスクトップ版と同じ生成と解析を、ブラウザのフォームから行います。「プレビュー」で生成ファイルの内容を確認し、「入力を生成」でサーバー (adit-web を動かしている PC) 上の出力ディレクトリに書き出します。
+デスクトップ版と同じ生成と解析を、ブラウザのフォームから行います。「プレビュー」で生成ファイルの内容を確認し、「生成」でサーバー (adit-web を動かしている PC) 上の出力ディレクトリに書き出します。
 「この PC で実行」の条件はデスクトップ版と同じです。「解析」ページでは計算結果のディレクトリを解析し、図と要約をそのページに表示します。spec.json の読み込みとダウンロードもできます。
 
 依存は Python の標準ライブラリと Jinja2 だけです。**認証はありません。**既定では 127.0.0.1 でのみ待ち受けます。`--host 0.0.0.0` にすると、そのアドレスに届く人は誰でも生成と実行ができるため、信頼できるネットワークの中だけで使ってください。

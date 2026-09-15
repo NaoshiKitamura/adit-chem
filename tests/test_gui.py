@@ -97,7 +97,7 @@ def test_run_button_order(app, quiet, sk_root, tmp_path, monkeypatch):
     monkeypatch.setenv("PATH", str(tmp_path / "bin_without_dftb"))
     win = make_window(sk_root, tmp_path)
     win.method.sk_set.setCurrentText("fake-1-0"); win.refresh_preview()
-    assert not win.btn_run.isEnabled() and "入力を生成" in win.run_hint.text()
+    assert not win.btn_run.isEnabled() and "生成" in win.run_hint.text()
     win.generate()
     assert not win.btn_run.isEnabled() and ((os.name == "nt") or "PATH" in win.run_hint.text())
     fake = tmp_path / "bin_with_dftb"; fake.mkdir(); (fake / "dftb+").write_text("#!/bin/sh\necho fake\n", encoding="utf-8"); (fake / "dftb+").chmod(0o755)
@@ -108,7 +108,7 @@ def test_run_button_order(app, quiet, sk_root, tmp_path, monkeypatch):
     else:
         assert win.btn_run.isEnabled() and str(tmp_path / "out") in win.run_hint.text()
     win.task.max_steps.setValue(3); win.refresh_preview()
-    assert not win.btn_run.isEnabled() and "入力を生成" in win.run_hint.text()
+    assert not win.btn_run.isEnabled() and "生成" in win.run_hint.text()
     win.runtime.profile.setCurrentText("cluster"); win.refresh_preview(); win.generate()
     assert not win.btn_run.isEnabled() and "PBS" in win.run_hint.text()
 
@@ -235,7 +235,7 @@ def test_english_ui(app, quiet, sk_root, tmp_path):
     try:
         win = make_window(sk_root, tmp_path)
         translate_widgets(win)
-        assert win.structure.title() == "Structure" and win.btn_generate.text() == "Generate input"
+        assert win.structure.title() == "Structure" and win.btn_generate.text() == "Generate"
         assert win.structure.source.itemText(win.structure.source.findData("bulk")) == "Bulk" and win.kpoints.mode.itemText(0) == "Γ only"
         assert tr("生成できます") == "Ready to generate" and tr("未知の文") == "未知の文"
         assert win.ribbon.page_titles() == ["File", "Insert", "View", "Run", "Settings", "Help"]
@@ -284,7 +284,7 @@ def test_toolbar_has_no_menu_duplicates(app, quiet, sk_root, tmp_path):
     assert [b.defaultAction() for b in win.quick_access.buttons] == [win.act_back, win.act_forward]
     assert win.ribbon.page_titles() == ["ファイル", "挿入", "表示", "実行", "設定", "ヘルプ"]
     ribbon_texts = {a.text() for a in win.ribbon.all_actions()}
-    for text in ("計算設定 (spec.json) を開く…", "環境設定を再読み込み", "環境設定…", "Draw", "1 つの条件を変えて一括生成…", "入力を生成", "この PC で実行"):
+    for text in ("計算設定 (spec.json) を開く…", "環境設定を再読み込み", "環境設定…", "Draw", "1 つの条件を変えて一括生成…", "生成", "この PC で実行"):
         assert text in ribbon_texts, text
     assert win.act_scan in win.ribbon.actions_on_page(3) and win.act_generate in win.ribbon.actions_on_page(3)
     assert all(not a.icon().isNull() and a.iconText() for a in win.ribbon.all_actions())

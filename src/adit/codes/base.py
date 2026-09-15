@@ -21,7 +21,6 @@ class ReadmeNotes:
     files: list[str] = field(default_factory=list)
     prepare: list[str] = field(default_factory=list)
     outputs: list[str] = field(default_factory=list)
-    citation: list[str] = field(default_factory=list)
 
 
 class GenerationError(AditError):

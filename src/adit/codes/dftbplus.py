@@ -204,8 +204,8 @@ class DftbPlusGenerator(InputGenerator):
               "  dftb_in.hsd   DFTB+ input (the settings; DFTB+ reads it automatically when started in this directory)"),
             L("  geometry.gen  構造 (原子の種類と座標。gen 形式、長さの単位は Å)",
               "  geometry.gen  structure (elements and coordinates; gen format, lengths in Å)"),
-            L(f"  skf/          Slater-Koster ファイル (DFTB+ が使う、元素の組ごとのパラメータ) と LICENSE、README: {', '.join(skf_names)}",
-              f"  skf/          Slater-Koster files (DFTB+ parameters for each pair of elements) plus LICENSE and README: {', '.join(skf_names)}"),
+            L(f"  skf/          Slater-Koster ファイル (セット {skset.name}。DFTB+ が使う、元素の組ごとのパラメータ) と LICENSE、README: {', '.join(skf_names)}",
+              f"  skf/          Slater-Koster files (set {skset.name}; DFTB+ parameters for each pair of elements) plus LICENSE and README: {', '.join(skf_names)}"),
         ]
         if t == "band_structure":
             files.append(L("  bands/        バンド計算の 2 段階目。1 段階目の電荷を読み、高対称点を結ぶ経路 (bands/kpath.json) に沿って計算します",
@@ -231,13 +231,7 @@ class DftbPlusGenerator(InputGenerator):
         }.get(t, [])
         out.append(L("  dftb_pin.hsd  省略した設定を既定値で埋めた入力。実際に使われた設定を確かめられます",
                      "  dftb_pin.hsd  the input with omitted settings filled with defaults; shows what was actually used"))
-        cite = [
-            L(f"  Slater-Koster セット {skset.name} は CC BY-SA 4.0 で配布されています。論文などでは、セットの README",
-              f"  The Slater-Koster set {skset.name} is distributed under CC BY-SA 4.0; publications must cite the references"),
-            L("  (skf/README) に書かれた文献の引用が求められます。DFTB+ 自体の引用先は output.log の先頭に表示されます。",
-              "  listed in the set's README (skf/README). The citation for DFTB+ itself is printed at the top of output.log."),
-        ]
-        return ReadmeNotes(program="dftb+", files=files, outputs=out, citation=cite)
+        return ReadmeNotes(program="dftb+", files=files, outputs=out)
 
     def geometry_gen(self, spec: CalculationSpec) -> str:
         buf = io.StringIO()

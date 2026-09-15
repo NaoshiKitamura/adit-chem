@@ -308,9 +308,7 @@ class MlipGenerator(InputGenerator):
             "vibrations": [L("  vib_summary.txt / vib/   振動数の表 (ASE の Vibrations) と、変位ごとの力。振動数 [cm^-1] は results.json にも (虚数は負の数)",
                              "  vib_summary.txt / vib/   frequency table (ASE Vibrations) and forces per displacement; frequencies [cm^-1] also in results.json (imaginary as negative)")],
         }.get(t, [])
-        cite = [L(f"  MACE: {MACE_DOC} の各モデルの文献。CHGNet: Deng ほか, Nat. Mach. Intell. (2023), doi:10.1038/s42256-023-00716-3。ASE も引用します。",
-                  f"  MACE: the references per model at {MACE_DOC}. CHGNet: Deng et al., Nat. Mach. Intell. (2023), doi:10.1038/s42256-023-00716-3. Cite ASE as well.")]
-        return ReadmeNotes(program="python3", files=files, prepare=prep, outputs=out, citation=cite)
+        return ReadmeNotes(program="python3", files=files, prepare=prep, outputs=out)
 
 
 register(MlipGenerator())
