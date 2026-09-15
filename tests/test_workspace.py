@@ -84,3 +84,72 @@ def test_the_editor_opens_saves_and_refuses_binaries(tmp_path):
         assert panel.open_file(tmp_path / "blob.bin") != ""      # 開かない理由を返す
     finally:
         panel.close_session()
+
+
+def test_the_mouse_is_reported_when_a_program_asks_for_it(tmp_path):
+    session = ShellSession(cwd=tmp_path, command=SHELL, rows=10, cols=40)
+    try:
+        assert not session.mouse_wanted()
+        session.screen.set_mode(1000, private=True)
+        assert session.mouse_wanted()
+        assert session.mouse_report(0, 4, 2, True) == "\x1b[M \x25\x23".replace("\x25", chr(32 + 5)).replace("\x23", chr(32 + 3))
+        session.screen.set_mode(1006, private=True)      # SGR の書式
+        assert session.mouse_report(0, 4, 2, True) == "\x1b[<0;5;3M"
+        assert session.mouse_report(0, 4, 2, False) == "\x1b[<0;5;3m"
+    finally:
+        session.close()
+
+
+def test_the_history_can_be_scrolled_back(tmp_path):
+    session = ShellSession(cwd=tmp_path, command=SHELL, rows=6, cols=40)
+    try:
+        session.write("for i in 1 2 3 4 5 6 7 8 9; do echo line-$i; done\n")
+        assert _wait_for(session, "line-9"), session.text()
+        assert session.history_above > 0                  # 流れていった行がある
+        before = session.text()
+        session.scroll_pages(-1)
+        assert session.text() != before                   # さかのぼれた
+        session.scroll_pages(1)
+    finally:
+        session.close()
+
+
+@pytest.mark.skipif(os.name == "nt", reason="Windows は別のシェル")
+def test_several_terminals_can_be_open_at_once(tmp_path):
+    pytest.importorskip("PySide6")
+    from PySide6.QtWidgets import QApplication
+
+    from adit.gui.terminal_pane import TerminalTabs
+
+    QApplication.instance() or QApplication([])
+    tabs = TerminalTabs(cwd=tmp_path)
+    try:
+        assert tabs.tabs.count() == 1
+        tabs.add_tab()
+        assert tabs.tabs.count() == 2 and tabs.current is not None
+        tabs.close_tab(1)
+        assert tabs.tabs.count() == 1                     # 最後の 1 つは残る
+        tabs.close_tab(0)
+        assert tabs.tabs.count() == 1
+    finally:
+        tabs.close_session()
+
+
+@pytest.mark.skipif(os.name == "nt", reason="Windows は別のシェル")
+def test_the_font_size_changes_the_number_of_columns(tmp_path):
+    pytest.importorskip("PySide6")
+    from PySide6.QtWidgets import QApplication
+
+    from adit.gui.terminal import TerminalWidget
+
+    QApplication.instance() or QApplication([])
+    term = TerminalWidget(cwd=tmp_path, command=SHELL)
+    try:
+        term.resize(800, 400)
+        term.set_font_size(9)
+        small = term.cols()
+        term.set_font_size(18)
+        assert term.cols() < small                        # 大きい文字ほど桁数は減る
+        assert term.session is not None and term.session.cols == term.cols()
+    finally:
+        term.close_session()

@@ -160,6 +160,40 @@ class ShellSession:
     def cursor(self) -> tuple[int, int]:
         return self.screen.cursor.y, self.screen.cursor.x
 
+    # ---- history (what scrolled off the top) ----
+    @property
+    def history_above(self) -> int:
+        return len(self.screen.history.top)
+
+    @property
+    def history_below(self) -> int:
+        return len(self.screen.history.bottom)
+
+    def scroll_pages(self, pages: int) -> None:
+        """Negative: go back into the history. Positive: come back down."""
+        for _ in range(abs(pages)):
+            (self.screen.prev_page if pages < 0 else self.screen.next_page)()
+
+    # ---- mouse reporting (set by programs such as htop or vim) ----
+    MOUSE_MODES = (1000, 1002, 1003)
+    SGR_MODE = 1006
+
+    def mouse_wanted(self) -> bool:
+        return any((m << 5) in self.screen.mode for m in self.MOUSE_MODES)
+
+    def mouse_motion_wanted(self) -> bool:
+        return any((m << 5) in self.screen.mode for m in (1002, 1003))
+
+    def mouse_report(self, button: int, col: int, row: int, pressed: bool = True) -> str:
+        """The escape sequence for one mouse event (columns and rows are 0-based)."""
+        col, row = max(0, col) + 1, max(0, row) + 1
+        if (self.SGR_MODE << 5) in self.screen.mode:
+            return f"\x1b[<{button};{col};{row}{'M' if pressed else 'm'}"
+        code = button if pressed else 3
+        if col > 223 or row > 223:
+            return ""
+        return "\x1b[M" + chr(32 + code) + chr(32 + col) + chr(32 + row)
+
 
 def available() -> tuple[bool, str]:
     """Whether a terminal can run here, and why not when it cannot."""

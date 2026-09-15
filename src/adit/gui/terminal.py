@@ -34,6 +34,7 @@ class TerminalWidget(QWidget):
     """A shell in a widget. Left click focuses it; keys go straight to the shell."""
 
     finished = Signal()
+    scrolled = Signal()
 
     def __init__(self, cwd=None, command=None, dark: bool = False, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -42,13 +43,15 @@ class TerminalWidget(QWidget):
         self.dark = dark
         self.session: ShellSession | None = None
         self.error = ""
+        self._sel_from: tuple[int, int] | None = None   # (行, 桁)
+        self._sel_to: tuple[int, int] | None = None
+        self._selecting = False
+        self.setMouseTracking(True)
         font = QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
         font.setPointSizeF(max(9.0, font.pointSizeF()))
         font.setStyleHint(QFont.StyleHint.Monospace)
         self.setFont(font)
-        self._metrics = QFontMetricsF(font)
-        self._cw = max(1.0, self._metrics.horizontalAdvance("M"))
-        self._ch = max(1.0, self._metrics.height())
+        self._measure()
         ok, missing = available()
         if not ok:
             self.error = L(f"ターミナルを開けません ({missing} が入っていません)",
@@ -61,6 +64,24 @@ class TerminalWidget(QWidget):
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._poll)
         self._timer.start(POLL_MS)
+
+    def _measure(self) -> None:
+        self._metrics = QFontMetricsF(self.font())
+        self._cw = max(1.0, self._metrics.horizontalAdvance("M"))
+        self._ch = max(1.0, self._metrics.height())
+
+    def set_font_size(self, points: float) -> None:
+        """文字の大きさを変える (Ctrl+= / Ctrl+- / Ctrl+0)。"""
+        font = self.font()
+        font.setPointSizeF(max(6.0, min(36.0, points)))
+        self.setFont(font)
+        self._measure()
+        if self.session is not None:
+            self.session.resize(self.rows(), self.cols())
+        self.update()
+
+    def zoom(self, step: float) -> None:
+        self.set_font_size(self.font().pointSizeF() + step)
 
     # ---- size in characters ----
     def cols(self) -> int:
@@ -139,6 +160,14 @@ class TerminalWidget(QWidget):
                     f.setBold(cell.bold)
                     p.setFont(f)
                     p.drawText(int(left), int(top + ascent), run)
+        if self._sel_from is not None and self._sel_to is not None and self._sel_from != self._sel_to:
+            (r1, c1), (r2, c2) = sorted([self._sel_from, self._sel_to])
+            for row in range(r1, r2 + 1):
+                start = c1 if row == r1 else 0
+                end = c2 if row == r2 else self.session.cols - 1
+                rect = QRect(int(PADDING + start * self._cw), int(PADDING + row * self._ch),
+                             int((end - start + 1) * self._cw), int(self._ch) + 1)
+                p.fillRect(rect, QColor(60, 120, 220, 70))
         cy, cx = self.session.cursor
         if self.hasFocus():
             p.fillRect(QRect(int(PADDING + cx * self._cw), int(PADDING + cy * self._ch),
@@ -157,10 +186,19 @@ class TerminalWidget(QWidget):
             return
         mods, key = event.modifiers(), event.key()
         if mods & Qt.KeyboardModifier.ControlModifier and mods & Qt.KeyboardModifier.ShiftModifier and key == Qt.Key.Key_C:
-            QApplication.clipboard().setText(self.session.text())     # 画面をコピー
+            self.copy()                                               # 選んだ範囲、無ければ画面全体
             return
         if mods & Qt.KeyboardModifier.ControlModifier and mods & Qt.KeyboardModifier.ShiftModifier and key == Qt.Key.Key_V:
-            self.send(QApplication.clipboard().text())
+            self.paste()
+            return
+        if mods & Qt.KeyboardModifier.ControlModifier and key in (Qt.Key.Key_Plus, Qt.Key.Key_Equal):
+            self.zoom(1.0)
+            return
+        if mods & Qt.KeyboardModifier.ControlModifier and key == Qt.Key.Key_Minus:
+            self.zoom(-1.0)
+            return
+        if mods & Qt.KeyboardModifier.ControlModifier and key == Qt.Key.Key_0:
+            self.set_font_size(QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont).pointSizeF())
             return
         if key in self.KEYS:
             self.send(self.KEYS[key])
@@ -171,14 +209,104 @@ class TerminalWidget(QWidget):
         if event.text():
             self.send(event.text())
 
+    # ---- mouse ----
+    def _cell_at(self, pos) -> tuple[int, int]:
+        row = int((pos.y() - PADDING) / self._ch)
+        col = int((pos.x() - PADDING) / self._cw)
+        rows = self.session.rows if self.session else 1
+        cols = self.session.cols if self.session else 1
+        return max(0, min(rows - 1, row)), max(0, min(cols - 1, col))
+
+    def _button_code(self, button) -> int:
+        return {Qt.MouseButton.LeftButton: 0, Qt.MouseButton.MiddleButton: 1, Qt.MouseButton.RightButton: 2}.get(button, 0)
+
+    def mousePressEvent(self, event) -> None:  # noqa: N802 (Qt)
+        if self.session is None:
+            return
+        self.setFocus()
+        row, col = self._cell_at(event.position())
+        if self.session.mouse_wanted():
+            self.send(self.session.mouse_report(self._button_code(event.button()), col, row, True))
+            return
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._sel_from = self._sel_to = (row, col)
+            self._selecting = True
+            self.update()
+
+    def mouseMoveEvent(self, event) -> None:  # noqa: N802 (Qt)
+        if self.session is None:
+            return
+        row, col = self._cell_at(event.position())
+        if self.session.mouse_wanted():
+            if self.session.mouse_motion_wanted() and event.buttons():
+                self.send(self.session.mouse_report(32 + self._button_code(event.buttons()), col, row, True))
+            return
+        if self._selecting:
+            self._sel_to = (row, col)
+            self.update()
+
+    def mouseReleaseEvent(self, event) -> None:  # noqa: N802 (Qt)
+        if self.session is None:
+            return
+        row, col = self._cell_at(event.position())
+        if self.session.mouse_wanted():
+            self.send(self.session.mouse_report(self._button_code(event.button()), col, row, False))
+            return
+        self._selecting = False
+
+    def selected_text(self) -> str:
+        """選んだ範囲の文字。選んでいなければ空。"""
+        if self.session is None or self._sel_from is None or self._sel_to is None:
+            return ""
+        (r1, c1), (r2, c2) = sorted([self._sel_from, self._sel_to])
+        lines = self.session.lines()
+        out = []
+        for row in range(r1, r2 + 1):
+            start = c1 if row == r1 else 0
+            end = c2 if row == r2 else len(lines[row]) - 1
+            out.append("".join(cell.text for cell in lines[row][start:end + 1]).rstrip())
+        return "\n".join(out)
+
+    def copy(self) -> None:
+        text = self.selected_text() or (self.session.text() if self.session else "")
+        if text:
+            QApplication.clipboard().setText(text)
+
+    def paste(self) -> None:
+        self.send(QApplication.clipboard().text())
+
+    def contextMenuEvent(self, event) -> None:  # noqa: N802 (Qt)
+        if self.session is not None and self.session.mouse_wanted():
+            return                                  # プログラムが右クリックを使う
+        from PySide6.QtWidgets import QMenu
+
+        menu = QMenu(self)
+        act_copy = menu.addAction(L("コピー", "Copy"))
+        act_copy.setEnabled(bool(self.selected_text()))
+        act_all = menu.addAction(L("画面全体をコピー", "Copy the whole screen"))
+        act_paste = menu.addAction(L("貼り付け", "Paste"))
+        chosen = menu.exec(event.globalPos())
+        if chosen is act_copy:
+            QApplication.clipboard().setText(self.selected_text())
+        elif chosen is act_all and self.session is not None:
+            QApplication.clipboard().setText(self.session.text())
+        elif chosen is act_paste:
+            self.paste()
+
     def wheelEvent(self, event) -> None:  # noqa: N802 (Qt)
-        """ホイールで、流れていった行をさかのぼる。"""
+        """ホイール: 文字の拡大縮小 (Ctrl)、プログラムへの通知、履歴をさかのぼる。"""
         if self.session is None:
             return
         steps = event.angleDelta().y()
-        screen = self.session.screen
-        for _ in range(max(1, abs(steps) // 120)):
-            (screen.prev_page if steps > 0 else screen.next_page)()
+        if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            self.zoom(1.0 if steps > 0 else -1.0)
+            return
+        if self.session.mouse_wanted():
+            row, col = self._cell_at(event.position())
+            self.send(self.session.mouse_report(64 if steps > 0 else 65, col, row, True))
+            return
+        self.session.scroll_pages(-1 if steps > 0 else 1)
+        self.scrolled.emit()
         self.update()
 
     def restart(self, cwd=None) -> None:

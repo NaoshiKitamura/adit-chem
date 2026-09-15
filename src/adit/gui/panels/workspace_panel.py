@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (QFileSystemModel, QHBoxLayout, QInputDialog, QLab
                                QPlainTextEdit, QPushButton, QSplitter, QTreeView, QVBoxLayout, QWidget)
 
 from adit.gui.style import GROUP_SPACING, PANEL_MARGIN
-from adit.gui.terminal import TerminalWidget
+from adit.gui.terminal_pane import TerminalTabs
 from adit.lang import L
 
 MAX_EDIT_BYTES = 2_000_000
@@ -117,13 +117,13 @@ class WorkspacePanel(QWidget):
         self.btn_save.clicked.connect(self.save)
         self.editor.dirty_changed.connect(self._on_dirty)
 
-        self.terminal = TerminalWidget(cwd=self.root, dark=dark)
+        self.terminal = TerminalTabs(cwd=self.root, dark=dark)
         self.btn_here = QPushButton(L("ここへ移動 (cd)", "cd here"))
         self.btn_here.clicked.connect(lambda: self.terminal.send(f"cd {self._quoted(self.root)}\n"))
         self.btn_restart = QPushButton(L("シェルを起動し直す", "Restart the shell"))
         self.btn_restart.setVisible(False)
-        self.btn_restart.clicked.connect(lambda: (self.terminal.restart(self.root), self.btn_restart.setVisible(False)))
-        self.terminal.finished.connect(lambda: self.btn_restart.setVisible(True))
+        self.btn_restart.clicked.connect(self._restart_terminal)
+        self._watch_terminal()
 
         save = QShortcut(QKeySequence.StandardKey.Save, self)      # Ctrl+S
         save.activated.connect(self.save)
@@ -173,8 +173,20 @@ class WorkspacePanel(QWidget):
         self.path_label.setText(str(path))
 
     def set_dark(self, dark: bool) -> None:
-        self.terminal.dark = dark
-        self.terminal.update()
+        self.terminal.set_dark(dark)
+
+    def _watch_terminal(self) -> None:
+        """いま見えているターミナルのシェルが終わったら、起動し直す案内を出す。"""
+        current = self.terminal.current
+        if current is not None:
+            current.finished.connect(lambda: self.btn_restart.setVisible(True))
+        self.terminal.tabs.currentChanged.connect(lambda *_: self.btn_restart.setVisible(False))
+
+    def _restart_terminal(self) -> None:
+        current = self.terminal.current
+        if current is not None:
+            current.restart(self.root)
+        self.btn_restart.setVisible(False)
 
     # ---- editor ----
     def _open_index(self, index: QModelIndex) -> None:
