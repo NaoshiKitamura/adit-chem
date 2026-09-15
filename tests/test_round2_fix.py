@@ -79,15 +79,13 @@ def test_set_top_level_value_inserts_before_tables(tmp_path):
     assert text.index('language = "en"') < text.index("[profiles.local]") and load_config(path).language == "en"
 
 
-def test_run_reason_like_desktop_and_cleared_on_code_change(sk_root, tmp_path, ja, monkeypatch):
+def test_the_generated_directory_is_cleared_on_code_change(sk_root, tmp_path, ja, monkeypatch):
     app = WebApp(cfg_for(sk_root), tmp_path / "none.toml")
     f = dict(app.form); f.update(sk_set="fake-1-0", output_dir=str(tmp_path / "out"))
     app.preview(f); msg, err = app.generate(False)
     assert not err and app.written is not None
-    monkeypatch.setattr("shutil.which", lambda name: None)
-    assert (os.name == "nt") or "が見つかりません (インストールされていないか" in app.run_block_reason()
     app.preview({**f, "code": "xtb"})
-    assert app.written is None and "先に「生成」" in app.run_block_reason()
+    assert app.written is None      # 計算コードを変えたら、生成し直すまで「生成済み」は消える
 
 
 def test_analysis_page_not_run_notice_and_md_defaults(sk_root, tmp_path, ja):

@@ -125,10 +125,11 @@ def test_the_cli_refuses_with_the_same_words_as_the_screens(tmp_path, sk_root):
     assert "enable_run" in r.stderr and ("投入はしません" in r.stderr or "never submits" in r.stderr)
 
 
-def test_all_three_entry_points_use_the_same_judgement():
+def test_only_the_command_line_runs_the_generated_input():
+    """画面からは実行しない (2026-09-15)。実行はターミナルで人が行い、コマンドの --run だけが残る。"""
     root = REPO / "src" / "adit"
-    for path in ("cli.py", "gui/main_window.py", "web/server.py"):
+    assert "from adit.runner import" in (root / "cli.py").read_text(encoding="utf-8")
+    for path in ("gui/main_window.py", "web/server.py"):
         text = (root / path).read_text(encoding="utf-8")
-        assert "from adit.runner import" in text, path
-    assert (root / "gui" / "main_window.py").read_text(encoding="utf-8").count("enable_run = true") == 0
-    assert (root / "web" / "server.py").read_text(encoding="utf-8").count("enable_run = true") == 0
+        assert "block_reason" not in text and "runner import start" not in text, path
+        assert "run_and_wait" not in text, path

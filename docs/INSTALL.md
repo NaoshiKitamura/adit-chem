@@ -6,7 +6,7 @@ ADIT を入れて、最初の計算を実行するまでの手順です。
 
 **Python も WSL も要りません。**
 
-1. [Releases](https://github.com/NaoshiKitamura/adit-chem/releases) を開きます
+1. [Releases](https://github.com/adit-chem-project/adit-chem/releases) を開きます
 2. Windows なら `ADIT-windows-x64.zip`、macOS (Apple Silicon) なら `ADIT-arm64.zip` を
    ダウンロードします (Intel の Mac 用は配っていません。下の pip で入れてください)
 3. 展開し、Windows は `ADIT.exe`、macOS は `ADIT.app` をダブルクリックします
@@ -137,7 +137,7 @@ pseudo_root = "/home/<ユーザー名>/pseudo"    # Quantum ESPRESSO を使う�
 adit-web --open                             # ブラウザが開かなければ、Windows のブラウザで http://127.0.0.1:8765/ を開きます
 ```
 
-ブラウザの画面で、構造「プリセット」の H2O、計算コード DFTB+、Slater-Koster パラメータ mio-1-1、プロファイル local のまま「プレビュー」→「生成」→「生成した入力をこの PC で実行」→「解析へ進む」と進みます。
+ブラウザの画面で、構造「プリセット」の H2O、計算コード DFTB+、Slater-Koster パラメータ mio-1-1、プロファイル local のまま「プレビュー」→「生成」と進み、ターミナルで `bash submit.sh` を実行したあと「解析へ進む」を押します。
 ターミナルだけで行う場合は、画面で保存した計算設定 (spec.json) から次のように作れます。
 
 ```bash

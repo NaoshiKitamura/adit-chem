@@ -118,7 +118,6 @@ def test_index_and_preview_and_generate(web, tmp_path):
     assert not _error(html) and (tmp_path / "out" / "dftb_in.hsd").is_file() and (tmp_path / "out" / "README.txt").is_file()
     assert _error(_post(base + "/generate", f))
     assert not _error(_post(base + "/generate", {**f, "overwrite": "on"}))
-    assert app.run_block_reason() != "" or __import__("shutil").which("dftb+")
 
 
 def test_preview_shows_validation_errors(web):
@@ -133,9 +132,7 @@ def test_cluster_profile_is_not_run(web, tmp_path):
     f = dict(app.form); f.update(sk_set="fake-1-0", profile="cluster", ncpus="8", omp="8", output_dir=str(tmp_path / "c"))
     html = _post(base + "/generate", f)
     assert not _error(html) and "#PBS" in (tmp_path / "c" / "submit.sh").read_text(encoding="utf-8")
-    assert app.run_block_reason() != ""
-    html = _post(base + "/run", {})
-    assert _error(html)
+    assert "transfer_and_submit.sh" in html        # 実行は人がターミナルで行う
 
 
 def test_analysis_page_and_figures(web, tmp_path):

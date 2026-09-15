@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import shlex
 from pathlib import Path
 
 from PySide6.QtCore import QEvent, QProcess, Qt, QTimer
@@ -23,7 +24,6 @@ from adit.gui.panels.analysis_panel import AnalysisPanel
 from adit.gui.panels.kpoints_panel import KPointsPanel
 from adit.gui.panels.method_panel import CODES, MethodPanel
 from adit.gui.panels.preview_panel import PreviewPanel
-from adit.gui.panels.run_panel import RunPanel
 from adit.gui.panels.runtime_panel import RuntimePanel
 from adit.gui.panels.structure_view_panel import StructureViewPanel
 from adit.gui.panels.structure_panel import StructurePanel
@@ -61,10 +61,7 @@ class MainWindow(QMainWindow):
         self.preview = PreviewPanel()
         self.analysis = AnalysisPanel()
         self.structure_view = StructureViewPanel()
-        self.run_panel = RunPanel()
-        self.files_pane = QSplitter(Qt.Orientation.Vertical)
-        self.files_pane.addWidget(self.preview); self.files_pane.addWidget(self.run_panel)
-        self.run_panel.hide()
+        self.files_pane = self.preview
         self.right_tabs = QTabWidget(); self.right_tabs.setDocumentMode(True)
         self.right_tabs.addTab(self.structure_view, icons.icon("tab_structure"), "構造")
         self.right_tabs.addTab(self.files_pane, icons.icon("tab_files"), "生成ファイル")
@@ -83,11 +80,7 @@ class MainWindow(QMainWindow):
         tb = QToolBar("操作"); tb.setMovable(False); tb.setObjectName("ribbon_actions"); self.action_bar = tb
         self.act_lang = QAction("English / 日本語", self)
         self.act_lang.setToolTip("表示言語を切り替えます (環境設定の language に保存。再起動後に反映)")
-        self.act_run_toggle = QAction(icons.icon("show_run", 32), "実行ボタンを表示", self); self.act_run_toggle.setCheckable(True)
-        self.act_run_toggle.setChecked(cfg.enable_run)
-        self.act_run_toggle.setToolTip("入力の生成だけに使うなら外します (環境設定の enable_run に保存されます)")
         self.btn_generate = QPushButton(icons.icon("generate", 16), "生成"); self.btn_generate.setObjectName("primary"); self.btn_generate.setDefault(True)
-        self.btn_run = QPushButton(icons.icon("run", 16), "この PC で実行")
         self.run_hint = QLabel(""); self.run_hint.setObjectName("hint")
         home = str(Path.home())
         shown = str(cfg_path).replace(home, "~", 1) if str(cfg_path).startswith(home) else str(cfg_path)
@@ -100,7 +93,6 @@ class MainWindow(QMainWindow):
         self.gen_hint_action = tb.addWidget(self.gen_hint)
         self.gen_hint_action.setVisible(False)
         tb.addWidget(self.btn_generate)
-        self.run_arrow = QLabel("→"); self.run_arrow_action = tb.addWidget(self.run_arrow); self.run_button_action = tb.addWidget(self.btn_run)
         self.statusBar().addWidget(self.run_hint)
         self.legend = QLabel(L("青字は必須です。最初から入っている値は、説明に出典がない限り ADIT が置いた値です。ラベルにカーソルを合わせると説明が表示されます",
                                "Blue fields are required. A pre-filled value was supplied by ADIT unless its explanation names another source. Hover a label for details.")); self.legend.setObjectName("hint")
@@ -166,11 +158,7 @@ class MainWindow(QMainWindow):
         self.preview.btn_clear_origin.clicked.connect(self.clear_origin)
         self.act_reload.triggered.connect(self.reload_config)
         self.btn_generate.clicked.connect(self.generate)
-        self.btn_run.clicked.connect(self.run_dftb)
-        self.act_run_toggle.toggled.connect(self._on_run_toggle)
         self.act_lang.triggered.connect(self._toggle_language)
-        self._apply_run_visibility()
-        self._update_run_button()
         self.refresh_preview()
         limit_combo_popups(self)
 
@@ -373,9 +361,9 @@ class MainWindow(QMainWindow):
         self._show_doc_values()
         self._on_structure_or_errors_changed()
         self._record_history()
-        if self.last_written is not None and self._proc is None:
+        if self.last_written is not None:
             self.last_written = None
-            self._update_run_button()
+            self.run_hint.clear()
 
     def _show_doc_values(self) -> None:
         from adit.web.prep23 import doc_lines
@@ -419,11 +407,6 @@ class MainWindow(QMainWindow):
         self.reload_config()
         self.statusBar().showMessage(L(f"{key} を {path} にしました (環境設定に保存しました)", f"{key} set to {path} (saved in the preferences)"))
 
-    def _apply_run_visibility(self) -> None:
-        show = self.cfg.enable_run
-        self.btn_run.setVisible(show); self.run_arrow.setVisible(show)
-        self.run_button_action.setVisible(show); self.run_arrow_action.setVisible(show)
-        self.run_hint.setVisible(show); self.act_run.setVisible(show)
 
     def _toggle_language(self) -> None:
         self.cfg.language = "en" if self.cfg.language != "en" else "ja"
@@ -434,21 +417,7 @@ class MainWindow(QMainWindow):
         except OSError as ex:
             self.statusBar().showMessage(L(f"設定を保存できません: {ex}", f"cannot save the settings: {ex}"))
 
-    def _on_run_toggle(self, checked: bool) -> None:
-        self.cfg.enable_run = checked
-        self._apply_run_visibility()
-        try:
-            from adit.config import save_config
-            save_config(self.cfg, self.cfg_path)
-        except OSError as ex:
-            self.statusBar().showMessage(L(f"設定を保存できません: {ex}", f"cannot save the settings: {ex}"))
 
-    def _run_block_reason(self) -> str:
-        from adit.runner import RunTarget, block_reason
-
-        target = (RunTarget(Path(self.last_written), self.last_written_kind or "", self.last_written_exe or "")
-                  if self.last_written is not None else None)
-        return block_reason(self.cfg, target, running=self._proc is not None, cfg_path=self.cfg_path)
 
     @staticmethod
     def _executable_of(run_command: str) -> str:
@@ -461,11 +430,6 @@ class MainWindow(QMainWindow):
             return rest[0] if rest else ""
         return words[0]
 
-    def _update_run_button(self) -> None:
-        reason = self._run_block_reason()
-        self.btn_run.setEnabled(reason == ""); self.act_run.setEnabled(reason == "")
-        self.btn_run.setToolTip(reason)
-        self.run_hint.setText(reason or L(f"実行先: {self.last_written}", f"target: {self.last_written}"))
 
     def generate(self) -> None:
         if self._timer.isActive():
@@ -485,15 +449,22 @@ class MainWindow(QMainWindow):
             return
         self.last_written = out
         self.analysis.set_run_dir(out, spec.elements)
-        self.workspace.set_root(out)          # ワークスペースのツリーも、いま作った場所へ
+        self.workspace.set_root(out)          # ツリーとターミナルを、いま作った場所へ
+        self.workspace.terminal.send(f"cd {shlex.quote(str(out))}\n")
         self.last_written_kind = self.cfg.profiles[spec.runtime.profile].kind
         from adit.codes import GENERATORS
         self.last_written_exe = self._executable_of(GENERATORS[spec.method.code].run_command(spec, self.cfg.profiles[spec.runtime.profile]))
         t = spec.task
         self.last_written_steps = t.md.steps if t.type == "molecular_dynamics" else (t.max_steps if t.type == "geometry_optimization" and t.max_steps > 0 else None)
-        self._update_run_button()
+        kind = self.cfg.profiles[spec.runtime.profile].kind
+        step = (L("ワークスペースのターミナルで  bash submit.sh  を実行します。",
+                  "In the workspace terminal, run  bash submit.sh")
+                if kind == "direct" else
+                L("transfer_and_submit.sh のコマンドで、クラスタへ送って投入します。",
+                  "Use the commands in transfer_and_submit.sh to send it to the cluster and submit it."))
+        self.run_hint.setText(L(f"次: {step}", f"Next: {step}"))
         self.statusBar().showMessage(L(f"{len(written)} ファイルを {out} に書きました", f"wrote {len(written)} files to {out}"))
-        QMessageBox.information(self, tr("生成しました"), L(f"{out}\n\n実行の手順は README.txt にあります。", f"{out}\n\nSee README.txt for how to run."))
+        QMessageBox.information(self, tr("生成しました"), f"{out}\n\n{step}")
 
     def scan_dialog(self):
         from adit.gui.scan_dialog import ScanDialog
@@ -660,7 +631,6 @@ class MainWindow(QMainWindow):
             a.setCheckable(True); a.setChecked(i == 0); mode_group.addAction(a)
             a.triggered.connect(lambda _c=False, i=i: self.set_mode(i)); self._mode_actions.append(a)
         self.act_generate = QAction(icons.icon("generate", 32), "生成", self); self.act_generate.setShortcut("Ctrl+G"); self.act_generate.triggered.connect(self.generate)
-        self.act_run = QAction(icons.icon("run", 32), "この PC で実行", self); self.act_run.setShortcut("Ctrl+R"); self.act_run.triggered.connect(self.run_dftb)
         self.act_scan = QAction(icons.icon("scan", 32), L("1 つの条件を変えて一括生成…", "Generate a parameter scan…"), self)
         self.act_scan.setIconText(L("一括生成", "Parameter scan"))
         self.act_scan.setToolTip(L("カットオフや k 点など 1 つの値だけを変えた入力を、値ごとのディレクトリにまとめて作ります (収束の確認・格子定数の探索)",
@@ -734,13 +704,11 @@ class MainWindow(QMainWindow):
         g = p.add_group("右側のタブ")
         for a in self._tab_actions:
             g.add_large(a)
-        g = p.add_group("ボタン"); g.add_large(self.act_run_toggle)
         p = rb.add_page("実行")
         g = p.add_group("入力"); g.add_large(self.act_generate); g.add_large(self.act_scan); g.add_large(self.act_stages)
         g = p.add_group("まとめて作る")
         g.add_small([self.act_batch[k] for k in ("compare", "conformers", "neb")])
         g.add_small([self.act_batch[k] for k in ("phonons", "elastic", "ts")])
-        g = p.add_group("この PC"); g.add_large(self.act_run)
         p = rb.add_page("設定")
         g = p.add_group("環境設定"); g.add_large(self.act_settings); g.add_small([self.act_reload])
         g = p.add_group("言語 (再起動後に反映)"); g.add_small([a for _c, a in self._lang_actions])
@@ -904,35 +872,5 @@ class MainWindow(QMainWindow):
         for items, value in ((self._lang_actions, self.cfg.language), (self._theme_actions, self.cfg.theme), (self._frame_actions, self.cfg.window_frame)):
             for code, a in items:
                 a.setChecked(code == value)
-        self.act_run_toggle.blockSignals(True); self.act_run_toggle.setChecked(self.cfg.enable_run); self.act_run_toggle.blockSignals(False)
-        self._apply_run_visibility()
 
-    def run_dftb(self) -> None:
-        if self._run_block_reason():
-            return
-        out = self.last_written
-        self._proc = QProcess(self)
-        self._proc.setWorkingDirectory(str(out))
-        self._proc.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
-        self._proc.finished.connect(self._on_run_finished)
-        self._update_run_button()
-        self.statusBar().showMessage(L(f"実行中: {out}", f"running: {out}"))
-        self.run_panel.start(out, getattr(self, "last_written_steps", None))
-        self.run_panel.show(); self.files_pane.setSizes([500, 320])
-        self.right_tabs.setCurrentWidget(self.files_pane)
-        self._proc.start("bash", ["submit.sh"])
 
-    def _on_run_finished(self, code: int, _status) -> None:
-        out = self.last_written
-        self._proc = None
-        self._update_run_button()
-        try:
-            summary = summarize_run(out, exit_code=code).text()
-        except Exception as ex:
-            summary = L(f"結果を読めません: {ex}", f"cannot read the results: {ex}")
-        self.statusBar().showMessage(L(f"実行が終了しました (終了コード {code})", f"Run finished (exit code {code})"))
-        self.run_panel.finish(code, summary)
-        QMessageBox.information(self, L(f"実行結果 (終了コード {code})", f"Run result (exit code {code})"), f"{out}\n\n{summary}")
-        self.analysis.set_run_dir(out, self.analysis.msd_species.itemText(1) and [self.analysis.msd_species.itemText(i) for i in range(1, self.analysis.msd_species.count())])
-        self.set_mode(self.MODE_ANALYSIS)
-        self.analysis.run()

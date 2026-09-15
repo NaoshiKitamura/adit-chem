@@ -165,11 +165,3 @@ def test_xcb_switch_only_on_linux(monkeypatch):
         assert "QT_QPA_PLATFORM" not in __import__("os").environ, plat
 
 
-def test_web_run_blocked_on_windows(monkeypatch, tmp_path):
-    from adit.web import server
-
-    st = server.WebApp(config.default_config(), tmp_path / "cluster.toml")
-    (tmp_path / "submit.sh").write_text("#!/bin/sh\n", encoding="utf-8")
-    st.written, st.written_kind, st.written_exe = tmp_path, "direct", "bash"
-    monkeypatch.setattr(server.os, "name", "nt")
-    assert "Windows" in st.run_block_reason()

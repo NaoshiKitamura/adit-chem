@@ -646,8 +646,8 @@ button.link:hover { text-decoration:underline; background:none; }
 <fieldset><legend>{{ T("実行と解析", "Run and analyze") }}</legend>
   {% if written %}<div class="hint">{{ T("生成先", "Generated in") }}: {{ written }}</div>{% endif %}
   <div class="actions">
-    <button type="submit" formaction="/run" formnovalidate{% if run_reason %} disabled title="{{ run_reason }}"{% endif %}>{{ T("生成した入力をこの PC で実行", "Run the generated input on this PC") }}</button>
-    {% if run_reason %}<span class="hint">{{ run_reason }}</span>{% endif %}
+    {% if written %}<span class="hint">{{ T("実行はターミナルで: 生成先で bash submit.sh (クラスタなら transfer_and_submit.sh のコマンド)",
+      "To run it, open a terminal in the generated directory: bash submit.sh (for a cluster, use the commands in transfer_and_submit.sh)") }}</span>{% endif %}
     {% if written %}<a class="btn" href="/analysis?dir={{ written|urlencode }}">{{ T("解析へ進む", "Go to analysis") }}</a>{% endif %}
   </div>
   <pre id="log" hidden></pre>

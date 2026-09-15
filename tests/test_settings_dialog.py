@@ -55,13 +55,12 @@ def test_fields_save_and_reload(app, tmp_path, shown, ja):
     dlg.sk_root.setText(str(sk)); dlg.pseudo_root.setText(str(upf))
     for key, value in (("language", "en"), ("theme", "dark"), ("window_frame", "native")):
         cb = dlg.combos[key]; cb.setCurrentIndex(cb.findData(value))
-    dlg.enable_run.setChecked(False)
     dlg.default_profile.setCurrentIndex(dlg.default_profile.findData("cluster"))
     dlg._save()
     assert dlg.result() == SettingsDialog.DialogCode.Accepted and not shown
     cfg = load_config(p)
     assert (cfg.sk_root, cfg.pseudo_root) == (str(sk), str(upf))
-    assert (cfg.language, cfg.theme, cfg.window_frame, cfg.enable_run, cfg.default_profile) == ("en", "dark", "native", False, "cluster")
+    assert (cfg.language, cfg.theme, cfg.window_frame, cfg.default_profile) == ("en", "dark", "native", "cluster")
     assert set(cfg.profiles) == {"local", "cluster", "slurm"}
     assert "# 自分で書いたメモ" in p.read_text(encoding="utf-8")
     assert not p.with_suffix(".toml.tmp").exists()

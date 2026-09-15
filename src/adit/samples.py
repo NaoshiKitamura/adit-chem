@@ -7,7 +7,7 @@ from pathlib import Path
 
 from adit.lang import L
 
-REPO_URL = "https://github.com/NaoshiKitamura/adit"
+REPO_URL = "https://github.com/adit-chem-project/adit-chem"
 
 
 @dataclass(frozen=True)

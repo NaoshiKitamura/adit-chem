@@ -93,43 +93,8 @@ def test_spec_roundtrip_through_panels(app, quiet, sk_root, tmp_path):
     assert win2.current_spec().model_dump(exclude={"meta"}) == spec.model_dump(exclude={"meta"})
 
 
-def test_run_button_order(app, quiet, sk_root, tmp_path, monkeypatch):
-    monkeypatch.setenv("PATH", str(tmp_path / "bin_without_dftb"))
-    win = make_window(sk_root, tmp_path)
-    win.method.sk_set.setCurrentText("fake-1-0"); win.refresh_preview()
-    assert not win.btn_run.isEnabled() and "生成" in win.run_hint.text()
-    win.generate()
-    assert not win.btn_run.isEnabled() and ((os.name == "nt") or "PATH" in win.run_hint.text())
-    fake = tmp_path / "bin_with_dftb"; fake.mkdir(); (fake / "dftb+").write_text("#!/bin/sh\necho fake\n", encoding="utf-8"); (fake / "dftb+").chmod(0o755)
-    monkeypatch.setenv("PATH", str(fake))
-    win._update_run_button()
-    if os.name == "nt":
-        assert not win.btn_run.isEnabled() and "Windows" in win.run_hint.text()
-    else:
-        assert win.btn_run.isEnabled() and str(tmp_path / "out") in win.run_hint.text()
-    win.task.max_steps.setValue(3); win.refresh_preview()
-    assert not win.btn_run.isEnabled() and "生成" in win.run_hint.text()
-    win.runtime.profile.setCurrentText("cluster"); win.refresh_preview(); win.generate()
-    assert not win.btn_run.isEnabled() and "PBS" in win.run_hint.text()
 
 
-@pytest.mark.skipif(not HAVE_REAL, reason="mio-1-1 か dftb+ が無い")
-def test_run_button_runs_water(app, quiet, tmp_path, monkeypatch):
-    shown = {}
-    monkeypatch.setattr(QMessageBox, "information", staticmethod(lambda *a, **k: shown.__setitem__("text", a[2] if len(a) > 2 else "")))
-    monkeypatch.setenv("PATH", f"{Path(DFTB_EXE).parent}:{os.environ.get('PATH', '')}")
-    win = make_window(REAL_SK_ROOT, tmp_path)
-    win.method.sk_set.setCurrentText("mio-1-1"); win.task.type.setCurrentIndex(1); win.task.max_steps.setValue(100)
-    win.refresh_preview(); win.generate()
-    assert win.btn_run.isEnabled(), win.run_hint.text()
-    loop = QEventLoop()
-    win.btn_run.click()
-    assert not win.btn_run.isEnabled() and "実行中" in win.run_hint.text()
-    win._proc.finished.connect(lambda *_: loop.quit())
-    QTimer.singleShot(120000, loop.quit)
-    loop.exec()
-    assert "0.9672" in shown["text"] and "収束" in shown["text"], shown
-    assert win.btn_run.isEnabled()
 
 
 def test_theme_falls_back_without_qdarktheme(app, monkeypatch):
@@ -177,7 +142,7 @@ def test_gui_vasp_bulk_flow(app, quiet, sk_root, tmp_path):
     win.generate()
     out = tmp_path / "out"
     assert (out / "INCAR").is_file() and (out / "make_potcar.sh").is_file() and not (out / "POTCAR").exists()
-    assert not win.btn_run.isEnabled() and "PBS" in win.run_hint.text()
+    assert "transfer_and_submit.sh" in win.run_hint.text()   # クラスタ向けの案内
     spec = load_project(out)
     assert spec.method.code == "vasp" and spec.kpoints.mesh == (4, 4, 4) and spec.structure.source == "bulk"
     win2 = make_window(sk_root, tmp_path / "b")
@@ -208,25 +173,6 @@ def test_gui_extra_incar_error_is_shown(app, quiet, sk_root, tmp_path):
     assert not win.btn_generate.isEnabled() and "KEY = value" in win.preview.status.text()
 
 
-def test_run_button_can_be_hidden_by_config(app, quiet, sk_root, tmp_path):
-    win = make_window(sk_root, tmp_path); win.show(); app.processEvents()
-    run_group = next(g for g in win.ribbon.pages[3].groups if win.act_run in [b.defaultAction() for b in g.buttons])
-    assert win.btn_run.isVisibleTo(win) and not run_group.isHidden()
-    win.act_run_toggle.setChecked(False)
-    for _ in range(3):
-        app.processEvents()
-    assert not win.btn_run.isVisibleTo(win) and not win.cfg.enable_run
-    assert run_group.isHidden() and run_group.separator.isHidden()
-    from adit.config import load_config
-    assert load_config(tmp_path / "cluster.toml").enable_run is False
-    win.act_run_toggle.setChecked(True); app.processEvents()
-    assert win.btn_run.isVisibleTo(win) and not run_group.isHidden() and not run_group.separator.isHidden()
-    cfg = default_config(sk_root=str(sk_root)); cfg.enable_run = False
-    win2 = MainWindow(cfg, tmp_path / "c2.toml"); win2.show()
-    for _ in range(3):
-        app.processEvents()
-    assert not win2.btn_run.isVisibleTo(win2) and not win2.run_arrow.isVisibleTo(win2)
-    win.close(); win2.close()
 
 
 def test_english_ui(app, quiet, sk_root, tmp_path):
@@ -284,7 +230,7 @@ def test_toolbar_has_no_menu_duplicates(app, quiet, sk_root, tmp_path):
     assert [b.defaultAction() for b in win.quick_access.buttons] == [win.act_back, win.act_forward]
     assert win.ribbon.page_titles() == ["ファイル", "挿入", "表示", "実行", "設定", "ヘルプ"]
     ribbon_texts = {a.text() for a in win.ribbon.all_actions()}
-    for text in ("計算設定 (spec.json) を開く…", "環境設定を再読み込み", "環境設定…", "Draw", "1 つの条件を変えて一括生成…", "生成", "この PC で実行"):
+    for text in ("計算設定 (spec.json) を開く…", "環境設定を再読み込み", "環境設定…", "Draw", "1 つの条件を変えて一括生成…", "生成"):
         assert text in ribbon_texts, text
     assert win.act_scan in win.ribbon.actions_on_page(3) and win.act_generate in win.ribbon.actions_on_page(3)
     assert all(not a.icon().isNull() and a.iconText() for a in win.ribbon.all_actions())
@@ -578,7 +524,6 @@ def test_menu_checks_follow_reloaded_settings(app, quiet, sk_root, tmp_path):
     save_config(cfg, tmp_path / "cluster.toml")
     win.reload_config()
     assert [c for c, a in win._theme_actions if a.isChecked()] == ["dark"]
-    assert not win.act_run_toggle.isChecked() and not win.btn_run.isVisibleTo(win)
 
 
 def test_native_frame_keeps_os_titlebar(app, quiet, sk_root, tmp_path, monkeypatch):
@@ -646,3 +591,17 @@ def test_generate_hint_jumps_to_the_field_and_marks_it_red(app, quiet, sk_root, 
     win.refresh_preview(); app.processEvents()
     assert win._error_marked == [] and not win.method.sk_set.property("adit_error")
     win.close()
+
+
+def test_generating_points_at_the_terminal(app, quiet, sk_root, tmp_path, monkeypatch):
+    """実行ボタンは無い。生成したら、ターミナルで何を打つかを案内する (2026-09-15)。"""
+    monkeypatch.setattr(QMessageBox, "information", staticmethod(lambda *a, **k: None))
+    win = make_window(sk_root, tmp_path)
+    assert not hasattr(win, "btn_run") and not hasattr(win, "act_run")
+    win.method.sk_set.setCurrentText("fake-1-0"); win.refresh_preview()
+    win.generate()
+    assert "bash submit.sh" in win.run_hint.text()
+    assert win.workspace.root == Path(tmp_path / "out")
+    win.runtime.profile.setCurrentText("cluster"); win.refresh_preview(); win.generate()
+    assert "transfer_and_submit.sh" in win.run_hint.text()
+    win.workspace.close_session()

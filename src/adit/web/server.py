@@ -659,22 +659,7 @@ class WebApp:
                 "add_opts": [(op, op_label(op)) for op in R.ADD_ORDER] + [(R.INTERFACE, L("電極と電解質の界面 (面 + 断面の自動調整 + 溶液 + 固定)",
                                                                                        "Electrode–electrolyte interface (slab + auto-sized surface + electrolyte + fixed layer)"))]}
 
-    def run_block_reason(self) -> str:
-        from adit.runner import RunTarget, block_reason
 
-        running = self.proc is not None and self.proc.poll() is None
-        target = (RunTarget(self.written, self.written_kind, self.written_exe, self.written_code)
-                  if self.written is not None else None)
-        return block_reason(self.cfg, target, running=running, cfg_path=self.cfg_path)
-
-    def run(self) -> str:
-        reason = self.run_block_reason()
-        if reason:
-            return reason
-        from adit.runner import RunTarget, start
-
-        self.proc = start(RunTarget(self.written, self.written_kind, self.written_exe, self.written_code), "web_run.log")
-        return ""
 
     def status(self) -> dict:
         running = self.proc is not None and self.proc.poll() is None
@@ -970,7 +955,7 @@ def make_handler(app: WebApp):
             self._send(app.render("index.html", form=app.form, choices=ch, files=app.files, spec=app.spec, status_text=status_text,
                                   scene_json=scene_json, scene_note=scene_note, scene_periodic=scene_periodic,
                                   viewer_js=app.viewer_js(),
-                                  error=error, message=message, run_reason=app.run_block_reason(), written=app.written,
+                                  error=error, message=message, written=app.written,
                                   message_head=message_head, scan_link=scan_link, scan_error=scan_error, scan_choices=all_choices(), scan_other=OTHER,
                                   scan_item=app.scan_item_value(), scan_dir=app.scan_dir_value(), file_periodic=file_periodic,
                                   no_kpoints=forms.NO_KPOINTS, **opts, **_prep_context(app, prep)))
@@ -1203,10 +1188,6 @@ def make_handler(app: WebApp):
                 app.clear_origin()
                 status_text, err = app.preview(fields)
                 self._page(status_text=status_text, error=err)
-            elif u.path == "/run":
-                reason = app.run()
-                self._page(status_text=L("生成できます", "Ready to generate") if app.files else "", error=reason,
-                           message="" if reason else L(f"実行中: {app.written}", f"running: {app.written}"), prefix=L("実行できません: ", "cannot run: "))
             elif u.path == "/load":
                 name_data = files.get("spec_file")
                 if not name_data:

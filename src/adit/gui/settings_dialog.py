@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QCheckBox, QComboBox, QDialog,
 from adit.config import Config, ConfigError, env_var, load_config
 from adit.lang import L
 
-FIELD_KEYS = ("sk_root", "pseudo_root", "cp2k_data", "templates_dir", "language", "theme", "window_frame", "enable_run", "default_profile")
+FIELD_KEYS = ("sk_root", "pseudo_root", "cp2k_data", "templates_dir", "language", "theme", "window_frame", "default_profile")
 
 
 def _choices() -> dict[str, list[tuple[str, str]]]:
@@ -214,10 +214,6 @@ class SettingsDialog(QDialog):
         g_run = QGroupBox(L("実行", "Running")); v3 = QVBoxLayout(g_run); v3.setSpacing(8)
         f3_box = QWidget(); f3_box.setObjectName("rowbox"); f3 = QFormLayout(f3_box); f3.setContentsMargins(0, 0, 0, 0); f3.setVerticalSpacing(10)
         v3.addWidget(f3_box)
-        self.enable_run = QCheckBox(L("「この PC で実行」ボタンを出す", "Show the \"Run on this PC\" button"))
-        self._field(f3, L("この PC で実行", "Run on this PC"), self.enable_run,
-                    L("入力ファイルを作ったあと、そのままこの PC で計算を始めるボタンです。計算はクラスタだけで行うなら外します。",
-                      "A button that starts the calculation on this PC right after the input is made. Untick it if you only run on a cluster."))
         self.default_profile = QComboBox()
         self._field(f3, L("いつも使う実行先", "Default target"), self.default_profile,
                     L("新しく計算を作るときに最初に選ばれている実行先です。実行先は下の一覧にあります。",
@@ -278,7 +274,6 @@ class SettingsDialog(QDialog):
             "language": self.combos["language"].currentData(),
             "theme": self.combos["theme"].currentData(),
             "window_frame": self.combos["window_frame"].currentData(),
-            "enable_run": self.enable_run.isChecked(),
             "default_profile": self.default_profile.currentData(),
         }
 
@@ -292,7 +287,6 @@ class SettingsDialog(QDialog):
             if i < 0:
                 cb.addItem(value, value); i = cb.count() - 1
             cb.setCurrentIndex(i)
-        self.enable_run.setChecked(cfg.enable_run)
         self.default_profile.clear()
         for name in cfg.profiles:
             self.default_profile.addItem(name, name)

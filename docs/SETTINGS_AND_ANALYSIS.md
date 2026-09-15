@@ -9,7 +9,6 @@ sk_root = "/home/<ユーザー名>/slakos"   # Slater-Koster パラメータの�
 pseudo_root = "/home/<ユーザー名>/pseudo" # Quantum ESPRESSO の擬ポテンシャル (直下に <セット名>/*.UPF)
 cp2k_data = ""                       # CP2K の data ディレクトリ (BASIS_MOLOPT など)。空なら CP2K_DATA_DIR、cp2k の隣の share/cp2k/data の順に探します
 default_profile = "local"
-enable_run = true                    # false にすると「この PC で実行」を表示しません
 language = "ja"                      # "ja" または "en" (環境変数 ADIT_LANG が優先)
 theme = "auto"                       # "auto" / "light" / "dark" (環境変数 ADIT_THEME が優先)
 
@@ -229,7 +228,7 @@ adit-web --open        # http://127.0.0.1:8765/
 ```
 
 デスクトップ版と同じ生成と解析を、ブラウザのフォームから行います。「プレビュー」で生成ファイルの内容を確認し、「生成」でサーバー (adit-web を動かしている PC) 上の出力ディレクトリに書き出します。
-「この PC で実行」の条件はデスクトップ版と同じです。「解析」ページでは計算結果のディレクトリを解析し、図と要約をそのページに表示します。spec.json の読み込みとダウンロードもできます。
+「解析」ページでは計算結果のディレクトリを解析し、図と要約をそのページに表示します。spec.json の読み込みとダウンロードもできます。
 
 依存は Python の標準ライブラリと Jinja2 だけです。**認証はありません。**既定では 127.0.0.1 でのみ待ち受けます。`--host 0.0.0.0` にすると、そのアドレスに届く人は誰でも生成と実行ができるため、信頼できるネットワークの中だけで使ってください。
 

@@ -3,7 +3,7 @@
 **Atomistic Design and Interpretation Toolkit** — 計算化学の実行に必要なインプットファイルを、
 **画面上で直感的・視覚的に作れる**デスクトップアプリです。
 
-[![tests](https://github.com/NaoshiKitamura/adit-chem/actions/workflows/tests.yml/badge.svg)](https://github.com/NaoshiKitamura/adit-chem/actions/workflows/tests.yml)
+[![tests](https://github.com/adit-chem-project/adit-chem/actions/workflows/tests.yml/badge.svg)](https://github.com/adit-chem-project/adit-chem/actions/workflows/tests.yml)
 [![PyPI](https://img.shields.io/pypi/v/adit-chem?color=2f7ae5)](https://pypi.org/project/adit-chem/)
 [![Python](https://img.shields.io/pypi/pyversions/adit-chem)](https://pypi.org/project/adit-chem/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -21,7 +21,7 @@
 
 ## インストール
 
-**Windows** — [Releases](https://github.com/NaoshiKitamura/adit-chem/releases) から
+**Windows** — [Releases](https://github.com/adit-chem-project/adit-chem/releases) から
 `ADIT-windows-x64.zip` をダウンロードし、展開して `ADIT.exe` を起動します。
 初回に SmartScreen の警告が出たら「詳細情報」→「実行」を選んでください。
 
@@ -48,8 +48,8 @@ pip install "adit-chem[gui,smiles,analysis]" --pre
 2. **構造** タブで、プリセットから `H2O` を選びます
 3. **計算条件** タブで、計算コード (例: DFTB+) と計算の種類 (例: 構造最適化) を選びます
 4. **生成** を押して、書き出し先のフォルダを指定します
-5. 計算ソフトがこの PC に入っていれば **この PC で実行** を押します
-   (クラスタで計算する場合は、書き出されたフォルダを転送して `bash submit.sh`)
+5. **ワークスペース** タブのターミナルで `bash submit.sh` を実行します
+   (クラスタで計算する場合は、`transfer_and_submit.sh` のコマンドを使います)
 6. 計算が終わったら **解析** タブでフォルダを指定し、**解析を実行** を押します
 
 ![解析の結果](docs/images/tutorial/06_analysis_result.png)
@@ -82,7 +82,7 @@ pip install "adit-chem[gui,smiles,analysis]" --pre
 | `analyze.py` | 解析用のスクリプト |
 | `transfer_and_submit.sh` | クラスタへ送って投入するコマンド (クラスタ向けに生成したときだけ) |
 
-手元の PC で直接実行することもできます (アプリの「この PC で実行」、または `adit-gen ... --run`)。
+実行は、ワークスペースのターミナルで行います (`bash submit.sh`)。自動処理では `adit-gen ... --run` も使えます。
 
 ### ファイルを扱う・ターミナルを使う
 
