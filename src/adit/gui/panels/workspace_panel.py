@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtCore import QDir, QModelIndex, Qt, Signal
-from PySide6.QtGui import QFont, QFontDatabase, QKeySequence, QShortcut
-from PySide6.QtWidgets import (QFileSystemModel, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QMenu, QMessageBox,
+from PySide6.QtCore import QDir, QModelIndex, QRect, Qt, Signal
+from PySide6.QtGui import QColor, QFont, QFontDatabase, QIcon, QKeySequence, QPainter, QPixmap, QShortcut
+from PySide6.QtWidgets import (QComboBox, QFileSystemModel, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QMenu, QMessageBox,
                                QPlainTextEdit, QPushButton, QSplitter, QTreeView, QVBoxLayout, QWidget)
 
 from adit.gui.style import GROUP_SPACING, PANEL_MARGIN
@@ -83,6 +83,57 @@ class Editor(QPlainTextEdit):
         return ""
 
 
+class FileIcons(QFileSystemModel):
+    """ファイルの種類が見て分かるように、拡張子ごとにしるしを付ける。"""
+
+    KIND = {
+        ".hsd": ("in", "#2f7ae5"), ".in": ("in", "#2f7ae5"), ".inp": ("in", "#2f7ae5"), ".gjf": ("in", "#2f7ae5"),
+        ".nw": ("in", "#2f7ae5"), ".dat": ("in", "#2f7ae5"), ".mdp": ("in", "#2f7ae5"), ".conf": ("in", "#2f7ae5"),
+        ".log": ("out", "#12876f"), ".out": ("out", "#12876f"), ".tag": ("out", "#12876f"),
+        ".xyz": ("st", "#d2691e"), ".gen": ("st", "#d2691e"), ".cif": ("st", "#d2691e"), ".pdb": ("st", "#d2691e"),
+        ".gro": ("st", "#d2691e"), ".extxyz": ("st", "#d2691e"),
+        ".json": ("cfg", "#7b4fd0"), ".toml": ("cfg", "#7b4fd0"), ".yaml": ("cfg", "#7b4fd0"),
+        ".sh": ("run", "#b8860b"), ".py": ("py", "#3776ab"), ".j2": ("cfg", "#7b4fd0"),
+        ".png": ("img", "#c2185b"), ".svg": ("img", "#c2185b"), ".csv": ("tbl", "#12876f"), ".md": ("doc", "#555f6d"),
+    }
+    NAMED = {"INCAR": ("in", "#2f7ae5"), "POSCAR": ("st", "#d2691e"), "CONTCAR": ("st", "#d2691e"),
+             "KPOINTS": ("in", "#2f7ae5"), "POTCAR": ("in", "#2f7ae5"), "OUTCAR": ("out", "#12876f"),
+             "README.txt": ("doc", "#555f6d"), "submit.sh": ("run", "#b8860b")}
+
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
+        if role == Qt.ItemDataRole.DecorationRole and index.column() == 0:
+            path = Path(self.filePath(index))
+            if path.is_dir():
+                return super().data(index, role)
+            kind = self.NAMED.get(path.name) or self.KIND.get(path.suffix.lower())
+            if kind is not None:
+                return self._badge(*kind)
+        return super().data(index, role)
+
+    _CACHE: dict[tuple[str, str], QIcon] = {}
+
+    @classmethod
+    def _badge(cls, text: str, color: str) -> QIcon:
+        got = cls._CACHE.get((text, color))
+        if got is not None:
+            return got
+        size = 16
+        pix = QPixmap(size, size)
+        pix.fill(Qt.GlobalColor.transparent)
+        p = QPainter(pix)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        p.setPen(Qt.PenStyle.NoPen)
+        p.setBrush(QColor(color))
+        p.drawRoundedRect(1, 2, size - 2, size - 4, 3, 3)
+        font = QFont(); font.setPointSizeF(5.5); font.setBold(True)
+        p.setFont(font); p.setPen(QColor("#ffffff"))
+        p.drawText(QRect(1, 2, size - 2, size - 4), int(Qt.AlignmentFlag.AlignCenter), text)
+        p.end()
+        icon = QIcon(pix)
+        cls._CACHE[(text, color)] = icon
+        return icon
+
+
 class WorkspacePanel(QWidget):
     """File tree on the left, editor above the terminal on the right."""
 
@@ -90,7 +141,7 @@ class WorkspacePanel(QWidget):
         super().__init__(parent)
         self.root = Path(root).expanduser() if root else Path.home()
 
-        self.model = QFileSystemModel(self)
+        self.model = FileIcons(self)
         self.model.setRootPath(str(self.root))
         self.model.setFilter(QDir.Filter.AllEntries | QDir.Filter.NoDotAndDotDot | QDir.Filter.Hidden)
         self.tree = QTreeView()
@@ -99,6 +150,13 @@ class WorkspacePanel(QWidget):
         for column in (1, 2, 3):
             self.tree.hideColumn(column)
         self.tree.setHeaderHidden(True)
+        self.tree.setIndentation(16)
+        self.tree.setAnimated(False)
+        self.tree.setRootIsDecorated(True)
+        self.tree.setExpandsOnDoubleClick(False)
+        self.tree.setStyleSheet("QTreeView { show-decoration-selected: 1; }")
+        self.tree.setUniformRowHeights(True)
+        self.model.directoryLoaded.connect(self._expand_new)
         self.tree.setDragDropMode(QTreeView.DragDropMode.InternalMove)   # ドラッグで移動できる
         self.tree.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.tree.customContextMenuRequested.connect(self._menu)
@@ -117,6 +175,19 @@ class WorkspacePanel(QWidget):
         self.btn_save.clicked.connect(self.save)
         self.editor.dirty_changed.connect(self._on_dirty)
 
+        self.layout_choice = QComboBox()
+        for value, text in (("v", L("エディタが上", "Editor on top")), ("v_rev", L("ターミナルが上", "Terminal on top")),
+                            ("h", L("エディタが左", "Editor on the left")), ("h_rev", L("ターミナルが左", "Terminal on the left"))):
+            self.layout_choice.addItem(text, value)
+        self.layout_choice.setToolTip(L("エディタとターミナルの並べ方", "How the editor and the terminal are arranged"))
+        self.layout_choice.currentIndexChanged.connect(lambda *_: self.apply_layout())
+        self.btn_fold_editor = QPushButton(L("エディタを畳む", "Collapse the editor"))
+        self.btn_fold_editor.setCheckable(True)
+        self.btn_fold_editor.toggled.connect(lambda *_: self.apply_layout())
+        self.btn_fold_terminal = QPushButton(L("ターミナルを畳む", "Collapse the terminal"))
+        self.btn_fold_terminal.setCheckable(True)
+        self.btn_fold_terminal.toggled.connect(lambda *_: self.apply_layout())
+
         self.terminal = TerminalTabs(cwd=self.root, dark=dark)
         self.btn_here = QPushButton(L("ここへ移動 (cd)", "cd here"))
         self.btn_here.clicked.connect(lambda: self.terminal.send(f"cd {self._quoted(self.root)}\n"))
@@ -133,24 +204,74 @@ class WorkspacePanel(QWidget):
         top = QHBoxLayout(); top.addWidget(self.btn_up); top.addWidget(self.path_label, 1)
         ll.addLayout(top); ll.addWidget(self.tree, 1)
 
-        right = QSplitter(Qt.Orientation.Vertical)
-        edit_box = QWidget()
-        el = QVBoxLayout(edit_box); el.setContentsMargins(0, 0, 0, 0); el.setSpacing(4)
-        head = QHBoxLayout(); head.addWidget(self.file_label, 1); head.addWidget(self.btn_save)
+        self.edit_box = QWidget()
+        el = QVBoxLayout(self.edit_box); el.setContentsMargins(0, 0, 0, 0); el.setSpacing(4)
+        head = QHBoxLayout()
+        head.addWidget(self.file_label, 1); head.addWidget(self.btn_fold_editor); head.addWidget(self.btn_save)
         el.addLayout(head); el.addWidget(self.editor, 1)
-        term_box = QWidget()
-        tl = QVBoxLayout(term_box); tl.setContentsMargins(0, 0, 0, 0); tl.setSpacing(4)
+
+        self.term_box = QWidget()
+        tl = QVBoxLayout(self.term_box); tl.setContentsMargins(0, 0, 0, 0); tl.setSpacing(4)
         thead = QHBoxLayout()
         label = QLabel(L("ターミナル", "Terminal")); label.setObjectName("section")
-        thead.addWidget(label); thead.addStretch(); thead.addWidget(self.btn_restart); thead.addWidget(self.btn_here)
+        thead.addWidget(label); thead.addStretch()
+        thead.addWidget(self.layout_choice); thead.addWidget(self.btn_fold_terminal)
+        thead.addWidget(self.btn_restart); thead.addWidget(self.btn_here)
         tl.addLayout(thead); tl.addWidget(self.terminal, 1)
-        right.addWidget(edit_box); right.addWidget(term_box); right.setSizes([420, 380])
 
-        split = QSplitter(Qt.Orientation.Horizontal)
-        split.addWidget(left); split.addWidget(right); split.setSizes([320, 900])
+        self.right = QSplitter(Qt.Orientation.Vertical)
+        self.right.addWidget(self.edit_box); self.right.addWidget(self.term_box)
+
+        self.split = QSplitter(Qt.Orientation.Horizontal)
+        self.split.addWidget(left); self.split.addWidget(self.right)
+        self.split.setStretchFactor(0, 0); self.split.setStretchFactor(1, 1)
+        left.setMinimumWidth(150)
+        self.split.setSizes([230, 1070])            # ツリーは細く、エディタとターミナルを広く
         lay = QVBoxLayout(self)
         lay.setContentsMargins(PANEL_MARGIN, 8, PANEL_MARGIN, PANEL_MARGIN); lay.setSpacing(GROUP_SPACING)
-        lay.addWidget(split)
+        lay.addWidget(self.split)
+        self.apply_layout()
+
+    # ---- layout ----
+    def apply_layout(self) -> None:
+        """並べ方 (上下・左右・入れ替え) と、畳む指定を反映する。"""
+        choice = self.layout_choice.currentData() or "v"
+        vertical = choice.startswith("v")
+        reverse = choice.endswith("_rev")
+        self.right.setOrientation(Qt.Orientation.Vertical if vertical else Qt.Orientation.Horizontal)
+        first, second = (self.term_box, self.edit_box) if reverse else (self.edit_box, self.term_box)
+        if self.right.widget(0) is not first:
+            self.right.insertWidget(0, first)
+            self.right.insertWidget(1, second)
+        fold_editor, fold_terminal = self.btn_fold_editor.isChecked(), self.btn_fold_terminal.isChecked()
+        if fold_editor and fold_terminal:           # 両方は畳めない (どちらかは残す)
+            self.btn_fold_terminal.setChecked(False)
+            fold_terminal = False
+        self.editor.setVisible(not fold_editor)
+        self.terminal.setVisible(not fold_terminal)
+        self.btn_fold_editor.setText(L("エディタを開く", "Expand the editor") if fold_editor
+                                     else L("エディタを畳む", "Collapse the editor"))
+        self.btn_fold_terminal.setText(L("ターミナルを開く", "Expand the terminal") if fold_terminal
+                                       else L("ターミナルを畳む", "Collapse the terminal"))
+        total = max(400, (self.right.height() if vertical else self.right.width()) or 800)
+        if fold_editor:
+            self.right.setSizes([40, total - 40] if not reverse else [total - 40, 40])
+        elif fold_terminal:
+            self.right.setSizes([total - 40, 40] if not reverse else [40, total - 40])
+        else:
+            self.right.setSizes([total // 2, total - total // 2])
+
+    def _expand_new(self, path: str) -> None:
+        """読み込めたフォルダを、根から 3 階層まで開く。"""
+        index = self.model.index(path)
+        if not index.isValid():
+            return
+        depth, walk = 0, index
+        root = self.model.index(str(self.root))
+        while walk.isValid() and walk != root and depth < 8:
+            walk = walk.parent(); depth += 1
+        if depth < 3:
+            self.tree.expand(index)
 
     # ---- helpers ----
     @staticmethod

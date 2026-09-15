@@ -154,3 +154,44 @@ def test_the_font_size_changes_the_number_of_columns(tmp_path):
         assert term.session is not None and term.session.cols == term.cols()
     finally:
         term.close_session()
+
+
+@pytest.mark.skipif(os.name == "nt", reason="Windows は別のシェル")
+def test_the_editor_and_terminal_can_be_rearranged_and_folded(tmp_path):
+    pytest.importorskip("PySide6")
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QApplication
+
+    from adit.gui.panels.workspace_panel import WorkspacePanel
+
+    QApplication.instance() or QApplication([])
+    panel = WorkspacePanel(root=tmp_path)
+    try:
+        assert panel.right.orientation() == Qt.Orientation.Vertical
+        assert panel.right.widget(0) is panel.edit_box
+        panel.layout_choice.setCurrentIndex(panel.layout_choice.findData("h_rev"))
+        assert panel.right.orientation() == Qt.Orientation.Horizontal
+        assert panel.right.widget(0) is panel.term_box          # 入れ替わる
+        panel.btn_fold_editor.setChecked(True)                   # 窓を出していないので isHidden で見る
+        assert panel.editor.isHidden() and not panel.terminal.isHidden()
+        panel.btn_fold_terminal.setChecked(True)                 # 両方は畳めない
+        assert not (panel.editor.isHidden() and panel.terminal.isHidden())
+    finally:
+        panel.close_session()
+
+
+def test_the_tree_marks_the_kind_of_each_file(tmp_path):
+    pytest.importorskip("PySide6")
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QApplication
+
+    from adit.gui.panels.workspace_panel import FileIcons
+
+    QApplication.instance() or QApplication([])
+    (tmp_path / "dftb_in.hsd").write_text("x", encoding="utf-8")
+    (tmp_path / "notes.zzz").write_text("x", encoding="utf-8")
+    model = FileIcons()
+    model.setRootPath(str(tmp_path))
+    icon = model.data(model.index(str(tmp_path / "dftb_in.hsd")), Qt.ItemDataRole.DecorationRole)
+    assert icon is not None and not icon.isNull()
+    assert FileIcons.KIND[".hsd"][0] == "in"                     # 入力ファイルの印
