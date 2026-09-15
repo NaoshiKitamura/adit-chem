@@ -103,8 +103,9 @@ def test_the_mouse_is_reported_when_a_program_asks_for_it(tmp_path):
 def test_the_history_can_be_scrolled_back(tmp_path):
     session = ShellSession(cwd=tmp_path, command=SHELL, rows=6, cols=40)
     try:
-        session.write("for i in 1 2 3 4 5 6 7 8 9; do echo line-$i; done\n")
-        assert _wait_for(session, "line-9"), session.text()
+        for i in range(1, 13):           # シェルの書き方に依らない形で、画面より多い行を出す
+            session.write(f"echo line-{i}" + ("\r\n" if os.name == "nt" else "\n"))
+        assert _wait_for(session, "line-12"), session.text()
         assert session.history_above > 0                  # 流れていった行がある
         before = session.text()
         session.scroll_pages(-1)
