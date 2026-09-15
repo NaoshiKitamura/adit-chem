@@ -20,8 +20,8 @@
 ダウンロードし、展開して `ADIT.exe` をダブルクリックします。**Python の用意は要りません。**
 署名を付けていないため、初回に SmartScreen の警告が出たら「詳細情報」→「実行」を選んでください。
 
-**macOS** — 同じ場所から `ADIT-arm64.zip` (Apple Silicon) か `ADIT-x86_64.zip` (Intel) を落とし、
-初回だけ Finder で右クリック →「開く」を選びます。
+**macOS (Apple Silicon)** — 同じ場所から `ADIT-arm64.zip` を落とし、初回だけ Finder で
+右クリック →「開く」を選びます。Intel の Mac では、下の pip で入れてください。
 
 **Python から入れる場合** (Linux、または自分で環境を管理したい人向け)
 

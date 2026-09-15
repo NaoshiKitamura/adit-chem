@@ -1,6 +1,6 @@
 # Build the macOS application bundle (.app). Started by hand from the Actions page ("Run workflow").
 # The bundle is neither signed nor notarised: the first launch needs right-click -> Open in Finder.
-# See docs/MACOS_BUILD.md. Intel (x86_64) and Apple Silicon (arm64) are built separately.
+# See docs/MACOS_BUILD.md. Only Apple Silicon (arm64) is built.
 name: macos-app
 
 on:
@@ -13,15 +13,9 @@ permissions:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: macos-14      # Apple Silicon (arm64)
-            arch: arm64
-          - runner: macos-13      # Intel (x86_64)
-            arch: x86_64
-    runs-on: ${{ matrix.runner }}
+    runs-on: macos-14         # Apple Silicon (arm64)
+    env:
+      ARCH: arm64
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -43,19 +37,19 @@ jobs:
           test -d dist/ADIT.app || (echo "ADIT.app was not produced" && exit 1)
       - name: Zip the bundle (keeping the permissions Finder needs)
         run: |
-          cd dist && ditto -c -k --keepParent ADIT.app "ADIT-${{ matrix.arch }}.zip"
+          cd dist && ditto -c -k --keepParent ADIT.app "ADIT-${{ env.ARCH }}.zip"
       - name: Attach the zip to the release
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd dist
-          gh release create "${{ github.ref_name }}" "ADIT-${{ matrix.arch }}.zip" --generate-notes --title "${{ github.ref_name }}" \
-            || gh release upload "${{ github.ref_name }}" "ADIT-${{ matrix.arch }}.zip" --clobber
+          gh release create "${{ github.ref_name }}" "ADIT-${{ env.ARCH }}.zip" --generate-notes --title "${{ github.ref_name }}" \
+            || gh release upload "${{ github.ref_name }}" "ADIT-${{ env.ARCH }}.zip" --clobber
       - uses: actions/upload-artifact@v4
         with:
-          name: adit-macos-${{ matrix.arch }}
+          name: adit-macos-${{ env.ARCH }}
           path: |
-            dist/ADIT-${{ matrix.arch }}.zip
+            dist/ADIT-${{ env.ARCH }}.zip
             dist/adit
           retention-days: 7

@@ -7,8 +7,8 @@ ADIT を入れて、最初の計算を実行するまでの手順です。
 **Python も WSL も要りません。**
 
 1. [Releases](https://github.com/NaoshiKitamura/adit-chem/releases) を開きます
-2. Windows なら `ADIT-windows-x64.zip`、macOS なら `ADIT-arm64.zip` (Apple Silicon) か
-   `ADIT-x86_64.zip` (Intel) をダウンロードします
+2. Windows なら `ADIT-windows-x64.zip`、macOS (Apple Silicon) なら `ADIT-arm64.zip` を
+   ダウンロードします (Intel の Mac 用は配っていません。下の pip で入れてください)
 3. 展開し、Windows は `ADIT.exe`、macOS は `ADIT.app` をダブルクリックします
 
 署名を付けていないため、初回だけ警告が出ます。Windows は「詳細情報」→「実行」、

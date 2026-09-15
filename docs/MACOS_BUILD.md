@@ -7,10 +7,13 @@
 
 GitHub の Actions から手で動かします。
 
+`v` で始まるタグ (例 `v0.1.0a1`) を押し上げると自動で作られ、Releases に `ADIT-arm64.zip` が添付されます。
+手で動かすこともできます。
+
 1. リポジトリの **Actions** → **macos-app** → **Run workflow**
-2. Apple Silicon (arm64) と Intel (x86_64) の 2 つが並行で走ります
-3. 終わると成果物 (artifact) に `adit-macos-arm64` / `adit-macos-x86_64` が出ます。中身は
-   - `ADIT-<arch>.zip` … 二重クリックで開く `ADIT.app` (`ditto` でまとめたもの。Finder の権限が保たれます)
+2. Apple Silicon (arm64) の 1 つが走ります
+3. 終わると成果物 (artifact) に `adit-macos-arm64` が出ます。中身は
+   - `ADIT-arm64.zip` … 二重クリックで開く `ADIT.app` (`ditto` でまとめたもの。Finder の権限が保たれます)
    - `dist/adit/` … 画面を使わない人向けの一式 (`adit-cli` が入っています)
 
 手元の Mac で作るなら:
@@ -55,8 +58,8 @@ Windows の手順 (`docs/WINDOWS_BUILD.md`) と同じ 7 点です。**通った�
 
 **7 が最も大事です。**作った機械では動いて、他の機械では足りないものがあって動かない、が起きます。
 
-## Intel と Apple Silicon
+## Intel の Mac
 
-CI は 2 つを別々に作ります (`macos-13` が Intel、`macos-14` が Apple Silicon)。
-1 つにまとめた universal2 は、PySide6 と RDKit の配布が両対応の wheel を出していないと作れないので、**していません**。
-配るときは、相手の Mac に合うほうを渡してください (Apple メニュー → この Mac について で分かります)。
+**配っているのは Apple Silicon (arm64) 版だけです。**GitHub が Intel の実行環境 (`macos-13`) の提供を
+終えたため、CI では作れません。Intel の Mac では pip で入れてください。
+1 つにまとめた universal2 は、PySide6 と RDKit が両対応の wheel を配っていないと作れないので、していません。
